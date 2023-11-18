@@ -1,316 +1,21 @@
-while true do
-    task.wait(1)
-    if game:IsLoaded() and game.PlaceId == 606849621 then
-        break
-    end
-end
-
-local IS_NOT_OBFUSCATED = false
-if not LPH_OBFUSCATED then
-    warn("ice tray debug")
-    IS_NOT_OBFUSCATED = true
-end
-
 local player = game:GetService("Players").LocalPlayer
-local httpservice = game:GetService("HttpService")
 local runservice = game:GetService("RunService")
 local repl = game:GetService("ReplicatedStorage")
-local coregui = game:GetService("CoreGui")
 local textService = game:GetService("TextChatService")
 
-if coregui:FindFirstChild("icetray_key") then
-    warn("ice tray key gui was already loaded")
-    return false
-end
-
-local shouldContinue = false
-
-local function getRequest(url)
-    return request({
-        Url = url;
-        Method = "GET";
-    })
-end
-
-local function newInstance(instance, data)
-    local obj = Instance.new(instance)
-    for i,v in next, data do
-        if i ~= "Parent" then
-            if typeof(v) == "Instance" then
-                v.Parent = obj
-            else
-                obj[i] = v
-            end
-        end
-    end
-    obj.Parent = data.Parent
-    return obj
-end
-
-local function notify(text, duration)
-    return require(repl.Game.Notification).new({
-        Text = text;
-        Duration = duration;
-    })
-end
-
-local function validate(key)
-    return true
-end
-
-local function onKeySubmit()
-    local gui = coregui:FindFirstChild("icetray_key")
-    local textbox = gui.puls.blackbackground.blackbackground2.Down.TextBox
-    local validation = validate(textbox.Text)
-    if validation then
-        gui:Destroy()
-    else
-        return notify("Invalid key", 10)
-    end
-end
-
-local link = "https://discord.gg/5Eqt6QBfYY"
-
-local function onLinkRequest()
-    setclipboard(link)
-    notify("Discord link has been set to clipboard (discord.gg/5Eqt6QBfYY). Find key in #key channel.", 45)
-end
-
-local function startUI()
-    local lib = newInstance("ScreenGui", {
-        Name = "icetray_key";
-        Parent = coregui;
-        newInstance("Frame", {
-            Name = "puls";
-            Active = true;
-            Draggable = true;
-            BackgroundColor3 = Color3.fromRGB(35,35,35);
-            BorderColor3 = Color3.fromRGB(25,25,25);
-            Position = UDim2.new(0.403486937, 0, 0.281345576, 0);
-            Size = UDim2.new(0, 335, 0, 341);
-            newInstance("Frame", {
-                Name = "blackbackground";
-                BackgroundColor3 = Color3.fromRGB(25,25,25);
-                BorderColor3 = Color3.fromRGB(40,40,40);
-                BorderSizePixel = 0;
-                Position = UDim2.new(0.00400062697, 0, 0.00399990566, 0);
-                Size = UDim2.new(0, 333, 0, 339);
-                newInstance("Frame", {
-                    Name = "blackbackground2";
-                    BackgroundColor3 = Color3.fromRGB(29,29,29);
-                    BorderColor3 = Color3.fromRGB(0,0,0);
-                    BorderSizePixel = 0;
-                    Position = UDim2.new(0.00200004689, 0, 0.00200011674, 0);
-                    Size = UDim2.new(0, 331, 0, 337);
-                    newInstance("Frame", {
-                        Name = "eboybar";
-                        Parent = blackbackground2;
-                        BackgroundColor3 = Color3.fromRGB(255, 255, 255);
-                        BorderColor3 = Color3.fromRGB(0, 0, 0);
-                        BorderSizePixel = 0;
-                        Size = UDim2.new(0, 331, 0, 2);
-                        newInstance("UIGradient", {
-                            Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(55, 177, 218)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(235, 93, 183)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(204, 227, 53))};
-                        })
-                    });
-                    newInstance("Frame", {
-                        Name = "Button";
-                        Parent = blackbackground2;
-                        BackgroundColor3 = Color3.fromRGB(255, 255, 255);
-                        BackgroundTransparency = 1;
-                        BorderColor3 = Color3.fromRGB(0, 0, 0);
-                        BorderSizePixel = 0;
-                        Position = UDim2.new(0.0725075528, 0, 0.314540058, 0);
-                        Size = UDim2.new(0, 282, 0, 85);
-                        newInstance("TextButton", {
-                            Name = "getKeyButton";
-                            Parent = Button;
-                            BackgroundColor3 = Color3.fromRGB(31, 31, 31);
-                            BorderColor3 = Color3.fromRGB(20, 20, 20);
-                            Position = UDim2.new(0.131205678, 0, -0.14164716, 0);
-                            Size = UDim2.new(0, 208, 0, 58);
-                            Font = Enum.Font.SourceSans;
-                            Text = "Join Discord";
-                            TextColor3 = Color3.fromRGB(210, 210, 210);
-                            TextSize = 17;
-                            TextStrokeTransparency = 0.8;
-                        })
-                    });
-                    newInstance("Frame", {
-                        Name = "Down";
-                        Parent = blackbackground2;
-                        BackgroundColor3 = Color3.fromRGB(255, 255, 255);
-                        BackgroundTransparency = 1.000;
-                        BorderColor3 = Color3.fromRGB(0, 0, 0);
-                        BorderSizePixel = 0;
-                        Position = UDim2.new(0.0725075528, 0, 0.554896116, 0);
-                        Size = UDim2.new(0, 282, 0, 83);
-                        newInstance("TextLabel", {
-                            Name = "gda";
-                            Parent = Down;
-                            BackgroundColor3 = Color3.fromRGB(255, 255, 255);
-                            BackgroundTransparency = 1;
-                            BorderColor3 = Color3.fromRGB(0, 0, 0);
-                            BorderSizePixel = 0;
-                            Position = UDim2.new(0.145390064, 0, -0.337349385, 0);
-                            Size = UDim2.new(0, 209, 0, 32);
-                            Font = Enum.Font.SourceSans;
-                            Text = "You can find the key in the #key channel";
-                            TextColor3 = Color3.fromRGB(210, 210, 210);
-                            TextSize = 17;
-                            TextStrokeTransparency = 0.7;
-                        });
-                        newInstance("TextBox", {
-                            Name = "TextBox";
-                            Parent = Down;
-                            BackgroundColor3 = Color3.fromRGB(31, 31, 31);
-                            BorderColor3 = Color3.fromRGB(20, 20, 20);
-                            Position = UDim2.new(0.0886524841, 0, 0.228795066, 0);
-                            Size = UDim2.new(0, 233, 0, 40);
-                            Font = Enum.Font.SourceSans;
-                            PlaceholderText = "Insert Key Here";
-                            Text = "";
-                            TextColor3 = Color3.fromRGB(200, 200, 200);
-                            TextSize = 14;
-                        });
-                        newInstance("TextButton", {
-                            Name = "submit";
-                            Parent = Down;
-                            BackgroundColor3 = Color3.fromRGB(31, 31, 31);
-                            BorderColor3 = Color3.fromRGB(20, 20, 20);
-                            Position = UDim2.new(0.131205678, 0, 0.966219604, 0);
-                            Size = UDim2.new(0, 208, 0, 50);
-                            Font = Enum.Font.SourceSans;
-                            Text = "Submit";
-                            TextColor3 = Color3.fromRGB(210, 210, 210);
-                            TextSize = 17;
-                            TextStrokeTransparency = 0.8;
-                        });
-                    });
-                    newInstance("Frame", {
-                        Name = "Label";
-                        BackgroundColor3 = Color3.fromRGB(255, 255, 255);
-                        BackgroundTransparency = 1;
-                        BorderColor3 = Color3.fromRGB(0, 0, 0);
-                        BorderSizePixel = 0;
-                        Position = UDim2.new(0.0725075528, 0, 0.0593471825, 0);
-                        Size = UDim2.new(0, 282, 0, 83);
-                        newInstance("TextLabel", {
-                            Name = "gda";
-                            BackgroundColor3 = Color3.fromRGB(255, 255, 255);
-                            BackgroundTransparency = 1;
-                            BorderColor3 = Color3.fromRGB(0, 0, 0);
-                            BorderSizePixel = 0;
-                            Position = UDim2.new(0.0283687934, 0, 0.0240963846, 0);
-                            Size = UDim2.new(0, 275, 0, 32);
-                            Font = Enum.Font.SourceSans;
-                            Text = "Please provide a key to run ice tray v3";
-                            TextColor3 = Color3.fromRGB(210, 210, 210);
-                            TextSize = 19;
-                            TextStrokeTransparency = 0.7;
-                        });
-                        newInstance("TextLabel", {
-                            Name = "ajdf";
-                            Parent = Label;
-                            BackgroundColor3 = Color3.fromRGB(255, 255, 255);
-                            BackgroundTransparency = 1;
-                            BorderColor3 = Color3.fromRGB(0, 0, 0);
-                            BorderSizePixel = 0;
-                            Position = UDim2.new(0.145390064, 0, 0.409638554, 0);
-                            Size = UDim2.new(0, 209, 0, 32);
-                            Font = Enum.Font.SourceSans;
-                            Text = "Press the button below to get the link to the key";
-                            TextColor3 = Color3.fromRGB(210, 210, 210);
-                            TextSize = 16;
-                            TextStrokeTransparency = 0.7;
-                        })
-                    });
-                });
-            })
-        });
-    })
-    lib.puls.blackbackground.blackbackground2.Down.submit.MouseButton1Down:connect(onKeySubmit)
-    lib.puls.blackbackground.blackbackground2.Button.getKeyButton.MouseButton1Down:connect(onLinkRequest)
-end
-
-startUI()
-
-while true do
-    if shouldContinue then
-        break
-    end
-    task.wait()
-end
-
-local player = game:GetService("Players").LocalPlayer
-local runservice = game:GetService("RunService")
-local repl = game:GetService("ReplicatedStorage")
-
-local function http_request(url)
-    local request = request or syn and syn.request
-    return request({
-        Url = url;
-        Method = "GET";
-    })
-end
-
-local uuid = tostring(require(repl.Module.Math).GUID())
-script.Name = uuid
-
-local function ON_LOADUP()
-    local function ON_VERSION_REQUEST()
-        getrenv()._version = "3.14.6"
-        if IS_NOT_OBFUSCATED then
-            getrenv().debug_version = true
-        end
-    end
-    ON_VERSION_REQUEST()
-    local function ON_SERVER_CONNECT()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/piglex9/icetray3/main/src/ui.lua"))()
-    end
-    ON_SERVER_CONNECT()
-end
-ON_LOADUP()
-
 getrenv().env = getrenv()
-env.icetray = global or {}
+env.icetray = global
 env.IS_WORKING = true
 env.CONNECTIONS = 1
 env.request = request or syn and syn.request
-env.discord_code = "5Eqt6QBfYY" -- 5Eqt6QBfYY
+env.discord_code = "5Eqt6QBfYY"
 env.coregui = game:GetService("CoreGui")
-
-while true do
-    if coregui:FindFirstChild("ice tray v3") then
-        getrenv().uistatus = false
-        break
-    end
-    getrenv().uistatus = true
-    task.wait()
-end
-
-local function force_destroy_coregui(bool)
-    assert(bool==true, "requires bool value to be true")
-    local icetray = coregui:FindFirstChild("ice tray v3")
-    if icetray then
-        icetray:Destroy()
-        return player:Kick("Lost connection to ice tray (Executor missing function, F9 for more info)")
-    end
-end
-
-local client = {}
-local meta = {
-    __index = function(t, k)
-        warn(("Could not find key `%s`"):format(k))
-    end;
-}
-setmetatable(client, meta)
 
 local function icetrayload()
     local function executionIdentifier()
         local executor = identifyexecutor()
         global.getExecutor = executor
-        global.exploit = executor == "Synapse X" and "synx" or executor == "ScriptWare" and "sw" or "unsupported" 
+        global.exploit = executor == "Synapse X" and "synx" or executor == "ScriptWare" and "sw" or executor == "Fluxus" and "fluxus" or "other" 
         global.version = _version
     end
     executionIdentifier()
@@ -326,7 +31,6 @@ local function icetrayload()
             system = require(repl.Game.WorldMarker.WorldMarkerSystem);
             group = require(repl.Game.WorldMarker.WorldMarkerGroup);
             cmdr = require(repl.CmdrClient);
-            equipConditions = require(repl.Inventory.InventoryItemSystem)._equipConditions;
             crawlButton = require(repl.Game.DefaultActions).crawlButton;
             fallingInit = require(repl.Game.Falling).Init;
             falling = require(repl.Game.Falling);
@@ -383,8 +87,17 @@ local function icetrayload()
             alexChassis2 = require(repl.Module.AlexChassis2);
             charBinder = require(repl.App.CharacterBinder);
             trainSystem = require(repl.Game.TrainSystem);
-            store = require(repl.App.store);
-            tooltipData = require(repl.Tooltip.TooltipData);
+            tableUtils = require(repl.Std.TableUtils);
+            levenshtein = require(repl.Module.Levenshtein);
+            c4 = require(repl.Game.Item.C4);
+            simulatedPhysicsProjectile = require(repl.Module.SimulatedPhysicsProjectile);
+            roll = require(repl.MovementRoll.MovementRollService);
+            gameUtil = require(repl.Game.GameUtil);
+            trackingSpotlight = require(repl.TrackingSpotlight.TrackingSpotlightBinder);
+            rocketLauncherConsts = require(repl.RocketLauncher.RocketLauncherConsts);
+            seekingMissileShared = require(repl.SeekingMissile.SeekingMissileShared);
+            netObjPool = require(repl.NetObjPool.NetObjPoolBinder);
+            smokeGrenade = require(repl.Game.Item.SmokeGrenade);
         }
         client.confirmation = {
             confirmed = {};
@@ -394,11 +107,13 @@ local function icetrayload()
             givers = workspace.Givers:GetChildren();
             vehicles = workspace.Vehicles;
         }
-        client.onWorkspaceSpawnRun = {};
+        client.onWorkspaceSpawnRun = {}
+        client.onWorkspaceRemovedRun = {}
         client.reg = {}
         client.state = {}
         client.waypoints = {
-            bank = "Bank";
+            bank = "Rising City Bank";
+            crater_city_bank = "Crater City Bank";
             jewelry = "Jewelry";
             museum = "Museum";
             tomb = "Tomb";
@@ -419,6 +134,8 @@ local function icetrayload()
             gun_store_mountainside = "Mountainside Gun Store";
             gun_store_cratercity = "Crater City Gun Store";
         }
+        client.rayHooks = {}
+        client.onGetEq = {}
         client.gamelocations = {
             criminal_base_city = Vector3.new(-241.04759216308594, 18.26566505432129, 1603.2467041015625);
             cargo_port = Vector3.new(-346.10906982421875, 21.265666961669922, 2051.884521484375);
@@ -441,7 +158,29 @@ local function icetrayload()
             fire_station = Vector3.new(-317.110107421875, 19.904991149902344, -5394.2763671875);
             mansion = Vector3.new(3087.748779296875, 62.8889274597168, -4604.91748046875);
             criminal_base_volcano = Vector3.new(2204.335205078125, 19.55750274658203, -2654.022216796875);
+            rail_track1 = Vector3.new(512, 18, 1789);
+            rail_track2 = Vector3.new(1517, 18, -176);
+            crater_city_bank = Vector3.new(-668, 19, -6087);
         }
+        local function loadRobberies()
+            local robberies = {
+                "bank";
+                "museum";
+                "jewelry";
+                "mansion";
+                "casino";
+                "tomb";
+                "powerplant";
+                "crater_city_bank";
+            }
+            for i,v in next, robberies do
+                local location = client.gamelocations[v]
+                player:RequestStreamAroundAsync(location)
+            end
+        end
+        loadRobberies()
+        client.run_on_player_connect = {}
+        client.run_on_player_disconnect = {}
         local function addPlayersToTable()
             for i,v in next, players:GetPlayers() do
                 if v ~= player then
@@ -451,10 +190,16 @@ local function icetrayload()
         end
         addPlayersToTable()
         local function onPlayerAdded(player)
+            for i,v in next, client.run_on_player_connect do
+                v._fn(player)
+            end
             table.insert(client.players, player)
         end
         players.PlayerAdded:connect(onPlayerAdded)
         local function onPlayerRemoving(player)
+            for i,v in next, client.run_on_player_disconnect do
+                v._fn(player)
+            end
             for i=1, #client.players do
                 local v = client.players[i]
                 if v == player then
@@ -474,35 +219,27 @@ local function icetrayload()
         function client.confirmation.onNo(confirmation, onNo)
             confirmation.OnNo:Connect(onNo)
         end
-        for i,v in next, client.gamelocations do
-            player:RequestStreamAroundAsync(v)
-        end
         global.registry = {
             client = client;
             doors = {};
-            doors_garbageCollected = {};
-            cellDoors = {};
-            doorsOpener_garbageCollected = nil;
-            sounds = {};
+            sounds = {}; 
         }
+        global.LocalMouse = player:GetMouse()
         global.ignorelist = {}
         local function notify(text, duration)
             return client.modules.notify({
-                Text = text;
-                Duration = duration or 0;
+                Text = tostring(text);
+                Duration = tonumber(duration) or 0;
             })
         end
         global.notify = notify
-        local function ContextMessage()
-            local contextMessageModule = client.modules.contextMsg
-            client.contextModule = {
-                open = contextMessageModule.open;
-                close = contextMessageModule.close;
-                setmsg = contextMessageModule.setMessage;
-                status = contextMessageModule.isOpen;
-            }
-        end
-        ContextMessage()
+        local contextMessageModule = client.modules.contextMsg
+        client.contextModule = {
+            open = contextMessageModule.open;
+            close = contextMessageModule.close;
+            setmsg = contextMessageModule.setMessage;
+            status = contextMessageModule.isOpen;
+        }
     end
     createRegistry()
     local function send_console_developer(text)
@@ -511,12 +248,29 @@ local function icetrayload()
             force_destroy_coregui(true)
             return false
         end
-        return Cmdr.Events.AddLine(("ICETRAY3 : %s"):format(tostring(text)))
+        return Cmdr.Events.AddLine(("ICETRAY : %s"):format(tostring(text)))
     end
     send_console_developer("beginning icetrayload")
+    local function keepRobberiesLoaded()
+        local locations = client.gamelocations
+        while true do
+            for i,v in next, locations do
+                player:RequestStreamAroundAsync(v)
+            end
+            task.wait(5)
+        end
+    end
+    task.spawn(keepRobberiesLoaded)
     local function synfunction()
         local function unsupported(func, isDebugLibrary)
             local msg = ("Tried to run %s but this function is not supported by your exploit")
+            if func == "Drawing" then
+                warn(msg:format("Drawing"))
+                return {
+                    new = function(...)
+                    end;
+                }
+            end
             if isDebugLibrary then
                 warn(msg:format("debug."..tostring(func)))
                 return function() end
@@ -531,13 +285,13 @@ local function icetrayload()
             setconstant = debug.setconstant or unsupported("setconstant", true);
             getupvalue = debug.getupvalue or unsupported("getupvalue", true);
             setupvalue = debug.setupvalue or unsupported("setupvalue", true);
+            getgc = getgc or unsupported("getgc");
             getrawmetatable = getrawmetatable or unsupported("getrawmetatable");
             setreadonly = setreadonly or make_writeable or unsupported("make_writeable");
             newcclosure = newcclosure or unsupported("newcclosure");
             setclipboard = setclipboard or unsupported("setclipboard");
             islclosure = islclosure or unsupported("islclosure");
             setscriptable = setscriptable or unsupported("setscriptable");
-            isnetworkowner = isnetworkowner or unsupported("isnetworkowner");
             is_synapse_function = is_synapse_function or is_oxygen_function or iskrnlclosure or isexecutorclosure or checkclosure or unsupported("is_synapse_function");
             firetouchinterest = firetouchinterest or unsupported("firetouchinterest");
             fireclickdetector = fireclickdetector or unsupported("fireclickdetector");
@@ -551,6 +305,9 @@ local function icetrayload()
             isfile = isfile or unsupported("isfile");
             isfolder = isfolder or unsupported("isfolder");
             decompile = decompile or function() return "nu exista decompiler pe acest executor" end;
+            listfiles = listfiles or unsupported("listfiles");
+            set_thread_identity = syn and syn.set_thread_identity or set_thread_identity or unsupported("set_thread_identity");
+            drawing = Drawing or unsupported("Drawing");
         }
     end
     local function tagService()
@@ -622,75 +379,172 @@ local function icetrayload()
         end
         client.tags = tags
     end
+    local function warningBar()
+        local warning = {}
+        local gui = {}
+        function gui.new(self, typ, props)
+            local inst = Instance.new(typ)
+            for i,v in next, props do
+                if i ~= "Parent" then
+                    if typeof(v) == "Instance" then
+                        v.Parent = inst
+                    else
+                        inst[i] = v
+                    end
+                end
+            end
+            inst.Parent = props.Parent
+            return inst
+        end
+        function warning.start(self)
+            local ui = gui:new("ScreenGui", {
+                Name = "warnings";
+                Parent = game:GetService("CoreGui");
+                Enabled = false;
+                gui:new("Frame", {
+                    Active = true;
+                    Draggable = true;
+                    AnchorPoint = Vector2.new(0.5, 1);
+                    BackgroundTransparency = 1;
+                    Position = UDim2.new(0.49, 0, 0.35, 0);
+                    Size = UDim2.new(0, 377, 0, 208);
+                    ZIndex = 3;
+                    gui:new("TextLabel", {
+                        BackgroundTransparency = 1;
+                        Position = UDim2.new(0.104065098, 0, 0.247999325, 0);
+                        Size = UDim2.new(0, 94, 0, 102);
+                        Text = "⚠️";
+                        TextSize = 75.000;
+                        BorderSizePixel = 2;
+                        TextWrapped = true;
+                        Font = Enum.Font.SourceSans;
+                    });
+                    gui:new("TextLabel", {
+                        Name = "State";
+                        BackgroundTransparency = 1;
+                        Position = UDim2.new(0.33129105, 0, 0.377007276, 0);
+                        Size = UDim2.new(0, 212, 0, 26);
+                        TextColor3 = Color3.fromRGB(255, 255, 255);
+                        Font = Enum.Font.Ubuntu;
+                        Text = "State";
+                        TextSize = 15;
+                        TextStrokeColor3 = Color3.fromRGB(0, 0, 0);
+                        TextStrokeTransparency = 0.5;
+                    });
+                    gui:new("Frame", {
+                        Name = "Uncolored";
+                        BackgroundColor3 = Color3.fromRGB(255, 255, 255);
+                        BackgroundTransparency = 0.6;
+                        BorderSizePixel = 0;
+                        Position = UDim2.new(0.330542207, 0, 0.502994716, 0);
+                        Size = UDim2.new(0, 213, 0, 7);
+                        gui:new("Frame", {
+                            Name = "Colored";
+                            BorderSizePixel = 0;
+                            Size = UDim2.new(0, 1, 0, 7);
+                            gui:new("UIGradient", {
+                                Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 200, 0)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))};
+                            });
+                        });
+                    });
+                });
+            });
+            local new = {}
+            new.ui = ui
+            new.percentage = 0
+            function new.getEnabled(self)
+                return self.ui.Enabled
+            end
+            function new.setEnabled(self, value)
+                self.ui.Enabled = value
+            end
+            function new.setText(self, text)
+                text = tostring(text)
+                self.ui.Frame.State.Text = text
+            end
+            function new.cleanup(self)
+                self.ui.Enabled = false
+                self.ui.Frame.Uncolored.Colored.Size = UDim2.new(0, 1, 0, 7)
+                self.percentage = 0
+                self.time = nil
+            end
+            function new.tween(self)
+                local tween = tweenservice:Create(self.ui.Frame.Uncolored.Colored, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Size = UDim2.new(self.percentage/100, 1, 0, 7)})
+                tween:Play()
+            end
+            function new.play(self)
+                assert(not self.hb, "hb already in process...")
+                self.time = tick()
+                self.hb = runservice.Heartbeat:connect(function()
+                    if self.percentage >= 101 then
+                        self.hb:disconnect()
+                        self.hb = nil
+                        task.delay(0.1, function()
+                            self:cleanup()
+                        end)
+                        return false
+                    end
+                    if tick() - self.time > 0.02 then
+                        self.percentage += 1 
+                        self:tween()
+                        self.time = tick()
+                    end
+                end)
+            end
+            return new
+        end
+        client.warningBar = warning:start()
+    end
+    warningBar()
+    function global.createloop(seconds, callback)
+        return interval.every(tonumber(seconds)):connect(callback)
+    end
     local function createfiles()
         local writefile = global.functions.writefile
         local appendfile = global.functions.appendfile
         local makefolder = global.functions.makefolder
         local isfile = global.functions.isfile
         local isfolder = global.functions.isfolder
-        local isIcetrayFolder = isfolder("icetray3")
+        local isIcetrayFolder = isfolder("icetray")
         if not isIcetrayFolder then
-            makefolder("icetray3")
+            makefolder("icetray")
         end
-        local isResourceFolder = isfolder("icetray3/resource")
+        local isResourceFolder = isfolder("icetray/resource")
         if not isResourceFolder then
-            makefolder("icetray3/resource")
+            makefolder("icetray/resource")
         end
-        local isConfigurationFolder = isfolder("icetray3/config")    
+        local isConfigurationFolder = isfolder("icetray/config")    
         if not isConfigurationFolder then
-            makefolder("icetray3/config")
+            makefolder("icetray/config")
         end
         local function files()
             send_console_developer("loading resource")
+            local isfile = global.functions.isfile
             local function makeResources()
                 local function httpGet(url)
                     return game:HttpGet(url)
                 end
-                if not isfile("icetray3/resource/airdrop.png") then
-                    writefile("icetray3/resource/airdrop.png", httpGet("https://img001.prntscr.com/file/img001/CxPl0JU6SyyrHhMyL5NEhw.png"))
+                if not isfile("icetray/resource/airdrop.png") then
+                    writefile("icetray/resource/airdrop.png", httpGet("https://img001.prntscr.com/file/img001/CxPl0JU6SyyrHhMyL5NEhw.png"))
                 end
-                if not isfile("icetray3/resource/football.png") then
-                    writefile("icetray3/resource/football.png", httpGet("https://img001.prntscr.com/file/img001/RAhMFSwkRyCglvAtWrJbVQ.png"))
+                if not isfile("icetray/resource/football.png") then
+                    writefile("icetray/resource/football.png", httpGet("https://img001.prntscr.com/file/img001/RAhMFSwkRyCglvAtWrJbVQ.png"))
                 end
-                if not isfile("icetray3/resource/robot.png") then
-                    writefile("icetray3/resource/robot.png", httpGet("https://img001.prntscr.com/file/img001/HDrYpapySqKS52X3BIMdHA.png"))
+                if not isfile("icetray/resource/robot.png") then
+                    writefile("icetray/resource/robot.png", httpGet("https://img001.prntscr.com/file/img001/HDrYpapySqKS52X3BIMdHA.png"))
                 end
             end
             makeResources()
-            send_console_developer("resource loaded")
         end
         files()
-        send_console_developer("files loaded")
-    end
-    local function serviceloop()
-        function global.createloop(seconds, callback)
-            return interval.every(tonumber(seconds)):connect(callback)
-        end
     end
     synfunction()
     createfiles()
     tagService()
-    serviceloop()
-    local function GET_EXTERNALS()
-        return "-xsd-1.>>->>>la"
-    end
-    GET_EXTERNALS()
     send_console_developer("ended icetrayload")
     global.registry.log = send_console_developer
 end
-
-if LPH_OBFUSCATED then
-    local isLoaded, err = pcall(icetrayload)
-    if not isLoaded then
-        print("LOADER ERROR")
-        task.delay(2, function()
-            while true do end
-        end)
-        return player:Kick("Lost connection to ice tray. Loader Error.") 
-    end
-else
-    icetrayload()
-end
+icetrayload()
 
 local createloop = global.createloop
 local getreg = global.functions.getreg
@@ -699,18 +553,18 @@ local getconstants = global.functions.getconstants
 local setconstant = global.functions.setconstant
 local getupvalue = global.functions.getupvalue
 local setupvalue = global.functions.setupvalue
-local getrawmetatable = global.functions.getrawmetatable
 local setreadonly = global.functions.setreadonly
 local newcclosure = global.functions.newcclosure
 local setclipboard = global.functions.setclipboard
 local islclosure = global.functions.islclosure
 local setscriptable = global.functions.setscriptable
-local isnetworkowner = global.functions.isnetworkowner
 local is_synapse_function = global.functions.is_synapse_function
 local firetouchinterest = global.functions.firetouchinterest
 local fireclickdetector = global.functions.fireclickdetector
 local getconnections = global.functions.getconnections
+local set_thread_identity = global.functions.set_thread_identity
 local sethiddenproperty = global.functions.sethiddenproperty
+local getgc = global.functions.getgc
 local getsynasset = global.functions.getsynasset
 
 local function loadup()
@@ -718,1380 +572,31 @@ local function loadup()
     if not log then
         error("Configuration failure")
     end
-    log("starting engine")
+    log("starting loadup")
+    global.ui.statusRobberies = {}
+    global.ui.colorForcing = {}
+    global.config = {}
+    global.ui_status = {}
     local function ui()
-        local window = global.ui.window.tab
-        local plr = global.ui.player.tab
-        local vehicle = global.ui.vehicle.tab
-        local misc = global.ui.misc.tab
-        local combat = global.ui.combat.tab
-        local markers = global.ui.markers.tab
-        local robbery = global.ui.robbery.tab
-        local info = global.ui.info.tab
-        global.ui_status = {}
-        local uiMarker = markers:Section("Marker")
-        local uiTeams, teamsSection = markers:Section("Teams")
-        local uiObj, objSection = markers:Section("Objects")
-        local uiSettings, settingsSection = markers:Section("Settings")
-        global.ui.markerSection = {
-            teamsSection = teamsSection;
-            objSection = objSection;
-            settingsSection = settingsSection;
-        }
-        local sections = {
-            WalkSpeed = plr:Section("Walk Speed");
-            JumpPower = plr:Section("Jump Power");
-            PlayerUtils = plr:Section("Utils");
-            PlayerMisc = plr:Section("Misc");
-            Marker = uiMarker;
-            Teams = uiTeams;
-            Objects = uiObj;
-            Settings = uiSettings;
-            Gunmods = combat:Section("Gun Mods");
-            Gunstore = combat:Section("Gun Store");
-            Silentaim = combat:Section("Silent Aim");
-            Arrestaura = combat:Section("Arrest Aura");
-            Waypoints = misc:Section("Waypoints");
-            Misc = misc:Section("Misc");
-            Prison = misc:Section("Prison");
-            BreakVehicles = misc:Section("Break Nearby Vehicles");
-            Pickpocket = misc:Section("Pickpocket Aura");
-            Eject = misc:Section("Eject Aura");
-            Breakout = misc:Section("Breakout Aura");
-            Pit = misc:Section("Pit Aura");
-            DroppedCash = misc:Section("Dropped Cash Aura");
-            PlaySounds = misc:Section("Play Sounds");
-            Dance = misc:Section("Fortnite Mode");
-            Disablers = misc:Section("Disablers");
-            CarModify = vehicle:Section("Car Modifications");
-            HeliModify = vehicle:Section("Heli Modifications");
-            PlaneModify = vehicle:Section("Plane Modifications");
-            BikeModify = vehicle:Section("Bike Modifications");
-            BoatModify = vehicle:Section("Boat Modifications");
-            VehicleMisc = vehicle:Section("Misc");
-            Bank = robbery:Section("Bank");
-            BankTruck = robbery:Section("Bank Truck");
-            Jewelry = robbery:Section("Jewelry");
-            Museum = robbery:Section("Museum");
-            Casino = robbery:Section("Casino");
-            Airdrop = robbery:Section("Airdrop");
-            Cargoplane = robbery:Section("Cargo Plane");
-            Mansion = robbery:Section("Mansion");
-            Trains = robbery:Section("Trains");
-            Powerplant = robbery:Section("Powerplant");
-            Tomb = robbery:Section("Tomb");
-            Cargoship = robbery:Section("Cargoship");
-            SmallStores = robbery:Section("Small Stores");
-            Info = info:Section("Info");
-            LightingTechnology = info:Section("Lighting Technology");
-        }
-        global.ui.sections = sections
-        global.ui.statusRobberies = {}
-        global.ui.colorForcing = {}
-        global.config = {}
-        local function slider(section, name, min, max, callback)
-            local section = sections[section]
-            return section:Slider(name, min, max, callback)
-        end
-        local function toggle(section, name, callback, isMasterSwitch)
-            if not isMasterSwitch then
-                isMasterSwitch = false
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/piglex9/icetray4/main/src/ui_features.lua"))()
+        while true do
+            if global.features_loaded then
+                break
             end
-            local section = sections[section]
-            return section:Toggle(name, callback, isMasterSwitch)
+            task.wait()
         end
-        local function label(section, text, forceColor, forceLeft)
-            local section = sections[section]
-            global.ui.statusRobberies[text] = text
-            global.ui.colorForcing[text] = forceColor
-            return section:Label(text, forceColor, forceLeft)
-        end
-        local function button(section, name, callback)
-            local section = sections[section]
-            return section:Button(name, callback)
-        end
-        local function dropdown(section, name, list, callback)
-            local section = sections[section]
-            return section:DropDown(name, list, callback)
-        end
-        local function keybind(section, name, default_key, callback)
-            local section = sections[section]
-            return section:KeyBind(name, default_key, callback)
-        end
-        local function credit(section, name)
-            local section = sections[section]
-            return section:Credit(name)
-        end
-        local callback = {}
-        local function sections()
-            local config = global.config
-            local function player()
-                function callback.master_switch_walkspeed(bool)
-                    global.ui_status.master_switch_walkspeed = bool
-                end
-                function callback.master_switch_jumppower(bool)
-                    global.ui_status.master_switch_jumppower = bool
-                end
-                function callback.walkspeed(num)
-                    global.ui_status.walkspeed = num
-                end
-                function callback.ws_disable_if_handcuffed(bool)
-                    global.ui_status.ws_disable_if_handcuffed = bool
-                end
-                function callback.jp_disable_if_handcuffed(bool)
-                    global.ui_status.jp_disable_if_handcuffed = bool
-                end
-                function callback.jumppower(num)
-                    global.ui_status.jumppower = num
-                end
-                function callback.antiragdoll(bool)
-                    global.ui_status.antiragdoll = bool
-                end
-                function callback.antifalldamage(bool)
-                    global.ui_status.antifalldamage = bool
-                end
-                function callback.antiskydive(bool)
-                    global.ui_status.antiskydive = bool
-                end
-                function callback.antitaze(bool)
-                    global.ui_status.antitaze = bool
-                end
-                function callback.allow_equip_on_duck(bool)
-                    global.ui_status.allow_equip_on_duck = bool
-                end
-                function callback.infduck(bool)
-                    global.ui_status.infduck = bool
-                end
-                function callback.infpunch(bool)
-                    global.ui_status.infpunch = bool
-                end
-                function callback.alwaysjump(bool)
-                    global.ui_status.alwaysjump = bool
-                end
-                function callback.allow_equip_with_items(bool)
-                    global.ui_status.allow_equip_with_items = bool
-                end
-                function callback.allow_equip_while_flying(bool)
-                    global.ui_status.allow_equip_while_flying = bool
-                end
-                function callback.automatic_respawn_on_taze(bool)
-                    global.ui_status.automatic_respawn_on_taze = bool
-                end
-                function callback.alwayssprint(bool)
-                    global.ui_status.alwayssprint = bool
-                end
-                function callback.jesus(bool)
-                    global.ui_status.jesus = bool
-                end
-                function callback.automatic_punch(bool)
-                    global.ui_status.automatic_punch = bool
-                end
-                function callback.always_duck(bool)
-                    global.ui_status.always_duck = bool
-                end
-                function callback.respawn()
-                    local dieOfFalldamage = global.registry.dieOfFalldamage
-                    if dieOfFalldamage then
-                        dieOfFalldamage()
-                    end
-                end
-                function callback.parachute_boost(bool)
-                    global.ui_status.parachute_boost = bool
-                end
-                function callback.antiparachute(bool)
-                    global.ui_status.antiparachute = bool
-                end
-                function callback.fov(num)
-                    global.ui_status.fov = num or 70
-                end
-                function callback.give_glider()
-                    if global._loaded then
-                        for i,v in next, client.descendants.givers do
-                            if v.Item.Value == "Glider" then
-                                fireclickdetector(v.ClickDetector, math.huge)
-                            end
-                        end
-                    end
-                end
-                function callback.parachute_key(key)
-                    global.ui_status.parachute_key = key.Name
-                end
-                function callback.parachute_on_key(bool)
-                    global.ui_status.parachute_on_key = bool
-                end
-                function callback.glider_key(key)
-                    global.ui_status.glider_key = key.Name
-                end
-                function callback.glider_on_key(bool)
-                    global.ui_status.glider_on_key = bool
-                end
-                function callback.noclip_attempt_key(key)
-                    global.ui_status.noclip_attempt_key = key.Name
-                end
-                local master_switch_walkspeed = toggle("WalkSpeed", "Master Switch", callback.master_switch_walkspeed, true)
-                local ws = slider("WalkSpeed", "Value", 16, 100, callback.walkspeed)
-                master_switch_walkspeed.setChild(ws)
-                local ws_disable_if_handcuffed = toggle("WalkSpeed", "Disable If Handcuffed", callback.ws_disable_if_handcuffed)
-                master_switch_walkspeed.setChild(ws_disable_if_handcuffed)
-                local master_switch_jumppower = toggle("JumpPower", "Master Switch", callback.master_switch_jumppower, true)
-                local jp = slider("JumpPower", "Value", 50, 300, callback.jumppower)
-                master_switch_jumppower.setChild(jp)
-                local jp_disable_if_handcuffed = toggle("JumpPower", "Disable If Handcuffed", callback.jp_disable_if_handcuffed)
-                master_switch_jumppower.setChild(jp_disable_if_handcuffed)
-                local antiragdoll = toggle("PlayerUtils", "Anti Ragdoll", callback.antiragdoll)
-                local antiskydive = toggle("PlayerUtils", "Anti Skydive", callback.antiskydive)
-                local antiparachute = toggle("PlayerUtils", "Anti Parachute", callback.antiparachute)
-                local antifalldamage = toggle("PlayerUtils", "Anti Falldamage", callback.antifalldamage)
-                local antitaze = toggle("PlayerUtils", "Anti Taze", callback.antitaze)
-                local jesus = toggle("PlayerUtils", "Jesus", callback.jesus)
-                local respawn = button("PlayerUtils", "Choose Respawn", callback.respawn)
-                local fov = slider("PlayerMisc", "FOV", 70, 150, callback.fov)
-                local give_glider = button("PlayerMisc", "Give Glider", callback.give_glider)
-                local glider_on_key = toggle("PlayerMisc", "Glider On Key", callback.glider_on_key, true)
-                local glider_key = keybind("PlayerMisc", "Glider Key", Enum.KeyCode.J, callback.glider_key)
-                glider_on_key.setChild(glider_key)
-                local parachute_on_key = toggle("PlayerMisc", "Parachute On Key", callback.parachute_on_key, true)
-                local parachute_key = keybind("PlayerMisc", "Parachute Key", Enum.KeyCode.Z, callback.parachute_key)
-                parachute_on_key.setChild(parachute_key)
-                local parachute_boost = toggle("PlayerMisc", "Parachute Boost", callback.parachute_boost)
-                local infduck = toggle("PlayerMisc", "Infinite Duck", callback.infduck)
-                local infpunch = toggle("PlayerMisc", "Infinite Punch", callback.infpunch)
-                local alwaysjump = toggle("PlayerMisc", "Infinite Jump", callback.alwaysjump)
-                local alwayssprint = toggle("PlayerMisc", "Always Sprint", callback.alwayssprint)
-                local automatic_punch = toggle("PlayerMisc", "Always Punch", callback.automatic_punch)
-                local always_duck = toggle("PlayerMisc", "Always Duck", callback.always_duck)
-                local automatic_respawn_on_taze = toggle("PlayerMisc", "Automatic Respawn On Stunned", callback.automatic_respawn_on_taze)
-                local allow_equip_on_duck = toggle("PlayerMisc", "Allow Equip On Duck", callback.allow_equip_on_duck)
-                local allow_equip_while_flying = toggle("PlayerMisc", "Allow Equip While Flying", callback.allow_equip_while_flying)
-                local allow_equip_with_items = toggle("PlayerMisc", "Allow Equip With Items", callback.allow_equip_with_items)
-                config.master_switch_walkspeed = master_switch_walkspeed
-                config.walkspeed = ws
-                config.ws_disable_if_handcuffed = ws_disable_if_handcuffed
-                config.master_switch_jumppower = master_switch_jumppower
-                config.jumppower = jp
-                config.jp_disable_if_handcuffed = jp_disable_if_handcuffed
-                config.antiragdoll = antiragdoll
-                config.noclip_attempt_key = noclip_attempt_key
-                config.antiskydive = antiskydive
-                config.antiparachute = antiparachute
-                config.antifalldamage = antifalldamage
-                config.parachute_on_key = parachute_on_key
-                config.parachute_key = parachute_key
-                config.glider_on_key = glider_on_key
-                config.glider_key = glider_key
-                config.fov = fov
-                config.parachute_boost = parachute_boost
-                config.antitaze = antitaze
-                config.jesus = jesus
-                config.automatic_punch = automatic_punch
-                config.automatic_respawn_on_taze = automatic_respawn_on_taze
-                config.infduck = infduck
-                config.infpunch = infpunch
-                config.alwaysjump = alwaysjump
-                config.always_duck = always_duck
-                config.alwayssprint = alwayssprint
-                config.allow_equip_on_duck = allow_equip_on_duck
-                config.allow_equip_while_flying = allow_equip_while_flying
-                config.allow_equip_with_items = allow_equip_with_items
-            end
-            local function vehicle()
-                function callback.master_switch_carmodify(bool)
-                    global.ui_status.master_switch_carmodify = bool
-                end
-                function callback.car_speed(num)
-                    global.ui_status.car_speed = num
-                end
-                function callback.car_brakes(num)
-                    global.ui_status.car_brakes = num
-                end
-                function callback.car_turnspeed(num)
-                    global.ui_status.car_turnspeed = num
-                end
-                function callback.car_height(num)
-                    global.ui_status.car_height = num
-                end
-                function callback.master_switch_heli_speed(bool)
-                    global.ui_status.master_switch_heli_speed = bool
-                end
-                function callback.heli_speed(num)
-                    global.ui_status.heli_speed = num
-                end
-                function callback.infinite_heli_height(bool)
-                    global.ui_status.infinite_heli_height = bool
-                end
-                function callback.infinite_drone_height(bool)
-                    global.ui_status.infinite_drone_height = bool
-                end
-                function callback.infinite_nitro(bool)
-                    global.ui_status.infinite_nitro = bool
-                end
-                function callback.antitirepop(bool)
-                    global.ui_status.antitirepop = bool
-                end
-                function callback.allow_equip_in_vehicle(bool)
-                    global.ui_status.allow_equip_in_vehicle = bool
-                end
-                function callback.hide_name_in_vehicle(bool)
-                    global.ui_status.hide_name_in_vehicle = bool
-                end
-                function callback.show_hotbar_in_vehicle(bool)
-                    global.ui_status.show_hotbar_in_vehicle = bool
-                end
-                function callback.destroy_all_destructibles(bool)
-                    global.ui_status.destroy_all_destructibles = bool
-                end
-                function callback.automatic_flip_vehicle(bool)
-                    global.ui_status.automatic_flip_vehicle = bool
-                end
-                function callback.spam_headlights(bool)
-                    global.ui_status.spam_headlights = bool
-                end
-                function callback.spam_jeep_roof(bool)
-                    global.ui_status.spam_jeep_roof = bool
-                end
-                function callback.always_drift(bool)
-                    global.ui_status.always_drift = bool
-                end
-                function callback.automatic_hijack_vehicles(bool)
-                    global.ui_status.automatic_hijack_vehicles = bool
-                end
-                function callback.instant_rope(bool)
-                    global.ui_status.instant_rope = bool
-                end
-                function callback.rope_aura(bool)
-                    global.ui_status.rope_aura = bool
-                end
-                function callback.automatic_eject_vehicle_player(bool)
-                    global.ui_status.automatic_eject_vehicle_player = bool
-                end
-                function callback.automatic_lock_vehicle(bool)
-                    global.ui_status.automatic_lock_vehicle = bool
-                end
-                function callback.master_switch_carmodify(bool)
-                    global.ui_status.master_switch_carmodify = bool
-                end
-                function callback.anchor_vehicle_on_high_speed(bool)
-                    global.ui_status.anchor_vehicle_on_high_speed = bool
-                end
-                function callback.destruct_delay(num)
-                    global.ui_status.destruct_delay = num
-                end
-                function callback.no_trailer(bool)
-                    global.ui_status.no_trailer = bool
-                end
-                function callback.high_speed_value(num)
-                    global.ui_status.high_speed_value = num
-                end
-                function callback.vehicle_jump(bool)
-                    global.ui_status.vehicle_jump = bool
-                end
-                function callback.vehicle_jump_key(key)
-                    global.ui_status.vehicle_jump_key = key.Name 
-                end
-                function callback.master_switch_plane(bool)
-                    global.ui_status.master_switch_plane = bool
-                end
-                function callback.anti_max_height(bool)
-                    global.ui_status.anti_max_height = bool
-                end
-                function callback.plane_speed(num)
-                    global.ui_status.plane_speed = num
-                end
-                function callback.automatic_jet_heat_seek(bool)
-                    global.ui_status.automatic_jet_heat_seek = bool
-                end
-                function callback.master_switch_boat(bool)
-                    global.ui_status.master_switch_boat = bool
-                end
-                function callback.boat_speed(num)
-                    global.ui_status.boat_speed = num
-                end
-                function callback.boat_on_land(bool)
-                    global.ui_status.boat_on_land = bool
-                end
-                function callback.master_switch_bike(bool)
-                    global.ui_status.master_switch_bike = bool
-                end
-                function callback.bike_speed(num)
-                    global.ui_status.bike_speed = num
-                end
-                function callback.dirt_bike_height(bool)
-                    global.ui_status.dirt_bike_height = bool
-                end
-                function callback.bike_height_value(num)
-                    global.ui_status.bike_height_value = num
-                end
-                local master_switch_carmodify = toggle("CarModify", "Master Switch", callback.master_switch_carmodify, true)
-                local car_speed = slider("CarModify", "Speed", 1, 50, callback.car_speed)
-                local car_brakes = slider("CarModify", "Brakes", 1, 50, callback.car_brakes)
-                local car_turnspeed = slider("CarModify", "Turn Speed", 1, 5, callback.car_turnspeed)
-                local car_height = slider("CarModify", "Height", 3, 125, callback.car_height)
-                master_switch_carmodify.setChild(car_speed)
-                master_switch_carmodify.setChild(car_brakes)
-                master_switch_carmodify.setChild(car_turnspeed)
-                master_switch_carmodify.setChild(car_height)
-                local infinite_nitro = toggle("CarModify", "Infinite Nitro", callback.infinite_nitro)
-                local automatic_flip_vehicle = toggle("CarModify", "Automatic Flip Vehicle", callback.automatic_flip_vehicle)
-                local spam_headlights = toggle("CarModify", "Spam Headlights", callback.spam_headlights)
-                local spam_jeep_roof = toggle("CarModify", "Spam Jeep Roof", callback.spam_jeep_roof)
-                local always_drift = toggle("CarModify", "Always Drift", callback.always_drift)
-                master_switch_carmodify.setChild(infinite_nitro)
-                master_switch_carmodify.setChild(automatic_flip_vehicle)
-                master_switch_carmodify.setChild(spam_headlights)
-                master_switch_carmodify.setChild(spam_jeep_roof)
-                master_switch_carmodify.setChild(always_drift)
-                local master_switch_heli_speed = toggle("HeliModify", "Master Switch", callback.master_switch_heli_speed, true)
-                local heli_speed = slider("HeliModify", "Speed", 1, 5, callback.heli_speed)
-                local infinite_heli_height = toggle("HeliModify", "Infinite Heli Height", callback.infinite_heli_height)
-                local infinite_drone_height = toggle("HeliModify", "Infinite Drone Height", callback.infinite_drone_height)
-                local instant_rope = toggle("HeliModify", "Instant Rope", callback.instant_rope, true)
-                local rope_aura = toggle("HeliModify", "Extended Rope", callback.rope_aura)
-                master_switch_heli_speed.setChild(heli_speed)
-                master_switch_heli_speed.setChild(infinite_heli_height)
-                master_switch_heli_speed.setChild(infinite_drone_height)
-                master_switch_heli_speed.setChild(instant_rope)
-                master_switch_heli_speed.setChild(rope_aura)
-                instant_rope.setChild(rope_aura)
-                local master_switch_plane = toggle("PlaneModify", "Master Switch", callback.master_switch_plane, true)
-                local plane_speed = slider("PlaneModify", "Speed", 1, 5, callback.plane_speed)
-                local anti_max_height = toggle("PlaneModify", "Anti Max Height", callback.anti_max_height)
-                local automatic_jet_heat_seek = toggle("PlaneModify", "Automatic Jet Heat Seak", callback.automatic_jet_heat_seek)
-                master_switch_plane.setChild(plane_speed)
-                master_switch_plane.setChild(anti_max_height)
-                master_switch_plane.setChild(automatic_jet_heat_seek)
-                local master_switch_bike = toggle("BikeModify", "Master Switch", callback.master_switch_bike, true)
-                local bike_speed = slider("BikeModify", "Speed", 1, 5, callback.bike_speed)
-                local dirt_bike_height = toggle("BikeModify", "Dirt Bike Height", callback.dirt_bike_height, true)
-                local bike_height_value = slider("BikeModify", "Value", 1, 15, callback.bike_height_value)
-                dirt_bike_height.setChild(bike_height_value)
-                master_switch_bike.setChild(bike_speed)
-                master_switch_bike.setChild(dirt_bike_height)
-                local master_switch_boat = toggle("BoatModify", "Master Switch", callback.master_switch_boat, true)
-                local boat_speed = slider("BoatModify", "Speed", 1, 5, callback.boat_speed)
-                local boat_on_land = toggle("BoatModify", "Boat On Land", callback.boat_on_land)
-                master_switch_boat.setChild(boat_speed)
-                master_switch_boat.setChild(boat_on_land)
-                local antitirepop = toggle("VehicleMisc", "Anti Break Vehicle", callback.antitirepop)
-                local anchor_vehicle_on_high_speed = toggle("VehicleMisc", "Anchor Vehicle On High Speed", callback.anchor_vehicle_on_high_speed, true)
-                local high_speed_value = slider("VehicleMisc", "High Speed Value", 200, 600, callback.high_speed_value)
-                anchor_vehicle_on_high_speed.setChild(high_speed_value)
-                local no_trailer = toggle("VehicleMisc", "No Semitruck Trailer", callback.no_trailer)
-                local vehicle_jump = toggle("VehicleMisc", "Vehicle Jump", callback.vehicle_jump, true)
-                local vehicle_jump_key = keybind("VehicleMisc", "Vehicle Jump Key", Enum.KeyCode.X, callback.vehicle_jump_key)
-                vehicle_jump.setChild(vehicle_jump_key)
-                local automatic_hijack_vehicles = toggle("VehicleMisc", "Automatic Hijack Vehicles", callback.automatic_hijack_vehicles)
-                local automatic_lock_vehicle = toggle("VehicleMisc", "Automatic Lock Vehicle", callback.automatic_lock_vehicle)
-                local automatic_eject_vehicle_player = toggle("VehicleMisc", "Automatic Eject Passengers", callback.automatic_eject_vehicle_player)
-                local destroy_all_destructibles = toggle("VehicleMisc", "Destroy All Destructibles", callback.destroy_all_destructibles, true)
-                local destruct_delay = slider("VehicleMisc", "Destruct Delay", 0, 10, callback.destruct_delay)
-                destroy_all_destructibles.setChild(destruct_delay)
-                local allow_equip_in_vehicle = toggle("VehicleMisc", "Allow Equip In Vehicle", callback.allow_equip_in_vehicle)
-                local hide_name_in_vehicle = toggle("VehicleMisc", "Hide Name In Vehicle", callback.hide_name_in_vehicle)
-                local show_hotbar_in_vehicle = toggle("VehicleMisc", "Show Hotbar In Vehicle", callback.show_hotbar_in_vehicle)
-                config.master_switch_boat = master_switch_boat
-                config.boat_speed = boat_speed
-                config.boat_on_land = boat_on_land
-                config.master_switch_plane = master_switch_plane
-                config.plane_speed = plane_speed
-                config.anti_max_height = anti_max_height
-                config.automatic_jet_heat_seek = automatic_jet_heat_seek
-                config.master_switch_bike = master_switch_bike
-                config.bike_speed = bike_speed
-                config.dirt_bike_height = dirt_bike_height
-                config.bike_height_value = bike_height_value
-                config.master_switch_carmodify = master_switch_carmodify
-                config.car_speed = car_speed
-                config.vehicle_jump = vehicle_jump
-                config.car_brakes = car_brakes
-                config.no_trailer = no_trailer
-                config.car_turnspeed = car_turnspeed
-                config.car_height = car_height
-                config.master_switch_heli_speed = master_switch_heli_speed
-                config.destruct_delay = destruct_delay
-                config.high_speed_value = high_speed_value
-                config.heli_speed = heli_speed
-                config.anchor_vehicle_on_high_speed = anchor_vehicle_on_high_speed
-                config.automatic_flip_vehicle = automatic_flip_vehicle
-                config.spam_headlights = spam_headlights
-                config.spam_jeep_roof = spam_jeep_roof
-                config.always_drift = always_drift
-                config.automatic_lock_vehicle = automatic_lock_vehicle
-                config.vehicle_jump_key = vehicle_jump_key
-                config.automatic_eject_vehicle_player = automatic_eject_vehicle_player
-                config.infinite_heli_height = infinite_heli_height
-                config.instant_rope = instant_rope
-                config.rope_aura = rope_aura
-                config.infinite_drone_height = infinite_drone_height
-                config.infinite_nitro = infinite_nitro
-                config.destroy_all_destructibles = destroy_all_destructibles
-                config.automatic_hijack_vehicles = automatic_hijack_vehicles
-                config.antitirepop = antitirepop
-                config.allow_equip_in_vehicle = allow_equip_in_vehicle
-                config.hide_name_in_vehicle = hide_name_in_vehicle
-                config.show_hotbar_in_vehicle = show_hotbar_in_vehicle
-            end
-            local function misc()
-                function callback.always_keycard(bool)
-                    global.ui_status.always_keycard = bool
-                end
-                function callback.never_unload_world(bool)
-                    global.ui_status.never_unload_world = bool
-                end
-                function callback.remove_clothing()
-                    if global._loaded then
-                        local hitbox = workspace.ClothingRacks.ClothingRack.Hitbox
-                        fireclickdetector(hitbox.ClickDetector, math.huge)
-                    end
-                end
-                function callback.give_police_clothing()
-                    if global._loaded then
-                        for i,v in next, client.descendants.givers do
-                            if v.Name == "Station" then
-                                if v.Item.Value == "ShirtPolice" then
-                                    fireclickdetector(v.ClickDetector, math.huge)
-                                end
-                                if v.Item.Value == "PantsPolice" then
-                                    fireclickdetector(v.ClickDetector, math.huge)
-                                end
-                            end
-                            task.wait()
-                        end
-                    end
-                end
-                function callback.give_police_hat()
-                    if global._loaded then
-                        for i,v in next, client.descendants.givers do
-                            if v.Name == "Station" then
-                                if v.Item.Value == "HatPolice" then
-                                    fireclickdetector(v.ClickDetector, math.huge)
-                                end
-                            end
-                        end
-                    end
-                end
-                function callback.pickpocketaura(bool)
-                    global.ui_status.pickpocketaura = bool
-                end
-                function callback.range_pickpocketaura(num)
-                    global.ui_status.range_pickpocketaura = num
-                end
-                function callback.droppedcashaura(bool)
-                    global.ui_status.droppedcashaura = bool
-                end
-                function callback.droppedcashrange(num)
-                    global.ui_status.droppedcashrange = num
-                end
-                function callback.range_pickpocketaura(num)
-                    global.ui_status.range_pickpocketaura = num
-                end
-                function callback.disable_lasers(bool)
-                    global.ui_status.disable_lasers = bool
-                end
-                function callback.disable_cameras(bool)
-                    global.ui_status.disable_cameras = bool
-                end
-                function callback.master_switch_no_circle_delay(bool)
-                    global.ui_status.master_switch_no_circle_delay = bool
-                end
-                function callback.master_switch_open_doors(bool)
-                    global.ui_status.master_switch_open_doors = bool
-                end
-                function callback.disable_military_turrets(bool)
-                    global.ui_status.disable_military_turrets = bool
-                end
-                function callback.disable_smoke_grenade_effect(bool)
-                    global.ui_status.disable_smoke_grenade_effect = bool
-                end
-                function callback.open_security_cameras()
-                    if global._loaded then        
-                        for i,v in next, client.modules.ui.CircleAction.Specs do
-                            if v.Name == "Open Security Cameras" then
-                                v:Callback(true)
-                            end
-                        end 
-                    end
-                end
-                function callback.rainbowbullets(bool)
-                    global.ui_status.rainbowbullets = bool
-                end
-                function callback.disable_anti_flight_zones(bool)
-                    global.ui_status.disable_anti_flight_zones = bool
-                end
-                function callback.infinite_jetpack_fuel(bool)
-                    global.ui_status.infinite_jetpack_fuel = bool
-                end
-                function callback.break_vehicles(bool)
-                    global.ui_status.break_vehicles = bool
-                end
-                function callback.master_switch_eject_aura(bool)
-                    global.ui_status.master_switch_eject_aura = bool
-                end
-                function callback.range_ejectaura(num)
-                    global.ui_status.range_ejectaura = num
-                end
-                function callback.master_switch_tase_aura(bool)
-                    global.ui_status.master_switch_tase_aura = bool
-                end
-                function callback.automatic_open_prison_gate(bool)
-                    global.ui_status.automatic_open_prison_gate = bool
-                end
-                function callback.automatic_explode_wall(bool)
-                    global.ui_status.automatic_explode_wall = bool
-                end
-                function callback.automatic_liftgate(bool)
-                    global.ui_status.automatic_liftgate = bool
-                end
-                function callback.automatic_punch_electric_gate(bool)
-                    global.ui_status.automatic_punch_electric_gate = bool
-                end
-                function callback.automatic_open_cells(bool)
-                    global.ui_status.automatic_open_cells = bool
-                end
-                function callback.master_switch_breakout_aura(bool)
-                    global.ui_status.master_switch_breakout_aura = bool
-                end
-                function callback.range_breakoutaura(num)
-                    global.ui_status.range_breakoutaura = num
-                end
-                function callback.disable_home_turrets(bool)
-                    global.ui_status.disable_home_turrets = bool
-                end
-                function callback.teleport_football_to_goal()
-                    local teleport_football_to_goal = global.registry.tpFootball
-                    if teleport_football_to_goal then
-                        teleport_football_to_goal()
-                    end
-                end
-                function callback.open_secretbases(bool)
-                    global.ui_status.open_secretbases = bool
-                end
-                function callback.playsounds(tip)
-                    local playsounds = global.registry.playSounds
-                    playsounds(tip, {
-                        Source = client.playerCharacter;
-                        MaxTime = 7;
-                        Volume = math.huge;
-                    })
-                end
-                function callback.annoyserver(bool)
-                    global.ui_status.annoyserver = bool
-                end
-                function callback.clicklightning(bool)
-                    global.ui_status.clicklightning = bool
-                end
-                function callback.only_on_weapon_equipped(bool)
-                    global.ui_status.only_on_weapon_equipped = bool
-                end
-                function callback.instant_break(bool)
-                    global.ui_status.instant_break = bool
-                end
-                function callback.target_enemy_team_only(bool)
-                    global.ui_status.target_enemy_team_only = bool
-                end
-                function callback.disable_automatic_unparachute(bool)
-                    global.ui_status.disable_automatic_unparachute = bool
-                end
-                function callback.dance(bool)
-                    global.ui_status.dance = bool
-                end
-                function callback.dance_speed(num)
-                    global.ui_status.dance_speed = num
-                end
-                function callback.clicknuke(bool)
-                    global.ui_status.clicknuke = bool
-                end
-                function callback.disable_minimap_flash(bool)
-                    global.ui_status.disable_minimap_flash = bool
-                end
-                function callback.pit_aura(bool)
-                    global.ui_status.pit_aura = bool
-                end
-                function callback.pit_aura_range(num)
-                    global.ui_status.pit_aura_range = num
-                end
-                function callback.auto_accept_battle(bool)
-                    global.ui_status.auto_accept_battle = bool
-                end
-                function callback.auto_start_matchmaking(bool)
-                    global.ui_status.auto_start_matchmaking = bool
-                end
-                function callback.place_waypoint(key)
-                    if global._loaded then
-                        local setWaypoint = global.registry.setWaypoint
-                        if setWaypoint then
-                            setWaypoint(key)
-                        end
-                    end
-                end
-                local place_waypoint = dropdown("Waypoints", "Place Waypoint", {}, callback.place_waypoint)
-                local always_keycard = toggle("Misc", "Always Keycard", callback.always_keycard)
-                local master_switch_open_doors = toggle("Misc", "Open All Doors", callback.master_switch_open_doors)
-                local master_switch_no_circle_delay = toggle("Misc", "No Circle Delay", callback.master_switch_no_circle_delay)
-                local rainbowbullets = toggle("Misc", "Colorful Bullets", callback.rainbowbullets)
-                local infinite_jetpack_fuel = toggle("Misc", "Infinite Jetpack Fuel", callback.infinite_jetpack_fuel)
-                local never_unload_world = toggle("Misc", "Never Unload World", callback.never_unload_world)
-                local open_secretbases = toggle("Misc", "Open Secretbases", callback.open_secretbases)
-                local auto_accept_battle = toggle("Misc", "Automatic Accept Battle", callback.auto_accept_battle)
-                local auto_start_matchmaking = toggle("Misc", "Automatic Start Matchmaking", callback.auto_start_matchmaking)
-                local clicklightning = toggle("Misc", "Click Lightning", callback.clicklightning)
-                local clicknuke = toggle("Misc", "Click Nuke", callback.clicknuke)
-                local teleport_football_to_goal = button("Misc", "Teleport Football To Goal", callback.teleport_football_to_goal)
-                local open_security_cameras = button("Misc", "Open Security Cameras", callback.open_security_cameras)
-                local remove_clothing = button("Misc", "Remove Clothing", callback.remove_clothing)
-                local give_police_clothing = button("Misc", "Give Police Clothing", callback.give_police_clothing)
-                local give_police_hat = button("Misc", "Give Police Hat", callback.give_police_hat)
-                local automatic_punch_electric_gate = toggle("Prison", "Automatic Punch Electric Gate", callback.automatic_punch_electric_gate)
-                local automatic_open_prison_gate = toggle("Prison", "Automatic Open Prison Gate", callback.automatic_open_prison_gate)
-                local automatic_explode_wall = toggle("Prison", "Automatic Explode Wall", callback.automatic_explode_wall)
-                local automatic_liftgate = toggle("Prison", "Automatic Lift Gate", callback.automatic_liftgate)
-                local automatic_open_cells = toggle("Prison", "Automatic Open Cells", callback.automatic_open_cells)
-                local break_vehicles = toggle("BreakVehicles", "Master Switch", callback.break_vehicles, true)
-                local only_on_weapon_equipped = toggle("BreakVehicles", "Only On Weapon Equipped", callback.only_on_weapon_equipped)
-                local instant_break = toggle("BreakVehicles", "Instant Break", callback.instant_break)
-                local target_enemy_team_only = toggle("BreakVehicles", "Target Enemy Team Only", callback.target_enemy_team_only)
-                break_vehicles.setChild(only_on_weapon_equipped)
-                break_vehicles.setChild(instant_break)
-                break_vehicles.setChild(target_enemy_team_only)
-                local pickpocketaura = toggle("Pickpocket", "Master Switch", callback.pickpocketaura, true)
-                local range_pickpocketaura = slider("Pickpocket", "Range", 1, 50, callback.range_pickpocketaura)
-                pickpocketaura.setChild(range_pickpocketaura)
-                local master_switch_eject_aura = toggle("Eject", "Master Switch", callback.master_switch_eject_aura, true)
-                local range_ejectaura = slider("Eject", "Range", 1, 80, callback.range_ejectaura)
-                master_switch_eject_aura.setChild(range_ejectaura)
-                local master_switch_breakout_aura = toggle("Breakout", "Master Switch", callback.master_switch_breakout_aura, true)
-                local range_breakoutaura = slider("Breakout", "Range", 1, 20, callback.range_breakoutaura)
-                master_switch_breakout_aura.setChild(range_breakoutaura)
-                local pit_aura = toggle("Pit", "Master Switch", callback.pit_aura, true)
-                local pit_aura_range = slider("Pit", "Range", 10, 100, callback.pit_aura_range)
-                pit_aura.setChild(pit_aura_range)
-                local droppedcashaura = toggle("DroppedCash", "Master Switch", callback.droppedcashaura, true)
-                local droppedcashrange = slider("DroppedCash", "Range", 1, 25, callback.droppedcashrange)
-                droppedcashaura.setChild(droppedcashrange)
-                local playsounds = dropdown("PlaySounds", "Sounds", {}, callback.playsounds)
-                local annoyserver = toggle("PlaySounds", "Annoy Server", callback.annoyserver)
-                local dance = toggle("Dance", "Master Switch", callback.dance, true)
-                local dance_speed = slider("Dance", "Speed", 0, 10, callback.dance_speed)
-                dance.setChild(dance_speed)
-                local disable_lasers = toggle("Disablers", "Disable Lasers", callback.disable_lasers)
-                local disable_cameras = toggle("Disablers", "Disable Cameras", callback.disable_cameras)
-                local disable_minimap_flash = toggle("Disablers", "Disable Minimap Flash", callback.disable_minimap_flash)
-                local disable_automatic_unparachute = toggle("Disablers", "Disable Automatic Unparachute", callback.disable_automatic_unparachute)
-                local disable_military_turrets = toggle("Disablers", "Disable Military Turrets", callback.disable_military_turrets)
-                local disable_home_turrets = toggle("Disablers", "Disable Home Turrets", callback.disable_home_turrets)
-                --local disable_anti_flight_zones = toggle("Disablers", "Disable Anti Jetpack Zones", callback.disable_anti_flight_zones)
-                local disable_smoke_grenade_effect = toggle("Disablers", "Disable Smoke Grenade Effect", callback.disable_smoke_grenade_effect)
-                config.dance = dance
-                config.dance_speed = dance_speed
-                config.place_waypoint = place_waypoint
-                config.clicklightning = clicklightning
-                config.pit_aura = pit_aura
-                config.pit_aura_range = pit_aura_range
-                config.disable_minimap_flash = disable_minimap_flash
-                config.clicknuke = clicknuke
-                config.auto_accept_battle = auto_accept_battle
-                config.auto_start_matchmaking = auto_start_matchmaking
-                config.only_on_weapon_equipped = only_on_weapon_equipped
-                config.instant_break = instant_break
-                config.target_enemy_team_only = target_enemy_team_only
-                config.playsounds = playsounds
-                config.always_keycard = always_keycard
-                config.annoyserver = annoyserver
-                config.master_switch_open_doors = master_switch_open_doors
-                config.disable_automatic_unparachute = disable_automatic_unparachute
-                config.break_vehicles = break_vehicles
-                config.master_switch_no_circle_delay = master_switch_no_circle_delay
-                config.never_unload_world = never_unload_world
-                config.rainbowbullets = rainbowbullets
-                config.infinite_jetpack_fuel = infinite_jetpack_fuel
-                config.pickpocketaura = pickpocketaura
-                config.master_switch_breakout_aura = master_switch_breakout_aura
-                config.range_breakoutaura = range_breakoutaura
-                config.automatic_open_prison_gate = automatic_open_prison_gate
-                config.automatic_explode_wall = automatic_explode_wall
-                config.automatic_liftgate = automatic_liftgate
-                config.open_secretbases = open_secretbases
-                config.automatic_open_cells = automatic_open_cells
-                config.range_pickpocketaura = range_pickpocketaura
-                config.automatic_punch_electric_gate = automatic_punch_electric_gate
-                config.master_switch_eject_aura = master_switch_eject_aura
-                config.range_ejectaura = range_ejectaura
-                config.droppedcashaura = droppedcashaura
-                config.droppedcashrange = droppedcashrange
-                config.disable_lasers = disable_lasers
-                config.disable_cameras = disable_cameras
-                config.disable_home_turrets = disable_home_turrets
-                config.disable_military_turrets = disable_military_turrets
-                config.disable_anti_flight_zones = disable_anti_flight_zones
-                config.disable_smoke_grenade_effect = disable_smoke_grenade_effect
-            end
-            local function combat()
-                function callback.open_gunstore_ui(bool)
-                    global.ui_status.ui_gunstore = bool
-                    global.ui_status.open_gunstore_ui = bool
-                end
-                function callback.equip_owned_guns()
-                    global.hideshopui = true
-                    local equip_owned_guns = global.registry.equip_owned_guns
-                    if equip_owned_guns then
-                        equip_owned_guns()
-                    end 
-                end
-                function callback.always_equip_owned_guns(bool)
-                    global.ui_status.always_equip_owned_guns = bool
-                end
-                function callback.spam_drop_guns(bool)
-                    global.ui_status.spam_drop_guns = bool
-                end
-                function callback.automatic_fire(bool)
-                    global.ui_status.automatic_fire = bool
-                end
-                function callback.no_recoil(bool)
-                    global.ui_status.no_recoil = bool
-                end
-                function callback.automatic_reload(bool)
-                    global.ui_status.automatic_reload = bool
-                end
-                function callback.master_switch_silentaim(bool)
-                    global.ui_status.master_switch_silentaim = bool
-                end
-                function callback.target_closest_crosshair(bool)
-                    global.ui_status.target_closest_crosshair = bool
-                end
-                function callback.always_predict(bool)
-                    global.ui_status.always_predict = bool
-                end
-                function callback.master_switch_arrestaura(bool)
-                    global.ui_status.master_switch_arrestaura = bool
-                end
-                function callback.range_arrestaura(num)
-                    global.ui_status.range_arrestaura = num
-                end
-                function callback.allow_target_prisoner(bool)
-                    global.ui_status.allow_target_prisoner = bool
-                end
-                function callback.fov_silentaim(num)
-                    global.ui_status.fov_silentaim = num
-                end
-                function callback.fov_circle(bool)
-                    global.ui_status.fov_circle = bool
-                end
-                function callback.automatic_equip_handcuffs(bool)
-                    global.ui_status.automatic_equip_handcuffs = bool
-                end
-                function callback.automatic_eject_player(bool)
-                    global.ui_status.automatic_eject_player = bool
-                end
-                function callback.talk_on_arrest(bool)
-                    global.ui_status.talk_on_arrest = bool
-                end
-                function callback.no_wall_penetration(bool)
-                    global.ui_status.no_wall_penetration = bool
-                end
-                function callback.allow_target_npcs(bool)
-                    global.ui_status.allow_target_npcs = bool
-                end
-                function callback.allow_tase_target(bool)
-                    global.ui_status.allow_tase_target = bool
-                end
-                function callback.through_walls(bool)
-                    global.ui_status.through_walls = bool
-                end
-                function callback.anti_flintlock_knockback(bool)
-                    global.ui_status.anti_flintlock_knockback = bool
-                end
-                function callback.allow_target_boss(bool)
-                    global.ui_status.allow_target_boss = bool
-                end
-                function callback.always_target_boss_head(bool)
-                    global.ui_status.always_target_boss_head = bool
-                end
-                function callback.prediction_value(num)
-                    global.ui_status.prediction_value = num
-                end
-                function callback.anti_scope_ui(bool)
-                    global.ui_status.anti_scope_ui = bool
-                end
-                function callback.allow_taser_aimbot(bool)
-                    global.ui_status.allow_taser_aimbot = bool
-                end
-                function callback.ignore_while_driving(bool)
-                    global.ui_status.ignore_while_driving = bool
-                end
-                function callback.equip_guns(value)
-                    local equipOwnedItem = global.registry.equipOwnedItem
-                    if equipOwnedItem then
-                        if not table.find(client.reg.resolveEquippedItems, value) then
-                            equipOwnedItem(value)
-                        end
-                    end
-                end
-                function callback.extended_aimbot_range(bool)
-                    global.ui_status.extended_aimbot_range = bool
-                end
-                function callback.range_taseaura(num)
-                    global.ui_status.range_taseaura = num
-                end
-                function callback.fov_target_select(bool)
-                    global.ui_status.fov_target_select = bool
-                end
-                local automatic_fire = toggle("Gunmods", "Automatic Fire", callback.automatic_fire)
-                local no_recoil = toggle("Gunmods", "No Recoil", callback.no_recoil)
-                local anti_flintlock_knockback = toggle("Gunmods", "Anti Knockback", callback.anti_flintlock_knockback)
-                local anti_scope_ui = toggle("Gunmods", "Anti Scope UI", callback.anti_scope_ui)
-                local open_gunstore_ui = toggle("Gunstore", "Open Gunstore UI", callback.open_gunstore_ui)
-                local equip_owned_guns = button("Gunstore", "Equip Owned Guns", callback.equip_owned_guns)
-                local equip_guns = dropdown("Gunstore", "Equip Guns", {}, callback.equip_guns)
-                local always_equip_owned_guns = toggle("Gunstore", "Always Equip Owned Guns", callback.always_equip_owned_guns)
-                local spam_drop_guns = toggle("Gunstore", "Spam Drop Items", callback.spam_drop_guns)
-                local master_switch_silentaim = toggle("Silentaim", "Master Switch", callback.master_switch_silentaim, true)
-                local fov_target_select = toggle("Silentaim", "FOV Target Select", callback.fov_target_select, true)
-                local fov_silentaim = slider("Silentaim", "FOV", 1, 600, callback.fov_silentaim)
-                local fov_circle = toggle("Silentaim", "FOV Circle", callback.fov_circle)
-                local always_predict = toggle("Silentaim", "Movement Prediction", callback.always_predict, true)
-                local prediction_value = slider("Silentaim", "Prediction Value", 0, 99, callback.prediction_value)
-                local extended_aimbot_range = toggle("Silentaim", "Extended Aimbot Range", callback.extended_aimbot_range)
-                local allow_taser_aimbot = toggle("Silentaim", "Allow Taser Aimbot", callback.allow_taser_aimbot)
-                local allow_target_prisoner = toggle("Silentaim", "Allow Target Prisoner", callback.allow_target_prisoner)
-                local allow_target_npcs = toggle("Silentaim", "Allow Target NPCs", callback.allow_target_npcs)
-                local allow_target_boss = toggle("Silentaim", "Allow Target Boss", callback.allow_target_boss, true)
-                local always_target_boss_head = toggle("Silentaim", "Head Only", callback.always_target_boss_head)
-                local no_wall_penetration = toggle("Silentaim", "No Wall Penetration", callback.no_wall_penetration)
-                master_switch_silentaim.setChild(fov_target_select)
-                fov_target_select.setChild(fov_silentaim)
-                fov_target_select.setChild(fov_circle)
-                master_switch_silentaim.setChild(always_predict)
-                master_switch_silentaim.setChild(extended_aimbot_range)
-                always_predict.setChild(prediction_value)
-                master_switch_silentaim.setChild(allow_taser_aimbot)
-                master_switch_silentaim.setChild(allow_target_prisoner)
-                master_switch_silentaim.setChild(allow_target_npcs)
-                master_switch_silentaim.setChild(allow_target_boss)
-                allow_target_boss.setChild(always_target_boss_head)
-                master_switch_silentaim.setChild(no_wall_penetration)
-                local master_switch_arrestaura = toggle("Arrestaura", "Master Switch", callback.master_switch_arrestaura, true)
-                local range_arrestaura = slider("Arrestaura", "Range", 1, 20, callback.range_arrestaura)
-                local ignore_while_driving = toggle("Arrestaura", "Ignore while driving", callback.ignore_while_driving)
-                local automatic_equip_handcuffs = toggle("Arrestaura", "Automatic Equip Handcuffs", callback.automatic_equip_handcuffs)
-                local automatic_eject_player = toggle("Arrestaura", "Automatic Eject Player", callback.automatic_eject_player)
-                local allow_tase_target = toggle("Arrestaura", "Allow Tase Target", callback.allow_tase_target, true)
-                local through_walls = toggle("Arrestaura", "Allow Through Walls", callback.through_walls)
-                local talk_on_arrest = toggle("Arrestaura", "Talk on Arrest", callback.talk_on_arrest)
-                master_switch_arrestaura.setChild(range_arrestaura)
-                master_switch_arrestaura.setChild(automatic_equip_handcuffs)
-                master_switch_arrestaura.setChild(automatic_eject_player)
-                master_switch_arrestaura.setChild(allow_tase_target)
-                master_switch_arrestaura.setChild(ignore_while_driving)
-                master_switch_arrestaura.setChild(through_walls)
-                master_switch_arrestaura.setChild(talk_on_arrest)
-                config.anti_scope_ui = anti_scope_ui
-                config.allow_target_boss = allow_target_boss
-                config.always_target_boss_head = always_target_boss_head
-                config.automatic_fire = automatic_fire
-                config.no_recoil = no_recoil
-                config.equip_guns = equip_guns
-                config.master_switch_silentaim = master_switch_silentaim
-                config.fov_silentaim = fov_silentaim
-                config.fov_circle = fov_circle
-                config.always_predict = always_predict
-                config.prediction_value = prediction_value
-                config.extended_aimbot_range = extended_aimbot_range
-                config.always_equip_owned_guns = always_equip_owned_guns
-                config.spam_drop_guns = spam_drop_guns
-                config.allow_target_npcs = allow_target_npcs
-                config.no_wall_penetration = no_wall_penetration
-                config.allow_target_prisoner = allow_target_prisoner
-                config.anti_flintlock_knockback = anti_flintlock_knockback
-                config.master_switch_arrestaura = master_switch_arrestaura
-                config.fov_target_select = fov_target_select
-                config.allow_taser_aimbot = allow_taser_aimbot
-                config.range_arrestaura = range_arrestaura
-                config.automatic_equip_handcuffs = automatic_equip_handcuffs
-                config.allow_tase_target = allow_tase_target
-                config.through_walls = through_walls
-                config.automatic_eject_player = automatic_eject_player
-                config.talk_on_arrest = talk_on_arrest
-                config.ignore_while_driving = ignore_while_driving
-            end
-            local function markers()
-                function callback.master_switch_marker(bool)
-                    global.ui_status.master_switch_marker = bool
-                end
-                function callback.police_marker(bool)
-                    global.ui_status.allow_police_marker = bool
-                end
-                function callback.criminal_marker(bool)
-                    global.ui_status.allow_criminal_marker = bool
-                end
-                function callback.prisoner_marker(bool)
-                    global.ui_status.allow_prisoner_marker = bool
-                end
-                function callback.airdrop_marker(bool)
-                    global.ui_status.allow_airdrop_marker = bool
-                end
-                function callback.allow_football_marker(bool)
-                    global.ui_status.allow_football_marker = bool
-                end
-                function callback.allow_hackable_computer_marker(bool)
-                    global.ui_status.allow_hackable_computer_marker = bool
-                end
-                function callback.no_robberymarker_delay(bool)
-                    global.ui_status.no_robberymarker_delay = bool
-                end
-                function callback.allow_npcs_marker(bool)
-                    global.ui_status.allow_npcs_marker = bool
-                end
-                function callback.mark_bounty_criminals(bool)
-                    global.ui_status.mark_bounty_criminals = bool
-                end
-                local master_switch_marker = toggle("Marker", "Master Switch", callback.master_switch_marker)
-                local allow_criminal_marker = toggle("Teams", "Allow Criminal Marker", callback.criminal_marker)
-                local allow_prisoner_marker = toggle("Teams", "Allow Prisoner Marker", callback.prisoner_marker)
-                local allow_police_marker = toggle("Teams", "Allow Police Marker", callback.police_marker)
-                local allow_airdrop_marker = toggle("Objects", "Allow Airdrop Marker", callback.airdrop_marker)
-                local allow_football_marker = toggle("Objects", "Allow Football Marker", callback.allow_football_marker)
-                local allow_npcs_marker = toggle("Objects", "Allow NPCs Marker", callback.allow_npcs_marker)
-                local no_robberymarker_delay = toggle("Settings", "No Robbery Marker Delay", callback.no_robberymarker_delay)
-                local mark_bounty_criminals = toggle("Settings", "Mark Bounty Criminals", callback.mark_bounty_criminals)
-                config.master_switch_marker = master_switch_marker
-                config.allow_criminal_marker = allow_criminal_marker
-                config.allow_prisoner_marker = allow_prisoner_marker
-                config.allow_police_marker = allow_police_marker
-                config.allow_airdrop_marker = allow_airdrop_marker
-                config.allow_football_marker = allow_football_marker
-                config.allow_npcs_marker = allow_npcs_marker
-                config.no_robberymarker_delay = no_robberymarker_delay
-                config.mark_bounty_criminals = mark_bounty_criminals
-            end
-            local function robbery()
-                local function bank()
-                    function callback.auto_touch_vault(bool)
-                        global.ui_status.auto_touch_vault = bool
-                    end
-                    function callback.auto_place_dynamite(bool)
-                        global.ui_status.auto_place_dynamite = bool
-                    end
-                    local status = label("Bank", "Bank Status", Color3.fromRGB(0, 0, 0))
-                    local auto_touch_vault = toggle("Bank", "Automatic Touch Vault", callback.auto_touch_vault)
-                    local auto_place_dynamite = toggle("Bank", "Automatic Place Dynamite", callback.auto_place_dynamite)
-                    config.auto_touch_vault = auto_touch_vault
-                    config.auto_place_dynamite = auto_place_dynamite
-                end
-                bank()
-                local function banktruck()
-                    local status = label("BankTruck", "Banktruck Status", Color3.fromRGB(0, 0, 0))
-                end
-                banktruck()
-                local function smallstores()
-                    local donut = label("SmallStores", "Donut Shop", Color3.fromRGB(0, 0, 0))
-                    local gas = label("SmallStores", "Gas Station", Color3.fromRGB(0, 0, 0))
-                end
-                smallstores()
-                local function jewelry()
-                    function callback.automatic_grab_nearby_jewels(bool)
-                        global.ui_status.automatic_grab_nearby_jewels = bool
-                    end
-                    local status = label("Jewelry", "Jewelry Status", Color3.fromRGB(0, 0, 0))
-                    local automatic_grab_nearby_jewels = toggle("Jewelry", "Automatic Grab Nearby Jewels", callback.automatic_grab_nearby_jewels)
-                    config.automatic_grab_nearby_jewels = automatic_grab_nearby_jewels
-                end
-                jewelry()
-                local function museum()
-                    function callback.automatic_place_dynamite(bool)
-                        global.ui_status.automatic_place_dynamite = bool
-                    end
-                    function callback.auto_fill_bag(bool)
-                        global.ui_status.auto_fill_bag = bool
-                    end
-                    function callback.break_museum_puzzle(bool)
-                        global.ui_status.break_museum_puzzle = bool
-                    end
-                    function callback.automatic_resolve_museum_puzzle(bool)
-                        global.ui_status.automatic_resolve_museum_puzzle = bool
-                    end
-                    local status = label("Museum", "Museum Status", Color3.fromRGB(0, 0, 0))
-                    local automatic_resolve_museum_puzzle = toggle("Museum", "Automatic Resolve Puzzle", callback.automatic_resolve_museum_puzzle)
-                    local automatic_place_dynamite = toggle("Museum", "Automatic Place Dynamite", callback.automatic_place_dynamite)
-                    local auto_fill_bag = toggle("Museum", "Automatic Fill Bag", callback.auto_fill_bag)
-                    local break_museum_puzzle = toggle("Museum", "Break Museum Puzzle", callback.break_museum_puzzle)
-                    config.auto_fill_bag = auto_fill_bag
-                    config.automatic_resolve_museum_puzzle = automatic_resolve_museum_puzzle
-                    config.break_museum_puzzle = break_museum_puzzle
-                    config.automatic_place_dynamite = automatic_place_dynamite
-                end
-                museum()
-                local function casino()
-                    function callback.auto_crack_vault(bool)
-                        global.ui_status.auto_crack_vault = bool
-                    end
-                    function callback.auto_collect_cash(bool)
-                        global.ui_status.auto_collect_cash = bool
-                    end
-                    function callback.auto_open_door(bool)
-                        global.ui_status.auto_open_door = bool
-                    end
-                    function callback.auto_open_keycode_door(bool)
-                        global.ui_status.auto_open_keycode_door = bool
-                    end
-                    function callback.break_elevator(bool)
-                        global.ui_status.break_elevator = bool
-                    end
-                    function callback.hack_nearby_computers(bool)
-                        global.ui_status.hack_nearby_computers = bool
-                    end
-                    function callback.reveal_casino_keycode()
-                        local getKeycode = global.registry.getKeycode
-                        if getKeycode then
-                            local keycode = getKeycode()
-                            if keycode ~= "" then
-                                global.notify(keycode, 10)
-                            end
-                        end
-                    end
-                    function callback.call_elevator_to_floor(cb)
-                        local call_elevator_to_floor = global.registry.call_elevator_to_floor
-                        if call_elevator_to_floor then
-                            call_elevator_to_floor(cb)
-                        end
-                    end
-                    local status = label("Casino", "Casino Status", Color3.fromRGB(0, 0, 0))
-                    local auto_crack_vault = toggle("Casino", "Automatic Crack Vault", callback.auto_crack_vault)
-                    local auto_collect_cash = toggle("Casino", "Automatic Collect Loot", callback.auto_collect_cash)
-                    local auto_open_door = toggle("Casino", "Automatic Open Door", callback.auto_open_door)
-                    local break_elevator = toggle("Casino", "Break Elevator", callback.break_elevator)
-                    local hack_nearby_computers = toggle("Casino", "Hack Nearby Computers", callback.hack_nearby_computers)
-                    local reveal_casino_keycode = button("Casino", "Reveal Keycode", callback.reveal_casino_keycode)
-                    local call_elevator_to_floor = dropdown("Casino", "Call Elevator To Floor", {"The Roof", "Security", "Ground", "Vaults"}, callback.call_elevator_to_floor)
-                    config.auto_crack_vault = auto_crack_vault
-                    config.auto_collect_cash = auto_collect_cash
-                    config.auto_open_door = auto_open_door
-                    config.break_elevator = break_elevator
-                    config.hack_nearby_computers = hack_nearby_computers
-                    config.reveal_casino_keycode = reveal_casino_keycode
-                end
-                casino()
-                local function mansion()
-                    function callback.disable_traps(bool)
-                        global.ui_status.disable_traps = bool
-                    end
-                    function callback.anti_boss_attack(bool)
-                        global.ui_status.anti_boss_attack = bool
-                    end
-                    function callback.anti_boss_ragdoll(bool)
-                        global.ui_status.anti_boss_ragdoll = bool
-                    end
-                    function callback.break_mansion_npcs(bool)
-                        global.ui_status.break_mansion_npcs = bool
-                    end
-                    function callback.automatic_elevator_entry(bool)
-                        global.ui_status.automatic_elevator_entry = bool
-                    end
-                    function callback.allow_on_police_team(bool)
-                        global.ui_status.allow_on_police_team = bool
-                    end
-                    function callback.entry_only_near_elevator(bool)
-                        global.ui_status.entry_only_near_elevator = bool
-                    end
-                    local status = label("Mansion", "Mansion Status", Color3.fromRGB(0, 0, 0))
-                    local automatic_elevator_entry = toggle("Mansion", "Automatic Elevator Entry", callback.automatic_elevator_entry, true)
-                    local allow_on_police_team = toggle("Mansion", "Allow On Police Team", callback.allow_on_police_team)
-                    automatic_elevator_entry.setChild(allow_on_police_team)
-                    local anti_boss_attack = toggle("Mansion", "Anti Boss Attack", callback.anti_boss_attack)
-                    local anti_boss_ragdoll = toggle("Mansion", "Anti Boss Ragdoll", callback.anti_boss_ragdoll)
-                    local break_mansion_npcs = toggle("Mansion", "Break NPCs", callback.break_mansion_npcs)
-                    local disable_traps = toggle("Mansion", "Disable Traps", callback.disable_traps)
-                    config.break_mansion_npcs = break_mansion_npcs
-                    config.disable_traps = disable_traps
-                    config.anti_boss_attack = anti_boss_attack
-                    config.allow_on_police_team = allow_on_police_team
-                    config.anti_boss_ragdoll = anti_boss_ragdoll
-                    config.automatic_elevator_entry = automatic_elevator_entry
-                end
-                mansion()
-                local function powerplant()
-                    function callback.puzzle_resolver(bool)
-                        global.ui_status.puzzle_resolver = bool
-                    end
-                    function callback.disable_piston_damage(bool)
-                        global.ui_status.disable_piston_damage = bool
-                    end
-                    function callback.disable_powerwire_damage(bool)
-                        global.ui_status.disable_powerwire_damage = bool
-                    end
-                    local status = label("Powerplant", "Powerplant Status", Color3.fromRGB(0, 0, 0))
-                    local puzzle_resolver = toggle("Powerplant", "Automatic Resolve Puzzle", callback.puzzle_resolver)
-                    local disable_piston_damage = toggle("Powerplant", "Disable Piston Damage", callback.disable_piston_damage)
-                    local disable_powerwire_damage = toggle("Powerplant", "Disable Powerwire Damage", callback.disable_powerwire_damage)
-                    config.puzzle_resolver = puzzle_resolver
-                    config.disable_piston_damage = disable_piston_damage
-                    config.disable_powerwire_damage = disable_powerwire_damage
-                end
-                powerplant()
-                local function airdrop()
-                    function callback.break_npcs(bool)
-                        global.ui_status.break_npcs = bool
-                    end
-                    local status = label("Airdrop", "Airdrop Status", Color3.fromRGB(0, 0, 0))
-                    local break_npcs = toggle("Airdrop", "Break NPCs", callback.break_npcs)
-                    config.break_npcs = break_npcs
-                end
-                airdrop()
-                local function cargoplane()
-                    function callback.automatic_inspect_crate(bool)
-                        global.ui_status.automatic_inspect_crate = bool
-                    end
-                    function callback.automatic_open_cargoplane_door(bool)
-                        global.ui_status.automatic_open_cargoplane_door = bool
-                    end
-                    function callback.call_cargoplane()
-                        local callplane = global.registry.callplane
-                        if callplane then
-                            callplane()
-                        end
-                    end
-                    local status = label("Cargoplane", "Cargoplane Status", Color3.fromRGB(0, 0, 0))
-                    local automatic_inspect_crate = toggle("Cargoplane", "Automatic Inspect Crate", callback.automatic_inspect_crate)
-                    local automatic_open_cargoplane_door = toggle("Cargoplane", "Automatic Open Door", callback.automatic_open_cargoplane_door)
-                    local call_cargoplane = button("Cargoplane", "Call Cargoplane", callback.call_cargoplane)
-                    config.automatic_inspect_crate = automatic_inspect_crate
-                    config.automatic_open_cargoplane_door = automatic_open_cargoplane_door
-                end
-                cargoplane()
-                local function trains()
-                    function callback.automatic_train_fillbag(bool)
-                        global.ui_status.automatic_train_fillbag = bool
-                    end
-                    function callback.automatic_breach_vault(bool)
-                        global.ui_status.automatic_breach_vault = bool
-                    end
-                    function callback.automatic_delivery(bool)
-                        global.ui_status.automatic_delivery = bool
-                    end
-                    function callback.anti_station_stop(bool)
-                        global.ui_status.anti_station_stop = bool
-                    end
-                    local status = label("Trains", "Trains Status", Color3.fromRGB(0, 0, 0))
-                    local automatic_train_fillbag = toggle("Trains", "Automatic Fill Bag", callback.automatic_train_fillbag)
-                    local automatic_delivery = toggle("Trains", "Automatic Delivery", callback.automatic_delivery)
-                    local automatic_breach_vault = toggle("Trains", "Automatic Breach Vault", callback.automatic_breach_vault)
-                    local anti_station_stop = toggle("Trains", "Anti Station Stop", callback.anti_station_stop)
-                    config.automatic_train_fillbag = automatic_train_fillbag
-                    config.automatic_delivery = automatic_delivery
-                    config.automatic_breach_vault = automatic_breach_vault
-                    config.anti_station_stop = anti_station_stop
-                end
-                trains()
-                local function tomb()
-                    function callback.disable_darts(bool)
-                        global.ui_status.disable_darts = bool
-                    end
-                    function callback.disable_spikes(bool)
-                        global.ui_status.disable_spikes = bool
-                    end
-                    function callback.disable_lava(bool)
-                        global.ui_status.disable_lava = bool
-                    end
-                    function callback.disable_wood(bool)
-                        global.ui_status.disable_wood = bool
-                    end
-                    function callback.automatic_resolve_dart_room(bool)
-                        global.ui_status.automatic_resolve_dart_room = bool
-                    end
-                    local status = label("Tomb", "Tomb Status", Color3.fromRGB(0, 0, 0))
-                    local automatic_resolve_dart_room = toggle("Tomb", "Automatic Resolve Dart Room", callback.automatic_resolve_dart_room)
-                    local disable_darts = toggle("Tomb", "Disable Darts", callback.disable_darts)
-                    local disable_wood = toggle("Tomb", "Disable Wood Damage", callback.disable_wood)
-                    local disable_spikes = toggle("Tomb", "Disable Spike Damage", callback.disable_spikes)
-                    local disable_lava = toggle("Tomb", "Disable Lava Damage", callback.disable_lava)
-                    config.automatic_resolve_dart_room = automatic_resolve_dart_room
-                    config.disable_darts = disable_darts
-                    config.disable_wood = disable_wood
-                    config.disable_spikes = disable_spikes
-                    config.disable_lava = disable_lava
-                end
-                tomb()
-                local function cargoship()
-                    function callback.disable_cargoship_turrets(bool)
-                        global.ui_status.disable_cargoship_turrets = bool
-                    end
-                    local status = label("Cargoship", "Cargoship Status", Color3.fromRGB(0, 0, 0))
-                    local disable_cargoship_turrets = toggle("Cargoship", "Disable Turrets", callback.disable_cargoship_turrets)
-                    config.disable_cargoship_turrets = disable_cargoship_turrets
-                end
-                cargoship()
-            end
-            local function info()
-                function callback.discord()
-                    log("autojoin discord")
-                    setclipboard("https://discord.gg/"..discord_code)
-                end
-                function callback.discord2()
-                    setclipboard("https://discord.gg/"..discord_code)
-                end
-                function callback.hideusername(bool)
-                    global.ui_status.hideusername = bool
-                end
-                function callback.keybindUI(key)
-                    global.ui_status.keybindUI = key.Name
-                end
-                function callback.goto_trade_world()
-                    local generateJobId = global.registry.generateJobId
-                    local jobId = generateJobId(true)
-                    if jobId then
-                        teleportservice:TeleportToPlaceInstance("9780994092", jobId, players.LocalPlayer)
-                    end
-                end
-                function callback.join_random_server()
-                    local generateJobId = global.registry.generateJobId
-                    local jobId = generateJobId()
-                    if jobId then
-                        teleportservice:TeleportToPlaceInstance("606849621", jobId, players.LocalPlayer)
-                    end
-                end
-                function callback.rejoin()
-                    local jobId = game.JobId
-                    if jobId then
-                        teleportservice:TeleportToPlaceInstance("606849621", jobId, players.LocalPlayer)
-                    end
-                end
-                function callback.saveuistatus(bool)
-                    global.ui_status.saveuistatus = bool
-                end
-                function callback.lighting_technology(val)
-                    local lighting_technology = global.registry.lighting_technology
-                    if lighting_technology then
-                        lighting_technology(val)
-                    end
-                end
-                local infolabel = credit("Info", "Credits: alex9#0001 (870050524857258055)")
-                local infoversion = label("Info", ("Version: v%s-%s"):format(global.version, global.exploit))
-                local infoclipboard = button("Info", "Set Discord Link To Clipboard", callback.discord2)
-                local infoforcejoin = button("Info", "Force Join Discord", callback.discord)
-                local goto_trade_world = button("Info", "Teleport To Trade World", callback.goto_trade_world)
-                local join_random_server = button("Info", "Join Random Server", callback.join_random_server)
-                local rejoin = button("Info", "Rejoin", callback.rejoin)
-                local hideusername = toggle("Info", "Hide UI Username", callback.hideusername)
-                local saveuistatus = toggle("Info", "Save UI Status", callback.saveuistatus)
-                local keybindUI = keybind("Info", "UI Toggle Keybind", Enum.KeyCode.RightShift, callback.keybindUI)
-                local lighting_technology = dropdown("LightingTechnology", "Technology", {"Compatibility", "Future", "ShadowMap", "Voxel"}, callback.lighting_technology)
-                config.hideusername = hideusername
-                config.saveuistatus = saveuistatus
-                config.keybindUI = keybindUI
-            end
-            player()
-            vehicle()
-            misc()
-            combat()
-            markers()
-            robbery()
-            info()
-            global.ui_callbacks = callback
-        end
-        sections()
-        log("16TSnfSNUSV1SPEeBM5APD9UEVGCHHN1WB")
-        log("0,50 BTC ^ send? 🥺 >.<")
-        log("MemPro II by 02hacks loaded")
     end
     ui()
+    local function noVirtualization()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/piglex9/icetray4/main/src/mthooks.lua"))()
+        while true do
+            if global.mthooks then
+                break
+            end
+            task.wait()
+        end
+    end
+    noVirtualization()
     local function playerCharacter()
         local function onCharacterAdded(char)
             client.playerCharacter = player.Character
@@ -2100,29 +605,35 @@ local function loadup()
         if player.Character then
             client.playerCharacter = player.Character
         else
-            log("COULD NOT FIND CHARACTER")
+            client.playerCharacter = player:WaitForChild("Character")
         end
     end
     playerCharacter()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/piglex9/icetray3/main/utils/noVirtualization.lua"))()()
     local function registry()
         local function funcs()
-            local _equipConditions = client.modules.equipConditions
+            local _equipConditions = client.modules.inventoryItemSystem._equipConditions
+            local _unequipConditions = client.modules.inventoryItemSystem._unequipConditions
             for i,v in next, _equipConditions do
-                local con = getconstants(v)
-                if #con == 4 then
-                    global.registry.max4 = v
-                end
-                if table.find(con, "GetLocalVehiclePacket") then
-                    global.registry._equipconditions = v
+                local upvs, con = getupvalues(v), getconstants(v)
+                if #upvs == 2 then
+                    global.registry.antiEquip = upvs
                 end
                 if table.find(con, "IsCrawling") then
                     global.registry.iscrawling = v
                 end
-                if table.find(con, "GetLastInputType") then
-                    global.registry.getlastequip = v
-                end
             end
+            table.insert(_equipConditions, function()
+                if global.is_instant_reloading then
+                    return false
+                end
+                return true
+            end)
+            table.insert(_unequipConditions, function()
+                if global.is_instant_reloading then
+                    return false
+                end
+                return true
+            end)
             local onPressed = getupvalue(client.modules.crawlButton.onPressed, 3)
             if onPressed then
                 global.registry.buttons = onPressed
@@ -2143,7 +654,7 @@ local function loadup()
             end
             local trainSystem = client.modules.trainSystem
             local em = getupvalue(trainSystem.Init, 2)
-            if em then
+            if em and type(em) == "table" then
                 for i,v in next, em do
                     if type(v) == "function" then
                         if islclosure(v) then
@@ -2168,18 +679,76 @@ local function loadup()
             else
                 log("Wrong upvalue for em")
             end
-            local registry = getreg()
-            for i,v in next, registry do
+            local gates = {}
+            for i,v in next, collectionservice:GetTagged("Door") do
+                for i2,v2 in next, v:GetChildren() do
+                    if v2:IsA("ObjectValue") and v2.Name == "Button" then
+                        local val = v2.Value
+                        if val then
+                            if val:IsA("Part") then
+                                val = val.Parent
+                            end
+                            if val:IsA("Model") then
+                                val = val:FindFirstChild("ClickDetector", true)
+                            end
+                            table.insert(gates, val.MouseClick)
+                        end
+                    end
+                end
+            end
+            global.registry.prisonGate = gates
+            local function hasKey()
+                local inventoryItemSystem = client.modules.inventoryItemSystem
+                local gameUtil = client.modules.gameUtil
+                local settings = client.modules.settings
+                if gameUtil.Team == settings.EnumTeam.Police then
+                    return true
+                end
+                return inventoryItemSystem.playerHasItem(player, "Key")
+            end
+            global.registry.hasKey = hasKey
+            LPH_NO_VIRTUALIZE(function()
+                local player = players.LocalPlayer
+                local client = global.registry.client
+                local getreg = global.functions.getreg
+                local getupvalues = global.functions.getupvalues
+                local setupvalue = global.functions.setupvalue
+                local inventoryItemSystem = client.modules.inventoryItemSystem
+                local gameUtil = client.modules.gameUtil
+                local settings = client.modules.settings
+                for i,v in next, getreg() do
+                    if type(v) == "function" then
+                        for i2,v2 in next, getupvalues(v) do
+                            if type(v2) == "table" then
+                                for i3,v3 in next, v2 do
+                                    if type(v3) == "table" and rawget(v3, "Tag") and rawget(v3, "Part") and type(rawget(v3, "Fun")) == "function" then
+                                        local fun = v3.Fun
+                                        table.insert(global.registry.doors, fun)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+                for i,v in next, global.registry.doors do
+                    if type(v) == "function" and #getupvalues(v) >= 4 then
+                        local o = getupvalue(v, 4)
+                        setupvalue(v, 4, function(...)
+                            if global.ui_status.master_switch_open_doors then
+                                return true
+                            end
+                            return o(...)
+                        end)
+                    end
+                end
+            end)
+            local getreg = getreg()
+            for i,v in next, getreg do
                 if type(v) == "function" then
                     for i2,v2 in next, getupvalues(v) do
                         if type(v2) == "table" then
                             if rawget(v2, "Nitro") and rawget(v2, "NitroLastMax") then
                                 global.registry.nitro = v2
-                            end
-                            for i3,v3 in next, v2 do
-                                if type(v3) == "table" and rawget(v3, "Tag") and rawget(v3, "Part") and type(rawget(v3, "Fun")) == "function" then
-                                    table.insert(global.registry.doors, v3.Fun)
-                                end
                             end
                         end
                         if type(v2) == "function" then
@@ -2203,7 +772,7 @@ local function loadup()
                         if not is_synapse_function(v) then
                             for i2,v2 in next, getupvalues(v) do
                                 if type(v2) == "table" and type(rawget(v2, "Fireworks")) == "function" then
-                                    global.registry.fireworks = v2.Fireworks
+                                    global.registry.fireworks = v2
                                 end
                             end
                         end
@@ -2236,7 +805,6 @@ local function loadup()
                 break
             end
             task.wait()
-            log("bad pc detection")
         end
         local function shouldFuncs()
             local charBinder = client.modules.charBinder
@@ -2264,7 +832,7 @@ local function loadup()
             end
             if #jobids < 1 then
                 log("No JobId could be found. Try generating again! Generator issue from whoever created this function or roblox(?)")
-                return {}
+                return ""
             end
             return jobids[math.random(1, #jobids)]
         end
@@ -2273,9 +841,10 @@ local function loadup()
             Police = Color3.fromRGB(84, 215, 253);
             Criminal = Color3.fromRGB(253, 100, 30);
             Airdrop = Color3.fromRGB(148, 0, 211);
-            Football = Color3.fromRGB(255, 255, 0);
+            Football = Color3.fromRGB(68, 186, 13);
             NPCs = Color3.fromRGB(140, 182, 210);
             Bounty = Color3.fromRGB(255, 255, 50);
+            Target = Color3.fromRGB(179, 182, 255);
         }
         local markerSystem = client.modules.playerMarkerSystem
         local function constructMarker(player)
@@ -2333,6 +902,7 @@ local function loadup()
                     return v
                 end
             end
+            return false
         end
         local function getPartsInRegion(posX, posY, posZ, minX, minY, minZ, maxX, maxY, maxZ)
             if posX < maxX and posX > minX then
@@ -2356,7 +926,7 @@ local function loadup()
                         if settings and settings.prisonerTarget then
                             return global.ui_status.allow_target_prisoner
                         end
-                        return true
+                        return false
                     end
                 end
                 if p1 == "Prisoner" then
@@ -2382,7 +952,8 @@ local function loadup()
                 table.insert(global.registry.sounds, i)
             end
         end
-        sounds()
+        task.spawn(sounds)
+        --sounds()
         local function hasItemEquipped(item)
             local isItemEquipped = client.modules.itemSystem.GetLocalEquipped()
             return isItemEquipped and isItemEquipped.inventoryItemValue.name == item
@@ -2393,7 +964,7 @@ local function loadup()
                 name = "USER";
                 position = tbl.position;
                 priority = tbl.priority or 100;
-            }) -- returneaza minimapService.removeWaypoint
+            })
         end
         local function setWaypoint(key)
             local addWaypoint = global.registry.addWaypoint
@@ -2421,22 +992,35 @@ local function loadup()
             if not player then
                 return false
             end
-            return client.modules.inventoryItemSystem.getInventoryItemsFor(player)
+            local inventoryItemSystem = client.modules.inventoryItemSystem
+            return inventoryItemSystem.getInventoryItemsFor(player)
         end
         local function equip(item)
-            local hasItemEquipped = global.registry.hasItemEquipped
-            for i,v in next, client.reg.getInventoryItemsFor do
-                if v.obj.name == item and not hasItemEquipped(item) and v.AttemptSetEquipped then
-                    v:AttemptSetEquipped(true)
-                end
+            if not client.playerCharacter then
+                return false
             end
+            local success, err = pcall(function()
+                local hasItemEquipped = global.registry.hasItemEquipped
+                for i,v in next, client.reg.getInventoryItemsFor do
+                    if v.obj.name == item and not hasItemEquipped(item) and v.AttemptSetEquipped then
+                        v:AttemptSetEquipped(true)
+                    end 
+                end
+            end)
+            if not success then
+                warn(("Something errored when trying to equip item `%s`"):format(item))
+                log(("Something errored when trying to equip item `%s`"):format(item))
+            end
+        end
+        local function neverDropItems()
+            return {"Taser", "Handcuffs", "RoadSpike", "Bag", "Crate", "Gem", "MansionInvite"}
         end
         local function dropGun()
             local hasItemEquipped = global.registry.hasItemEquipped
-            local neverdrop = {"Taser", "Handcuffs", "RoadSpike", "Bag", "Crate", "Gem"}
+            local neverDropItems = global.registry.neverDropItems()
             for i,v in next, client.reg.getInventoryItemsFor do
-                if not table.find(neverdrop, v.obj.name) then
-                    if hasItemEquipped(v.obj.name) then
+                if hasItemEquipped(v.obj.name) then
+                    if not table.find(neverDropItems, v.obj.name) then
                         v:AttemptDrop()
                     end
                 end
@@ -2460,14 +1044,14 @@ local function loadup()
                 if floor == 4 then
                     for i,v in next, elevatorCar do
                         if v.Name == "4" and v:FindFirstChild("ClickDetector") then
-                            fireclickdetector(v.ClickDetector, math.huge)
+                            fireclickdetector(v.ClickDetector)
                         end
                     end
                     return true
                 end
                 for i,v in next, elevatorFloors do
                     if v.Name == "Call" and v.Parent.Name == tostring(floor) then
-                        fireclickdetector(v.ClickDetector, math.huge)
+                        fireclickdetector(v.ClickDetector)
                     end
                 end
             end
@@ -2480,11 +1064,12 @@ local function loadup()
             if floor == "Ground" then
                 clickDetector(2)
             end
+            
             if floor == "Vaults" then
                 clickDetector(1)
             end
         end
-        local function checkWallBeforePenetration(target) 
+        local function checkWallBeforePenetration(target)
             if not target then
                 return false
             end
@@ -2509,12 +1094,12 @@ local function loadup()
                 local result = true
                 local dist = (camera.CFrame.Position - target.Head.Position).magnitude
                 local unit = (target.Head.Position - camera.CFrame.Position).unit
-                local list = {camera, client.playerCharacter, player:GetMouse().TargetFilter}
+                local list = {camera, client.playerCharacter, global.LocalMouse.TargetFilter}
                 for i,v in next, ignorelist do
                     table.insert(list, v)
                 end
                 local ray = Ray.new(camera.CFrame.Position, unit * dist)
-                local hit = workspace:FindPartOnRayWithIgnoreList(ray, list)
+                local hit = workspace:FindPartOnRayWithIgnoreList(ray, list) -- @ asta am furat o de undeva dar nu mai tin minte de unde
                 if hit and not hit:IsDescendantOf(target) then
                     result = false
                     if not hit.CanCollide and hit.ClassName ~= Terrain or hit:IsDescendantOf(client.descendants.vehicles) then
@@ -2523,11 +1108,20 @@ local function loadup()
                 end
                 return result
             end
-            local rayCheck = rayCheck(char)
-            return rayCheck
+            return rayCheck(char)
         end
         local isAnchored = false
-        local function shootGun(target)
+        local last_used_shoot = tick()
+        local function shootGun()
+            if global.ui_status.spam_drop_guns then
+                return false
+            end
+            if global.is_instant_reloading then
+                return false
+            end
+            if global.is_registering_item then
+                return false
+            end
             local function attemptShoot(gun)
                 if not gun.ShootCheckConditions then
                     return function() end
@@ -2540,6 +1134,13 @@ local function loadup()
             if not getEquippedItem then
                 return false
             end
+            if not getEquippedItem.BulletEmitter then
+                return false
+            end
+            if tick() - last_used_shoot < 0.2 and getEquippedItem.__ClassName == "Sniper" then
+                return false
+            end
+            last_used_shoot = tick()
             attemptShoot(getEquippedItem)
         end
         local function canUseTaser(taser)
@@ -2552,7 +1153,7 @@ local function loadup()
                 task.delay(0.5, function()
                     global.AI_TASER_USE = false
                 end)
-                return client.modules.taser.Tase(taser, taser)--@nu inteleg de ce trebuie `taser` pus de 2 ori.
+                return client.modules.taser.Tase(taser, taser) --@nu inteleg de ce trebuie `taser` pus de 2 ori. 
             end
             local getEquippedItem = client.reg.getEquippedItem
             if not getEquippedItem then
@@ -2566,6 +1167,7 @@ local function loadup()
                 "STARTED";
                 "CLOSED";
             }
+            
             local consts = client.modules.robberyConsts
             local robberystate = repl:FindFirstChild("RobberyState")
             for i,v in next, consts.LIST_ROBBERY do
@@ -2573,11 +1175,12 @@ local function loadup()
                 local state = robberystate:FindFirstChild(enum)
                 if state then
                     local data = consts.DATA_ROBBERY[enum]
-                    if data.key == tostring(robbery) then
+                    if tostring(data.key) == tostring(robbery) then
                         return enums[state.Value]
                     end
                 end
             end
+            return "?"
         end
         local function getClosestCrate()
             local char = client.playerCharacter
@@ -2596,35 +1199,44 @@ local function loadup()
             if not crates then
                 return false
             end
+            local target, dist = nil, math.huge
             for i,v in next, crates:GetDescendants() do
                 if v:IsA("BasePart") then
-                    if (v.Position - root.Position).magnitude < 50 then
-                        return v
+                    local magnitude = (root.Position - v.Position).magnitude
+                    if magnitude < dist then
+                        dist = magnitude
+                        target = v
                     end
                 end
             end
+            return target
         end
         local function hasMansioninvite()
-            for i,v in next, client.reg.getInventoryItemsFor do
-                if v.obj.name == "MansionInvite" then
-                    return true
-                end
-            end
-            return false
+            return table.find(client.reg.resolveEquippedItems, "MansionInvite")
         end
         local function getKeycode()
             local casino = workspace:FindFirstChild("Casino")
             if not casino then
-                return false
+                return ""
             end
+            local parts = {}
             local codes = casino.RobberyDoor.Codes
             local code = ""
             for i,v in next, codes:GetDescendants() do
                 if v:IsA("TextLabel") and #v.Text ~= 0 then
-                    code = code .. v.Text
+                    table.insert(parts, {
+                        textLabel = v;
+                        part = v.Parent.Parent;
+                    })
                 end
             end
-            return code
+            table.sort(parts, function(x, y)
+                return x.part.Position.z > y.part.Position.z
+            end)
+            for i,v in next, parts do
+                code = code .. v.textLabel.Text
+            end
+            return code or ""
         end
         local function getCasinoDoor()
             local char = client.playerCharacter
@@ -2669,42 +1281,76 @@ local function loadup()
             end
             return false
         end
+        local function getSeats()
+            local vehicle = client.modules.vehicle
+            local plrs = {}
+            local getVehicle = client.reg.getLocalVehicle
+            if getVehicle then
+                local getSeats = vehicle.getSeats(getVehicle.Model)
+                for i,v in next, getSeats do
+                    if v.Player ~= player then
+                        table.insert(plrs, v)
+                    end
+                end
+            else
+                return nil
+            end
+            return plrs
+        end
         local function getClosestPlayer(range, settings)
             local char = client.playerCharacter
             if not char then
                 return false
             end
-            local rootplr = char:FindFirstChild("HumanoidRootPart")
+            local rootplr = char.PrimaryPart
             if not rootplr then
                 return false
             end 
             local isVulnerable = global.registry.isVulnerable
-            local target
-            local dist = 0
+            local target, dist = nil, range
             for i,v in next, client.players do
-                if v ~= player then
-                    local isVul = isVulnerable(player.Team, v.Team)
-                    if isVul then
-                        local char = v.Character
-                        if char then
-                            local hum = char:FindFirstChild("Humanoid")
-                            local root = char:FindFirstChild("HumanoidRootPart")
-                            if hum and root and hum.Health > 0 then
-                                local mag = (root.Position - rootplr.Position).magnitude
-                                if not target and mag < range then
-                                    target = v
-                                    dist = mag
-                                end
-                                if target and mag < range and mag < dist then
-                                    target = v
-                                    dist = mag
-                                end
-                            end
+                local char = v.Character
+                if char and isVulnerable(player.Team, v.Team, {
+                    prisonerTarget = global.ui_status.allow_target_prisoner
+                }) then
+                    local hum = char:FindFirstChild("Humanoid")
+                    local root = char:FindFirstChild("HumanoidRootPart")
+                    if root and hum and hum.Health > 0 then
+                        local magnitude = (root.Position - rootplr.Position).magnitude
+                        if magnitude < dist then
+                            target = v
+                            dist = magnitude
                         end
-                    end 
+                    end
                 end
             end
             return target
+        end
+        local function getAllClosePlayers(range)
+            local char = client.playerCharacter
+            if not char then
+                return false
+            end
+            local rootplr = char.PrimaryPart
+            if not rootplr then
+                return false
+            end 
+            local isVulnerable = global.registry.isVulnerable
+            local targets = {}
+            for i,v in next, client.players do
+                local char = v.Character
+                if char then
+                    local hum = char:FindFirstChild("Humanoid")
+                    local root = char:FindFirstChild("HumanoidRootPart")
+                    if hum and root and hum.Health > 0 then
+                        local distance = (root.Position - rootplr.Position).magnitude
+                        if distance < range then
+                            table.insert(targets, v)
+                        end
+                    end
+                end
+            end
+            return targets
         end
         local function getClosestPlayerWithVehicleTag(range)
             local char = client.playerCharacter
@@ -2723,7 +1369,8 @@ local function loadup()
                         local hum = char:FindFirstChild("Humanoid")
                         local root = char:FindFirstChild("HumanoidRootPart")
                         if hum and root and hum.Health > 0 then
-                            if (root.Position - rootplr.Position).magnitude < range then
+                            local distance = player:DistanceFromCharacter(root.Position) -- (root.Position - rootplr.Position).magnitude
+                            if distance < range then
                                 table.insert(target, v)
                             end
                         end
@@ -2753,7 +1400,7 @@ local function loadup()
                             local hum = char:FindFirstChild("Humanoid")
                             local root = char:FindFirstChild("HumanoidRootPart")
                             if hum and root and hum.Health > 0 then
-                                local distance = player:DistanceFromCharacter(root.Position)
+                                local distance = player:DistanceFromCharacter(root.Position) -- (root.Position - rootplr.Position).magnitude
                                 if distance < range then
                                     target = v
                                 end
@@ -2764,184 +1411,219 @@ local function loadup()
             end
             return target
         end
-        local function getClosestPlayerByFov(range, isJetSearch)
+        local function getClosestVulnerablePlayer(range)
             local char = client.playerCharacter
             if not char then
                 return false
             end
-            local rootplr = char:FindFirstChild("HumanoidRootPart")
-            if not rootplr then
+            local root = char.PrimaryPart
+            if not root then
                 return false
             end
-            local camera = workspace.CurrentCamera
-            local mouse = player:GetMouse()
-            local mousepos = Vector2.new(mouse.X, mouse.Y)
-            local target, dist = nil, 1281
-            local allow_target_boss = global.ui_status.allow_target_boss
-            local allow_target_npcs = global.ui_status.allow_target_npcs
-            local allow_target_prisoner = global.ui_status.allow_target_prisoner
-            local mansionRobbery = workspace:FindFirstChild("MansionRobbery")
-            if allow_target_boss then
-                if mansionRobbery then
-                    local boss = mansionRobbery:FindFirstChild("ActiveBoss")
-                    if boss then
-                        local hum = boss:FindFirstChild("Humanoid")
-                        local root = boss:FindFirstChild("HumanoidRootPart")
-                        if hum and root and hum.Health > 0 then
-                            local _, onscreen = camera:WorldToScreenPoint(root.Position)
-                            if onscreen then
-                                local dis = (Vector2.new(uis:GetMouseLocation().X, uis:GetMouseLocation().Y) - Vector2.new(_.X, _.Y)).magnitude
-                                if dis < dist and dis < range*1.5 and (root.Position - rootplr.Position).magnitude < 300 then
-                                    dist = dis
-                                    target = boss
+            local isVulnerable = global.registry.isVulnerable
+            local target, dist = nil, range
+            for i,v in next, client.players do
+                if v ~= player then
+                    local char = v.Character
+                    if char and not v.Folder:FindFirstChild("Cuffed") then
+                        local hum = char:FindFirstChild("Humanoid")
+                        local primaryPart = char.PrimaryPart
+                        if hum and hum.Health > 0 and primaryPart then
+                            if isVulnerable(player.Team, v.Team) then
+                                local distance = (root.Position - primaryPart.Position).magnitude
+                                if distance < dist then
+                                    dist = distance
+                                    target = v
                                 end
                             end
-                        end
-                        if target then
-                            return target
                         end
                     end
                 end
             end
-            if allow_target_npcs then
-                local drop = workspace:FindFirstChild("Drop")
-                if drop then
-                    if #workspace.GuardNPCPlayers:GetChildren() > 0 then
-                        for i,v in next, workspace.GuardNPCPlayers:GetChildren() do
-                            if v and v.Value then
-                                local hum = v.Value:FindFirstChild("Humanoid")
-                                local root = v.Value:FindFirstChild("HumanoidRootPart")
+            return target
+        end
+        local function getClosestPlayerByFov(range, isJetSearch)
+            local char = client.playerCharacter
+            if char then
+                local rootplr = char:FindFirstChild("HumanoidRootPart")
+                if rootplr then
+                    local camera = workspace.CurrentCamera
+                    local mouse = global.LocalMouse
+                    local mousepos = Vector2.new(mouse.X, mouse.Y)
+                    local gml = uis:GetMouseLocation()
+                    local target, dist = nil, math.huge
+                    local allow_target_boss = global.ui_status.allow_target_boss
+                    local allow_target_npcs = global.ui_status.allow_target_npcs
+                    local allow_target_prisoner = global.ui_status.allow_target_prisoner
+                    local force_target = global.aimbot.force_target
+                    if force_target then
+                        local max_dist = global.ui_status.max_distance or 500
+                        local char = force_target.Character
+                        if char then
+                            if char:IsDescendantOf(workspace) then
+                                local hum = char:FindFirstChild("Humanoid")
+                                local root = char.PrimaryPart
                                 if hum and root and hum.Health > 0 then
-                                    local _, onscreen = camera:WorldToScreenPoint(root.Position)
-                                    if onscreen then
-                                        local dis = (Vector2.new(uis:GetMouseLocation().X, uis:GetMouseLocation().Y) - Vector2.new(_.X, _.Y)).magnitude
-                                        if dis < dist and dis < range*1.5 and (root.Position - rootplr.Position).magnitude < 300 then
-                                            dist = dis
-                                            target = v.Value
+                                    if (root.Position - rootplr.Position).magnitude < 3500 then
+                                        return force_target
+                                    end
+                                end
+                            end
+                        end
+                    end 
+                    local mansionRobbery = workspace:FindFirstChild("MansionRobbery")
+                    if allow_target_boss then
+                        if mansionRobbery then
+                            local boss = mansionRobbery:FindFirstChild("ActiveBoss")
+                            if boss then
+                                local hum = boss:FindFirstChild("Humanoid")
+                                local root = boss:FindFirstChild("HumanoidRootPart")
+                                if hum and root and hum.Health > 0 then
+                                    if (root.Position - rootplr.Position).magnitude < 300 then
+                                        return boss
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    if allow_target_npcs then
+                        local drop = workspace:FindFirstChild("Drop")
+                        if drop then
+                            if #workspace.GuardNPCPlayers:GetChildren() > 0 then
+                                for i,v in next, workspace.GuardNPCPlayers:GetChildren() do
+                                    if v and v.Value then
+                                        local hum = v.Value:FindFirstChild("Humanoid")
+                                        local root = v.Value:FindFirstChild("HumanoidRootPart")
+                                        if hum and root and hum.Health > 0 then
+                                            local _, onscreen = camera:WorldToScreenPoint(root.Position)
+                                            if onscreen then
+                                                local dis = (Vector2.new(gml.X, gml.Y) - Vector2.new(_.X, _.Y)).magnitude
+                                                if dis < dist and dis < range*1.5 and (root.Position - rootplr.Position).magnitude < 300 then
+                                                    dist = dis
+                                                    target = v.Value
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                                if target then
+                                    return target
+                                end
+                            end
+                        end
+                        if mansionRobbery then
+                            local guardsFolder = mansionRobbery.GuardsFolder
+                            if #guardsFolder:GetChildren() > 0 then
+                                for i,v in next, guardsFolder:GetChildren() do
+                                    local hum = v:FindFirstChild("Humanoid")
+                                    local root = v:FindFirstChild("HumanoidRootPart")
+                                    if hum and root and hum.Health > 0 then
+                                        local _, onscreen = camera:WorldToScreenPoint(root.Position)
+                                        if onscreen then
+                                            local dis = (Vector2.new(gml.X, gml.Y) - Vector2.new(_.X, _.Y)).magnitude
+                                            if dis < dist and dis < range*1.5 and (root.Position - rootplr.Position).magnitude < 300 then
+                                                dist = dis
+                                                target = v
+                                            end
+                                        end
+                                    end
+                                end
+                                if target then
+                                    return target
+                                end
+                            end
+                        end
+                    end
+                    local max_dist = global.ui_status.max_distance or 500
+                    for i,v in next, client.players do
+                        if v ~= player then
+                            if not isJetSearch and isVulnerable(player.Team, v.Team, {
+                                prisonerTarget = global.ui_status.allow_target_prisoner
+                            }) or isJetSearch and true then
+                                local char = v.Character
+                                if char and char:IsDescendantOf(workspace) then
+                                    local hum = char:FindFirstChild("Humanoid")
+                                    local root = char:FindFirstChild("HumanoidRootPart")
+                                    if hum and root and hum.Health > 0 then
+                                        local _, onscreen = camera:WorldToScreenPoint(root.Position)
+                                        if onscreen then
+                                            local dis = (Vector2.new(gml.X, gml.Y) - Vector2.new(_.X, _.Y)).magnitude
+                                            local dis_ = (root.Position - rootplr.Position).magnitude
+                                            if dis < dist and dis_ < max_dist then 
+                                                dist = dis
+                                                target = v
+                                            end
                                         end
                                     end
                                 end
                             end
                         end
-                        if target then
-                            return target
-                        end
                     end
-                end
-                if mansionRobbery then
-                    local guardsFolder = mansionRobbery.GuardsFolder
-                    if #guardsFolder:GetChildren() > 0 then
-                        for i,v in next, guardsFolder:GetChildren() do
-                            local hum = v:FindFirstChild("Humanoid")
-                            local root = v:FindFirstChild("HumanoidRootPart")
-                            if hum and root and hum.Health > 0 then
-                                local _, onscreen = camera:WorldToScreenPoint(root.Position)
-                                if onscreen then
-                                    local dis = (Vector2.new(uis:GetMouseLocation().X, uis:GetMouseLocation().Y) - Vector2.new(_.X, _.Y)).magnitude
-                                    if dis < dist and dis < range*1.5 and (root.Position - rootplr.Position).magnitude < 300 then
-                                        dist = dis
-                                        target = v
-                                    end
-                                end
-                            end
-                        end
-                        if target then
-                            return target
-                        end
-                    end
+                    return target
                 end
             end
-            for i,v in next, client.players do
-                if v ~= player then
-                    if not isJetSearch and isVulnerable(player.Team, v.Team, {
-                        prisonerTarget = global.ui_status.allow_target_prisoner
-                    }) or isJetSearch then
-                        local char = v.Character
-                        if char and char:IsDescendantOf(workspace) then
-                            local hum = char:FindFirstChild("Humanoid")
-                            local root = char:FindFirstChild("HumanoidRootPart")
-                            if hum and root and hum.Health > 0 then
-                                local _, onscreen = camera:WorldToScreenPoint(root.Position)
-                                if onscreen then
-                                    local dis = (Vector2.new(uis:GetMouseLocation().X, uis:GetMouseLocation().Y) - Vector2.new(_.X, _.Y)).magnitude
-                                    if dis < dist and dis < range*1.5 and (root.Position - rootplr.Position).magnitude < 12000 then
-                                        dist = dis
-                                        target = v
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-            return target
         end
         local function getClosestHeliPickup(part, range)
             local char = client.playerCharacter
-            if not char then
-                return false
-            end
-            local root = char:FindFirstChild("HumanoidRootPart")
-            if not root then
-                return false
-            end
-            local getLocalVehicle = client.reg.getLocalVehicle
-            if not getLocalVehicle then
-                return false
-            end
-            local getHeliRope = global.registry.getHeliRope(getLocalVehicle) 
-            if not getHeliRope then
-                return false
-            end
-            local target
-            local vehicleLinkUtils = client.modules.vehicleLinkUtils
-            local geomUtils = client.modules.geomUtils
-            for i,v in next, collectionservice:GetTagged("HeliPickup") do
-                if v ~= getLocalVehicle.Model then
-                    local getPrimaryPart = vehicleLinkUtils.getPrimaryPart(v)
-                    if getPrimaryPart then
-                        local mag = (part.Position - geomUtils.closestPointInPart(getPrimaryPart, part.Position)).magnitude
-                        if mag < range then
-                            range = mag
-                            target = v
-                        end
+            if char then
+                local root = char:FindFirstChild("HumanoidRootPart")
+                if root then
+                    local getLocalVehicle = client.reg.getLocalVehicle
+                    if getLocalVehicle then
+                        local getHeliRope = global.registry.getHeliRope(getLocalVehicle)
+                        if getHeliRope then
+                            local target
+                            local vehicleLinkUtils = client.modules.vehicleLinkUtils
+                            local geomUtils = client.modules.geomUtils
+                            for i,v in next, collectionservice:GetTagged("HeliPickup") do
+                                if v ~= getLocalVehicle.Model then
+                                    local getPrimaryPart = vehicleLinkUtils.getPrimaryPart(v)
+                                    if getPrimaryPart then
+                                        local mag = (part.Position - geomUtils.closestPointInPart(getPrimaryPart, part.Position)).magnitude
+                                        if mag < range then
+                                            range = mag
+                                            target = v
+                                        end
+                                    end
+                                end
+                            end
+                            return target
+                        end 
                     end
                 end
             end
-            return target
+            return false
         end
         local function getClosestPlayerWithNoHandcuffs(range, bool)
             local char = client.playerCharacter
-            if not char then
-                return false
-            end
-            local rootplr = char:FindFirstChild("HumanoidRootPart")
-            if not rootplr then
-                return false
-            end
-            local target
-            for i,v in next, client.players do
-                if v ~= player then
-                    if tostring(v.Team) ~= tostring(player.Team) and tostring(v.Team) ~= "Prisoner" then
-                        local char = v.Character
-                        if char then
-                            local hum = char:FindFirstChild("Humanoid")
-                            local root = char:FindFirstChild("HumanoidRootPart")
-                            if hum and root and hum.Health > 0 then
-                                if (root.Position - rootplr.Position).magnitude < range then
-                                    if bool and v.Folder:FindFirstChild("Cuffed") then
-                                        return v
-                                    end
-                                    if not v.Folder:FindFirstChild("Cuffed") then
-                                        target = v
+            if char then
+                local rootplr = char:FindFirstChild("HumanoidRootPart")
+                if rootplr then
+                    local target
+                    for i,v in next, client.players do
+                        if v ~= player then
+                            if tostring(v.Team) ~= tostring(player.Team) and tostring(v.Team) ~= "Prisoner" then
+                                local char = v.Character
+                                if char then
+                                    local hum = char:FindFirstChild("Humanoid")
+                                    local root = char:FindFirstChild("HumanoidRootPart")
+                                    if hum and root and hum.Health > 0 then
+                                        if (root.Position - rootplr.Position).magnitude < range then
+                                            if bool and v.Folder:FindFirstChild("Cuffed") then
+                                                return v
+                                            end
+                                            if not v.Folder:FindFirstChild("Cuffed") then
+                                                target = v
+                                            end
+                                        end
                                     end
                                 end
                             end
                         end
                     end
+                    return target
                 end
             end
-            return target
         end
         local function getClosestPlayerWithTagPolice(range)
             local char = client.playerCharacter
@@ -2952,6 +1634,7 @@ local function loadup()
             if not rootplr then
                 return false
             end
+            local closest, dist = nil, range
             for i,v in next, client.players do
                 if v ~= player then
                     if tostring(v.Team) == "Police" and tostring(player.Team) ~= tostring(v.Team) then
@@ -2960,35 +1643,39 @@ local function loadup()
                             local hum = char:FindFirstChild("Humanoid")
                             local root = char:FindFirstChild("HumanoidRootPart")
                             if hum and root and hum.Health > 0 then
-                                if (root.Position - rootplr.Position).magnitude < range then
-                                    return v
+                                local magnitude = (root.Position - rootplr.Position).magnitude
+                                if magnitude < range then
+                                    closest = v
+                                    dist = magnitude
                                 end
                             end
                         end
                     end
                 end
             end
+            return closest
         end
         local function getClosestDroppedCash(range)
             local char = client.playerCharacter
             if not char then
                 return false
             end
-            local root = char:FindFirstChild("HumanoidRootPart")
+            local root = char.PrimaryPart
             if not root then
                 return false
             end
-            if #workspace.DroppedCash:GetChildren() > 0 then
-                for i,v in next, workspace.DroppedCash:GetChildren() do
-                    local part = v.Part
-                    if part then
-                        if (part.Position - root.Position).magnitude < range then
-                            return v
-                        end
+            local cash = collectionservice:GetTagged("CashDrop")
+            local closest, dist = nil, range
+            for i,v in next, cash do
+                if v and v.PrimaryPart then
+                    local magnitude = (root.Position - v.PrimaryPart.Position).magnitude
+                    if magnitude < range then
+                        closest = v.PrimaryPart
+                        dist = magnitude
                     end
                 end
             end
-            return false
+            return closest
         end
         local function getBattleInvites()
             local invites = {}
@@ -3019,6 +1706,91 @@ local function loadup()
                         return key
                     end
                 end
+            end
+        end
+        local function isProjectile(item, settings)
+            local settings = settings or {}
+            local includeAdditionals = settings.includeAdditionals
+            local projectiles = {"C4", "RocketLauncher", "SmokeGrenade", "Grenade", "C4Ammo", "RocketAmmo", includeAdditionals and "Flashlight" or nil, includeAdditionals and "Binoculars" or nil}
+            if table.find(projectiles, item) then
+                return true
+            end
+            return false
+        end
+        local function equipOwnedItem(item, unequip)
+            global.hideshopui = true
+            global.open_shop = true
+            local shouldUnequip = unequip or false
+            local gunshopgui = player.PlayerGui.GunShopGui
+            local container = gunshopgui.Container.Container
+            local mainContainer = container.Main.Container
+            while true do
+                if mainContainer:FindFirstChild("Slider") then
+                    break
+                end
+                task.wait()
+            end
+            local resolveOwnedItems = client.reg.resolveOwnedItems
+            if isProjectile(item) then
+                local sidebar = container.Sidebar
+                local projectile = sidebar:FindFirstChild("Projectile")
+                if projectile then
+                    if table.find(resolveOwnedItems, item) or item == "RocketAmmo" or item == "C4Ammo" then
+                        set_thread_identity(2)
+                        for _, connection in next, getconnections(projectile.MouseButton1Down) do
+                            connection.Function()
+                        end
+                        set_thread_identity(7)
+                        while true do
+                            if mainContainer.Slider:FindFirstChild("C4") then
+                                break
+                            end
+                            task.wait()
+                        end
+                        local slider = mainContainer:FindFirstChild("Slider")
+                        if slider then
+                            local item = slider:FindFirstChild(item)
+                            if item then
+                                local action = item.Bottom.Action
+                                if action and (shouldUnequip and action.Text == "UNEQUIP") or not shouldUnequip and action and action.Text ~= "UNEQUIP" or item == "RocketAmmo" and action.Text == "$1,000" then
+                                    for _, connection in next, getconnections(action.MouseButton1Down) do
+                                        connection.Function()
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+                global.hideshopui = false
+                global.open_shop = false
+            else
+                local slider = mainContainer:FindFirstChild("Slider")
+                if slider then
+                    if not table.find(resolveOwnedItems, "Pistol") then
+                        local pistol = slider:FindFirstChild("Pistol")
+                        if pistol then
+                            local action = pistol.Bottom.Action
+                            if action and action.Text == "FREE" then
+                                for _, connection in next, getconnections(action.MouseButton1Down) do
+                                    connection.Function()
+                                end
+                            end
+                        end
+                    end
+                    if table.find(resolveOwnedItems, item) then
+                        local weapon = slider:FindFirstChild(item)
+                        if weapon then
+                            local action = weapon.Bottom.Action
+                            if action and (shouldUnequip and action.Text == "UNEQUIP") or not shouldUnequip and action and action.Text ~= "UNEQUIP" then
+                                for _, connection in next, getconnections(action.MouseButton1Down) do
+                                    connection.Function()
+                                end
+                            end
+                        end
+                    end
+                end
+                global.hideshopui = false
+                global.open_shop = false
             end
         end
         local function getClanPlayersOnline(self)
@@ -3064,17 +1836,20 @@ local function loadup()
             if not casino then
                 return false
             end
+            local closest, dist = nil, range
             for i,v in next, casino.Computers:GetDescendants() do
                 if v.Name == "Computer" then
                     local display = v:FindFirstChild("Display")
                     if tostring(display.BrickColor) == "Really black" or tostring(display.BrickColor) == "Really red" then
-                        if (display.Position - root.Position).magnitude < range then
-                            return v
+                        local magnitude = (root.Position - display.Position).magnitude
+                        if magnitude < range then
+                            closest = v
+                            dist = magnitude
                         end
                     end
                 end
             end
-            return false
+            return closest
         end
         local function getClosestBankDoor(range)
             local char = client.playerCharacter
@@ -3119,14 +1894,13 @@ local function loadup()
             end
             return false
         end
-        local function resolvePowerplant()
-            local flow = getupvalue(client.modules.puzzleFlow.Init,3)
+        local function resolvePowerplant(flow)
             local function add1()
                 for _=1, #flow.Grid do
                     local grid = flow.Grid[_]
                     for n=1, #grid do
                         local num = grid[n]
-                        num = num + 1
+                        num += 1
                         grid[n] = num
                     end
                 end
@@ -3136,13 +1910,13 @@ local function loadup()
                     local grid = flow.Grid[_]
                     for n=1, #grid do
                         local num = grid[n]
-                        num = num - 1
+                        num -= 1
                         grid[n] = num
                     end
                 end
             end
             local function resolveRequest()
-                return "-s-1-->>.s-xa5";
+                return "-s-1-->>.s-xa4";
             end
             local function resolver()
                 add1()
@@ -3170,16 +1944,14 @@ local function loadup()
         local function resolveOwnedItems()
             local tbl = {}
             for i,v in next, player.Items:GetChildren() do
-                if v.Name ~= "SmokeGrenade" and v.Name ~= "C4" and v.Name ~= "RocketLauncher" then
-                    table.insert(tbl, v.Name)
-                end
+                table.insert(tbl, v.Name)
             end
             return tbl
         end
         local function resolveEquippedItems()
             local tbl = {}
             for i,v in next, player.Folder:GetChildren() do
-                if v.Name ~= "SmokeGrenade" and v.Name ~= "C4" and v.Name ~= "RocketLauncher" then
+                if v.Name ~= "SmokeGrenade" then
                     table.insert(tbl, v.Name)
                 end
             end
@@ -3200,27 +1972,12 @@ local function loadup()
             end
         end
         local function dieOfFalldamage()
-            if global.isRespawning then
-                return false
-            end
-            global.isRespawning = true
-            setupvalue(global.registry.falling,1,true)
-            setupvalue(global.registry.falling,5,999999)
-            global.registry.falling(1)
-            task.delay(1, function()
-                global.isRespawning = false
-            end)
-        end
-        local function tpFootball()
-            local ball = workspace:FindFirstChild("SoccerBall")
-            if not ball then
-                log("ball dont exist")
-                return false
-            end
-            local isnetworkowner = global.functions.isnetworkowner
-            if isnetworkowner(ball) then
-                local coords = CFrame.new(1139, 108, 1106)
-                ball.CFrame = coords
+            local char = player.Character
+            if char then
+                local hum = char:FindFirstChild("Humanoid")
+                if hum then
+                    hum.Health = 0
+                end
             end
         end
         local function lighting_technology(val)
@@ -3233,8 +1990,28 @@ local function loadup()
         local function getSpeedometer()
             return player.PlayerGui.AppUI:FindFirstChild("Speedometer") or nil
         end
+        local function isUnderRoof(root)
+            local ign
+            if workspace:FindFirstChild("Rain") then
+                ign = {root.Parent, client.descendants.vehicles, workspace.Rain}
+            else
+                ign = {root.Parent, client.descendants.vehicles}
+            end
+            local params = RaycastParams.new()
+            params.FilterType = Enum.RaycastFilterType.Blacklist
+            params.FilterDescendantsInstances = ign
+            local ray = workspace:Raycast(root.Position, Vector3.new(0, 1, 0) * 100, params)
+            if ray then
+                return true
+            end
+            return false
+        end
+        global.registry.isUnderRoof = isUnderRoof
+        global.registry.resolveKeycode = resolveKeycode
+        global.registry.isProjectile = isProjectile
         global.registry.addWaypoint = addWaypoint
         global.registry.setWaypoint = setWaypoint
+        global.registry.equipOwnedItem = equipOwnedItem
         global.registry.hasInVehicleTag = hasInVehicleTag
         global.registry.getSpeedometer = getSpeedometer
         global.registry.getClanId = getClanId
@@ -3262,7 +2039,7 @@ local function loadup()
         global.registry.getClosestCasinoLoot = getClosestCasinoLoot
         global.registry.getClosestPlayerForBreakouts = getClosestPlayerForBreakouts
         global.registry.getClosestComputer = getClosestComputer
-        global.registry.tpFootball = tpFootball
+        global.registry.getAllClosePlayers = getAllClosePlayers
         global.registry.getClosestTriggerDoor = getClosestTriggerDoor
         global.registry.constructMarker = constructMarker
         global.registry.getPartsInRegion = getPartsInRegion
@@ -3272,9 +2049,11 @@ local function loadup()
         global.registry.getInventoryItemsFor = getInventoryItemsFor
         global.registry.dropGun = dropGun
         global.registry.canUseTaser = canUseTaser
+        global.registry.getSeats = getSeats
         global.registry.getClosestCrate = getClosestCrate
         global.registry.destructMarker = destructMarker
         global.registry.doesMarkerExist = doesMarkerExist
+        global.registry.neverDropItems = neverDropItems
         global.registry.checkWallBeforePenetration = checkWallBeforePenetration
         global.registry.hasItemEquipped = hasItemEquipped
         global.registry.unequipAll = unequipAll
@@ -3286,6 +2065,7 @@ local function loadup()
         global.registry.useTaser = useTaser
         global.registry.equip = equip
         global.registry.getHeliRope = getHeliRope
+        global.registry.getClosestVulnerablePlayer = getClosestVulnerablePlayer
         global.registry.isInMuseum = isInMuseum
         global.registry.resolveOwnedItems = resolveOwnedItems
         global.registry.resolveEquippedItems = resolveEquippedItems
@@ -3317,22 +2097,23 @@ local function loadup()
             if global.registry.getInventoryItemsFor then
                 client.reg.getInventoryItemsFor = global.registry.getInventoryItemsFor(player)
             end
+            if global.registry.getClosestVulnerablePlayer then
+                client.reg.getClosestVulnerablePlayer = global.registry.getClosestVulnerablePlayer(global.ui_status.killaura_range or 50)
+            end
             if global.registry.getClosestPlayerByFov then
                 local getClosestPlayerByFov = global.registry.getClosestPlayerByFov
+                local getClosestPlayer = global.registry.getClosestPlayer
                 local getEquippedItem = client.reg.getEquippedItem
                 if getEquippedItem then
                     if getEquippedItem.__ClassName == "Taser" then
                         if global.ui_status.master_switch_silentaim or global.ui_status.allow_tase_target then
-                            client.reg.getClosestPlayerByFov = getClosestPlayerByFov(5000)
+                            local fov = global.ui_status.fov_silentaim or 0
+                            client.reg.getClosestPlayerByFov = getClosestPlayer(85)
                         end
                     else
                         if global.ui_status.master_switch_silentaim then
-                            if global.ui_status.fov_target_select then
-                                local fov = global.ui_status.fov_silentaim or 0
-                                client.reg.getClosestPlayerByFov = getClosestPlayerByFov(fov)
-                            else
-                                client.reg.getClosestPlayerByFov = getClosestPlayerByFov(1200)
-                            end
+                            local fov = global.ui_status.fov_silentaim or 0
+                            client.reg.getClosestPlayerByFov = getClosestPlayerByFov(fov)
                         end
                     end
                 end
@@ -3350,7 +2131,37 @@ local function loadup()
                 end
             end
         end
-        createloop(0.2, loop)
+        createloop(0, loop)
+        local function tagServiceForVehicles()
+            local cache
+            cache = client.tags.new("isLocalInVehicle", 0, false, function(val)
+                if global.ui_status.spinbot then
+                    local char = client.playerCharacter
+                    if char then
+                        local root = char.PrimaryPart
+                        if root then
+                            if val then
+                                if root:FindFirstChild("IsLocalSpinning") then
+                                    root.IsLocalSpinning.MaxTorque = Vector3.new()
+                                end
+                            else
+                                if root:FindFirstChild("IsLocalSpinning") then
+                                    root.IsLocalSpinning.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+            local function loop()
+                local bool = client.state.isLocalInVehicle
+                if cache then
+                    cache.obj.Value = bool
+                end
+            end
+            createloop(0, loop)
+        end
+        tagServiceForVehicles()
     end
     client_reg()
     while true do
@@ -3359,38 +2170,6 @@ local function loadup()
         end
         task.wait()
     end
-    local function hideSectionsOnMarkersOff()
-        local markerSection = global.ui.markerSection
-        local function getTeamsSection()
-            local teamsSection = markerSection.teamsSection
-            return teamsSection
-        end
-        local function getObjSection()
-            local objSection = markerSection.objSection
-            return objSection
-        end
-        local function getSettingsSection()
-            local settingsSection = markerSection.settingsSection
-            return settingsSection
-        end
-        local getTeamsSection = getTeamsSection()
-        local getObjSection = getObjSection()
-        local getSettingsSection = getSettingsSection()
-        local function loop()
-            local master_switch_marker = global.ui_status.master_switch_marker
-            if getTeamsSection then
-                getTeamsSection.frame.Visible = master_switch_marker
-            end
-            if getObjSection then
-                getObjSection.frame.Visible = master_switch_marker
-            end
-            if getSettingsSection then
-                getSettingsSection.frame.Visible = master_switch_marker
-            end
-        end
-        createloop(0, loop)
-    end
-    hideSectionsOnMarkersOff()
     local function removeSettings()
         local settings = player.PlayerGui.AppUI.DevPanel.Container.SETTINGS.SETTINGS
         local playerMarkers = settings:FindFirstChild("playerMarkers")
@@ -3409,31 +2188,200 @@ local function loadup()
     table.insert(client.onWorkspaceSpawnRun, {
         _fn = workspaceChildAdded
     })
-    local function findEmptyFolder()
+    local function findEmptyFolder() -- @ n are sens folderu asta
         for i,v in next, workspaceChildren do
-            if v.Name == "Folder" and v:IsA("Folder") and #v:GetChildren() == 0 then
-                log(("Destroyed `%s`"):format(v.Name))
-                v:Destroy()
+            if v:IsA("Folder") and v.Name == "Folder" and #v:GetChildren() ~= 0 then
+                client.NonEmptyFolder = v
             end
         end
     end
     findEmptyFolder()
-    local function Corrections()
-        local function networkOwnership()
-            local setscriptable = global.functions.setscriptable
-            local isnetworkowner = global.functions.isnetworkowner
-            local function loop()
-                setscriptable(player, "SimulationRadius", true)
-                player.SimulationRadius = math.huge, math.huge
+    local function onewayNoclip()
+        local isUnderRoof = global.registry.isUnderRoof
+        local function onPressed()
+            if global.IS_IN_NOCLIP then
+                return false
             end
-            local function onSimulationRadiusChanged(r)
-                r = 9e9
-                return r
+            local char = client.playerCharacter
+            if char then
+                local hasInVehicleTag = global.registry.hasInVehicleTag
+                if not hasInVehicleTag(char) then
+                    local root = char:FindFirstChild("HumanoidRootPart")
+                    if root then
+                        if not isUnderRoof(root) then
+                            global.IS_IN_NOCLIP = true -- @activeaza anti falldmg automat si pune walkspeedul la 0
+                            local velocity = root.Velocity
+                            local oldCframe = root.CFrame
+                            local lookVector = root.CFrame.LookVector
+                            local currentCamera = workspace.CurrentCamera
+                            local cameraType = currentCamera.CameraType
+                            currentCamera.CameraType = "Scriptable"
+                            root.Velocity = Vector3.new(0, 100000, 0)
+                            root.CFrame = oldCframe + Vector3.new(0, 1000000, 0)
+                            task.wait(0.5)
+                            root.CFrame = root.CFrame + root.CFrame.LookVector * 5
+                            root.Velocity = velocity
+                            root.CFrame = oldCframe + lookVector * 10
+                            currentCamera.CameraType = cameraType
+                            task.wait(0.5)
+                            global.IS_IN_NOCLIP = false
+                        else
+                            global.notify("There is something above your head", 5)
+                        end
+                    end
+                end
             end
-            player.SimulationRadiusChanged:connect(onSimulationRadiusChanged)
-            createloop(0, loop)
         end
-        networkOwnership()
+        local lastPressed = tick()
+        local function onInputBegan(key)
+            if global.ui_status.one_way_noclip then
+                if key.KeyCode.Name == global.ui_status.noclip_attempt_key then
+                    if client.confirmation.confirmed.one_way_noclip then
+                        if tick() - lastPressed > 0.7 and not global.IS_IN_NOCLIP then
+                            onPressed()
+                            lastPressed = tick()
+                        end
+                    end
+                end
+            end
+        end
+        uis.InputBegan:connect(onInputBegan)
+    end
+    onewayNoclip()
+    local function forceTarget()
+        global.aimbot = {
+            junk = {};
+            connections = {};
+        }
+        local warningBar = client.warningBar
+        local isVulnerable = global.registry.isVulnerable
+        local doesMarkerExist = global.registry.doesMarkerExist
+        local constructMarker = global.registry.constructMarker
+        local destructMarker = global.registry.destructMarker
+        local setColor = global.registry.setColor
+        local markerColors = global.registry.markerColors
+        local statusRobberies = global.ui.statusRobberies
+        statusRobberies["FORCED_TARGET_NAME"] = ("Forcing target selection on: None")
+        local function findTarget(name)
+            name = tostring(name)
+            for i,v in next, client.players do
+                if v.DisplayName == name or v.Name == name or (v.Name):find(name) or (v.DisplayName):find(name) then
+                    local char = v.Character
+                    if char then
+                        return v
+                    end
+                end
+            end
+            return false
+        end
+        local function onTargetRespawned(target)
+            if not isVulnerable(player.Team, target.Team) then
+                if doesMarkerExist(target) then
+                    destructMarker(target)
+                end
+                global.notify("Target is no longer vulnerable", 5)
+                global.aimbot.force_target = nil
+                global.aimbot.connections[target.UserId]:disconnect()
+                global.aimbot.connections[target.UserId] = nil
+                statusRobberies["FORCED_TARGET_NAME"] = ("Forcing target selection on: None")
+                return false
+            end
+            task.spawn(function()
+                local char = target:WaitForChild("Character")
+                if char then
+                    local root = char:WaitForChild("HumanoidRootPart")
+                    if root then
+                        player:RequestStreamAroundAsync(root.Position)
+                    end
+                end
+            end)
+            if global.ui_status.mark_forced_target then
+                if not doesMarkerExist(target) then
+                    constructMarker(target)
+                    setColor(target, markerColors.Target)
+                end
+            end
+            warningBar:setEnabled(true)
+            warningBar:setText("Target has respawned")
+            pcall(function()
+                warningBar:play()
+            end)
+        end
+        global.aimbot.junk.onTargetRespawned = onTargetRespawned
+        local old_target
+        local function setTarget(name)
+            local target = findTarget(name)
+            if target then
+                if isVulnerable(player.Team, target.Team, {prisonerTarget = true}) then
+                    task.spawn(function() -- @ hack
+                        for i,v in next, global.aimbot.connections do
+                            v:disconnect()
+                            v = nil
+                        end
+                        global.aimbot.connections[target.UserId] = target.CharacterAdded:connect(function()
+                            onTargetRespawned(target)
+                        end)
+                    end)
+                    if global.ui_status.mark_forced_target then
+                        if not doesMarkerExist(target) then
+                            constructMarker(target)
+                            setColor(target, markerColors.Target)
+                        else
+                            destructMarker(target)
+                        end
+                        if old_target ~= nil and doesMarkerExist(old_target) then
+                            destructMarker(old_target)
+                        end
+                    end
+                    global.aimbot.force_target = target
+                    old_target = target
+                    statusRobberies["FORCED_TARGET_NAME"] = ("Forcing target selection on: %s"):format(target.DisplayName)
+                    return global.notify(("Target selection will now prioritze player %s"):format(target.DisplayName), 5)
+                else
+                    return global.notify("Target has to be a enemy", 5)
+                end
+            else
+                return global.notify(("Couldn't find target with name `%s`"):format(name), 5)
+            end
+        end
+        global.aimbot.setTarget = setTarget
+        local function onCharacterAdded()
+            local target = global.aimbot.force_target
+            if target then
+                if not isVulnerable(player.Team, target.Team) then
+                    if doesMarkerExist(target) then
+                        destructMarker(target)
+                    end
+                    global.aimbot.force_target = nil
+                    global.aimbot.connections[target.UserId]:disconnect()
+                    global.aimbot.connections[target.UserId] = nil
+                    statusRobberies["FORCED_TARGET_NAME"] = ("Forcing target selection on: None")
+                    global.notify(("Target %s is no longer vulnerable"):format(target.DisplayName), 5)
+                    warningBar:setEnabled(true)
+                    warningBar:setText("Target is no longer vulnerable")
+                    warningBar:play()
+                end
+            end
+        end
+        player.CharacterAdded:connect(onCharacterAdded)
+        local function onPlayerRemoving(target)
+            if global.aimbot.force_target == target then
+                global.aimbot.force_target = nil
+                global.aimbot.connections[target.UserId]:disconnect()
+                global.aimbot.connections[target.UserId] = nil
+                statusRobberies["FORCED_TARGET_NAME"] = ("Forcing target selection on: None")
+                global.notify(("Target %s has left the game"):format(target.DisplayName), 5)
+                warningBar:setEnabled(true)
+                warningBar:setText("Target left the game")
+                warningBar:play()
+            end
+        end
+        table.insert(client.run_on_player_disconnect, {
+            _fn = onPlayerRemoving;
+        })
+    end
+    forceTarget()
+    local function Corrections()
         local function battleInvitesAccept()
             local battleInvitesFolder = player:FindFirstChild("CrewBattleInvitesFolder")
             if not battleInvitesFolder then
@@ -3515,7 +2463,7 @@ local function loadup()
             if getClanPlayersOnlineId then
                 getClanPlayersOnlineId.Changed:connect(onOnlineValueChanged)
             else
-                log("LocalPlayer is not in a clan. Adding cache to get the changed status of Clan.")
+                log("Not in clan")
                 local cache
                 cache = createloop(1, function()
                     local getClanPlayersOnlineId = global.registry:getClanPlayersOnlineId()
@@ -3561,6 +2509,15 @@ local function loadup()
             workspace.ChildAdded:connect(onSpawnRun)
         end
         onWorkspaceSpawnRun()
+        local function onWorkspaceRemovedRun()
+            local function onRemovedRun(obj)
+                for i,v in next, client.onWorkspaceRemovedRun do
+                    v._fn(obj)
+                end
+            end
+            workspace.ChildRemoved:connect(onRemovedRun)
+        end
+        onWorkspaceRemovedRun()
         local function playerStateCorrection()
             local function requestJump()
                 local hum = client.playerCharacter and client.playerCharacter:FindFirstChild("Humanoid")
@@ -3577,28 +2534,30 @@ local function loadup()
             local model
             local function discoModel()
                 local m = Instance.new("Model")
-                m.Name = "samibagpulanunguri"
+                m.Name = "samibagpulanunguri" -- @muie ungaria!!!!!
                 m.Parent = workspace
                 model = m
             end
             discoModel()
+            local cache_switch
+            local cache_speed
             local stopDancing = getupvalue(party,6)
             local startDancing = getupvalue(party,5)
-            local danceAnim = getupvalue(getupvalue(party, 4), 8)
+            local function onCharacterAdded()
+                if not is_dancing and global.ui_status.fortnite_mode then
+                    startDancing(model)
+                else
+                    is_dancing = false
+                end
+            end 
             local function onCharacterRemoving()
                 if is_dancing then
                     stopDancing()
-                    task.wait(0.1)
-                    if is_dancing and global.ui_status.dance then
-                        startDancing(model)
-                    else
-                        is_dancing = false
-                    end
+                    is_dancing = false
                 end
             end
-            player.CharacterAdded:connect(onCharacterRemoving)
-            local cache_switch
-            local cache_speed
+            player.CharacterAdded:connect(onCharacterAdded)
+            player.CharacterRemoving:connect(onCharacterRemoving)
             local function tagService()
                 cache_switch = client.tags.new("fortnite", 0, false, function(val)
                     if val then
@@ -3609,6 +2568,7 @@ local function loadup()
                         stopDancing()
                     end
                     if is_dancing and cache_speed.obj.Value then
+                        local danceAnim = getupvalue(getupvalue(party, 4), 8)
                         danceAnim:AdjustSpeed(tonumber(cache_speed.obj.Value))
                     end
                 end)
@@ -3616,17 +2576,18 @@ local function loadup()
                     if not is_dancing then
                         return false
                     end
+                    local danceAnim = getupvalue(getupvalue(party, 4), 8)
                     danceAnim:AdjustSpeed(tonumber(val))
                 end)
             end
             tagService()
             local function loop()
-                local bool = global.ui_status.dance
-                local speed = global.ui_status.dance_speed
+                local bool = global.ui_status.fortnite_mode
+                local speed = global.ui_status.fortnite_mode_speed
                 if cache_switch then
                     cache_switch.obj.Value = bool
                     if bool then
-                        cache_speed.obj.Value = speed
+                        cache_speed.obj.Value = speed or 1
                     end
                 end
             end
@@ -3637,20 +2598,41 @@ local function loadup()
             local function automatic()
                 local function loop()
                     local bool = global.ui_status.always_duck
-                    if not bool then
-                        return false
-                    end
                     local buttons = global.registry.buttons
-                    if not buttons then
-                        return false
+                    if bool and buttons then
+                        pcall(function()
+                            buttons.attemptToggleCrawling()
+                        end)
                     end
-                    pcall(function()
-                        buttons.attemptToggleCrawling()
+                end
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("alwaysduck", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0.3, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            else
+                                warn("no loopf")
+                            end
+                        end
                     end)
                 end
-                createloop(0.3, loop)
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.always_duck
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
             end
             automatic()
+            local loopf
+            local cache
             local function loop()
                 local bool = global.ui_status.infduck
                 if bool then
@@ -3659,12 +2641,34 @@ local function loadup()
                     table.insert(lastDuckTick, 1, 0)
                 end
             end
+            local function tagService()
+                cache = client.tags.new("infiniteduck", 0, false, function(val)
+                    if val then
+                        loopf = createloop(0, loop)
+                    else
+                        if loopf then
+                            loopf:disconnect()
+                            loopf = nil
+                        end
+                    end
+                end)
+            end
+            tagService()
+            local function loop()
+                local bool = global.ui_status.infduck
+                if cache then
+                    cache.obj.Value = bool
+                end
+            end
             createloop(0, loop)
         end
         duckCorrection()
         local function ispointintagCorrection()
             local module = client.modules.tagUtils.isPointInTag
             local function hook(plr, str)
+                if global.IS_IN_NOCLIP then
+                    return true
+                end
                 if global.isRespawning then
                     return module(plr, str)
                 end
@@ -3686,14 +2690,395 @@ local function loadup()
         end
         ispointintagCorrection()
         local function humanoidCorrection()
+            local function hideCharacter()
+                local fakeCharacter = Instance.new("Model")
+                local fakeHumanoid = Instance.new("Humanoid")
+                local boolVal = Instance.new("BoolValue")
+                fakeCharacter.Parent = workspace
+                fakeCharacter.Name = "FakeCharacter"
+                fakeHumanoid.Parent = fakeCharacter
+                boolVal.Name = "isLocalFakeCharacter"
+                boolVal.Parent = fakeCharacter
+                local animator
+                local isInProcess = false
+                local firstTime = true
+                local buttons = global.registry.buttons
+                local function hide_character_function()
+                    if isInProcess then
+                        return false
+                    end
+                    local char = client.playerCharacter
+                    if not char then
+                        return false
+                    end
+                    local hum = char:FindFirstChild("Humanoid")
+                    if not hum then
+                        return false
+                    end
+                    isInProcess = true
+                    player.Character = fakeCharacter
+                    task.wait()
+                    animator = hum.Animator
+                    animator.Parent = nil
+                    hum:Destroy()
+                    task.wait()
+                    player.Character = char
+                    local newFakeHumanoid = Instance.new("Humanoid")
+                    newFakeHumanoid.Parent = char
+                    hum = char:FindFirstChild("Humanoid")
+                    if not hum then
+                        return false
+                    end
+                    animator.Parent = hum
+                    animator = nil
+                    char.Animate.Disabled = true
+                    task.wait()
+                    char.Animate.Disabled = false
+                    task.wait()
+                    isInProcess = false
+                    if not char:FindFirstChild("Ball") then
+                        buttons.attemptToggleCrawling()
+                    end
+                    if firstTime then
+                        global.notify('Stay in crouch and your character should be "hidden" for others. If you jump they may see you!', 8)
+                        firstTime = false
+                    end
+                end
+                global.registry.hide_character_function = hide_character_function
+            end
+            hideCharacter()
+            local function spinbot()
+                local function doSpin(speed)
+                    local char = client.playerCharacter
+                    if char then
+                        local root = char.PrimaryPart
+                        if root then
+                            if root:FindFirstChild("IsLocalSpinning") then
+                                root.IsLocalSpinning:Destroy()
+                            end
+                            local bodyAngularVelocity = Instance.new("BodyAngularVelocity")
+                            bodyAngularVelocity.Name = "IsLocalSpinning"
+                            bodyAngularVelocity.Parent = root
+                            bodyAngularVelocity.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+                            bodyAngularVelocity.AngularVelocity = Vector3.new(0, speed or 1, 0)
+                        end
+                    end
+                end
+                local function changeSpeed(newSpeed)
+                    local char = client.playerCharacter
+                    if char then
+                        local root = char.PrimaryPart
+                        if root then
+                            if root:FindFirstChild("IsLocalSpinning") then
+                                root.IsLocalSpinning.AngularVelocity = Vector3.new(0, newSpeed, 0)
+                            end
+                        end
+                    end
+                end
+                local spin_cache, speed_cache
+                local function onCharacterAdded()
+                    if global.ui_status.spinbot then
+                        local char = player.Character
+                        if char then
+                            local root = char:WaitForChild("HumanoidRootPart")
+                            if root then
+                                doSpin(speed_cache.obj.Value or 1)    
+                            end
+                        end
+                    end
+                end
+                player.CharacterAdded:connect(onCharacterAdded)
+                local loopf
+                local function tagService()
+                    spin_cache = client.tags.new("spinbot", 0, false, function(val)
+                        if val then
+                            doSpin(speed_cache.obj.Value or 1)
+                        else
+                            local char = client.playerCharacter
+                            if char then
+                                local root = char.PrimaryPart
+                                if root then
+                                    if root:FindFirstChild("IsLocalSpinning") then
+                                        root.IsLocalSpinning:Destroy()
+                                    end
+                                end
+                            end
+                        end
+                    end)
+                    speed_cache = client.tags.new("spinbot_speed", 1, 1, function(val)
+                        changeSpeed(val)
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.spinbot
+                    local speed = global.ui_status.spinbot_speed
+                    if spin_cache then
+                        spin_cache.obj.Value = bool
+                    end 
+                    if speed_cache then
+                        speed_cache.obj.Value = speed
+                    end
+                end
+                createloop(0, loop)
+            end
+            spinbot()
+            local function flight()
+                
+            end
+            flight()
+            local function keycardCorrection()
+                local sys = client.modules.inventoryItemSystem
+                local function hook()
+                    local bool = global.ui_status.always_keycard
+                    if tostring(player.Team) == "Police" then
+                        return true
+                    end
+                    if sys.playerHasItem(player, "Key") then
+                        return true
+                    end
+                    if bool then
+                        return true
+                    end
+                    return false
+                end
+                client.modules.playerUtils.hasKey = hook
+            end
+            keycardCorrection()
+            local function juicedCorrection()
+                local charUtil = client.modules.characterUtil
+                local l
+                local function loop()
+                    local bool = global.ui_status.always_juiced
+                    charUtil.IsJuiced = bool
+                end
+                local cache
+                local function tagService()
+                    cache = client.tags.new("always_juiced", 0, false, function(val)
+                        if not val then
+                            if l then
+                                l:disconnect()
+                                l = nil
+                            end
+                        else
+                            l = createloop(0, loop)
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local always_juiced = global.ui_status.always_juiced
+                    if cache then
+                        cache.obj.Value = always_juiced
+                    end
+                end
+                createloop(0, loop)
+            end
+            juicedCorrection()
+            local function rollMechanics()
+                local actionButtonService = client.modules.actionButtonService
+                local roll = client.modules.roll
+                local function onInfRoll(num)
+                    for i,v in next, actionButtonService.active do
+                        if table.find(v.keyCodes, Enum.KeyCode.LeftControl) then
+                            v.useEvery = num
+                            break
+                        end
+                    end
+                end
+                local function rollDuration(num)
+                    if num == 0 then
+                        num = 0.3
+                    end
+                    setconstant(roll.attemptRoll, 83, tonumber(num))
+                end
+                local breakAnimt = tick()
+                local function breakAnimations()
+                    if tick() - breakAnimt > 0.2 then
+                        local char = player.Character
+                        if char then
+                            local primaryPart = char.PrimaryPart
+                            if primaryPart then
+                                roll.attemptRoll()
+                                breakAnimt = tick()
+                            end
+                        end
+                    end
+                end
+                local cache = {}
+                local is_always_roll
+                local function tagService()
+                    cache.infroll = client.tags.new("infinite_roll", 0, false, function(val)
+                        if val then
+                            onInfRoll(0)
+                        else
+                            onInfRoll(5)
+                        end
+                    end)
+                    cache.roll_duration = client.tags.new("roll_duration", 1, 3, function(val)
+                        if val then
+                            rollDuration(val/10)
+                        end
+                    end)
+                    cache.always_roll = client.tags.new("always_roll", 0, false, function(val)
+                        if val then
+                            is_always_roll = createloop(0, breakAnimations)
+                        else
+                            if is_always_roll then
+                                is_always_roll:disconnect()
+                                is_always_roll = nil
+                            end
+                        end
+                    end)
+                    cache.break_physics = client.tags.new("break_physics", 0, false, function(val)
+                        if val then
+                            setconstant(roll.attemptRoll, 72, Enum.HumanoidStateType.None)
+                        else
+                            setconstant(roll.attemptRoll, 72, Enum.HumanoidStateType.Physics)
+                        end
+                    end)
+                    cache.frozen_roll = client.tags.new("frozen_roll", 0, false, function(val)
+                        if val then
+                            setconstant(roll.attemptRoll, 44, 0)
+                        else
+                            setconstant(roll.attemptRoll, 44, 500)
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.infinite_roll
+                    if cache.infroll then
+                        cache.infroll.obj.Value = bool
+                    end
+                    local roll_duration = global.ui_status.roll_duration
+                    if cache.roll_duration then
+                        cache.roll_duration.obj.Value = roll_duration
+                    end
+                    local always_roll = global.ui_status.always_roll
+                    if cache.always_roll then
+                        cache.always_roll.obj.Value = always_roll
+                    end
+                    local break_physics = global.ui_status.break_physics
+                    if cache.break_physics then
+                        cache.break_physics.obj.Value = break_physics
+                    end
+                    local frozen_roll = global.ui_status.frozen_roll
+                    if cache.frozen_roll then
+                        cache.frozen_roll.obj.Value = frozen_roll
+                    end
+                end
+                createloop(0, loop)
+            end
+            rollMechanics()
+            local function equipAfterDeath()
+                local connection
+                local cache
+                local loopf
+                local weaponName
+                local equip = global.registry.equip
+                local unequipAll = global.registry.unequipAll
+                local equipOwnedItem = global.registry.equipOwnedItem
+                local function onDied()
+                    if not cache.obj.Value then
+                        connection:disconnect()
+                        connection = nil
+                        return false
+                    end
+                    local gun = client.reg.getEquippedItem
+                    if gun then
+                        weaponName = gun.__ClassName
+                        unequipAll()
+                    end
+                end
+                local function onCharacterAdded(char)
+                    if weaponName then
+                        global._weaponName = weaponName
+                        while true do
+                            if not global.is_instant_reloading and not global.is_registering_item then
+                                break
+                            end
+                            task.wait()
+                        end
+                        task.delay(1, function()
+                            while true do
+                                if table.find(client.reg.resolveEquippedItems, weaponName) then
+                                    break
+                                end
+                                equipOwnedItem(weaponName)
+                                task.wait(0.2)
+                            end
+                            while true do
+                                if client.reg.getEquippedItem then
+                                    break
+                                end
+                                equip(weaponName)
+                                task.wait(0.2)
+                            end
+                            weaponName = nil
+                            connection:disconnect()
+                            connection = nil
+                        end)
+                    end
+                end
+                player.CharacterAdded:connect(onCharacterAdded)
+                local function loop()
+                    if connection then
+                        if not global.CONNECTED_TO:IsDescendantOf(workspace) then
+                            connection:disconnect()
+                            connection = nil
+                        end
+                    end
+                    if not connection then
+                        local char = client.playerCharacter
+                        if char then
+                            local hum = char:FindFirstChild("Humanoid")
+                            if hum then
+                                global.CONNECTED_TO = char
+                                connection = hum.Died:connect(onDied)
+                            end
+                        end
+                    end
+                end
+                local function tagService()
+                    cache = client.tags.new("automatic_equip_after_death", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                            if connection then
+                                connection:disconnect()
+                                connection = nil
+                                weaponName = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_equip_after_death
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            equipAfterDeath()
             local function loop()
                 local char = client.playerCharacter
                 if char then
                     local hum = char:FindFirstChild("Humanoid")
                     if hum then
+                        if global.IS_IN_NOCLIP then
+                            hum.WalkSpeed = 0
+                            return true
+                        end
                         if client.confirmation.confirmed.ws then
                             if global.ui_status.master_switch_walkspeed then
-                                hum.WalkSpeed = global.ui_status.walkspeed
+                                hum.WalkSpeed = global.ui_status.walkspeed or 16
                             else
                                 hum.WalkSpeed = hum.WalkSpeed
                             end
@@ -3704,7 +3089,7 @@ local function loadup()
                                     hum.JumpPower = 50
                                     return true
                                 end
-                                hum.JumpPower = global.ui_status.jumppower
+                                hum.JumpPower = global.ui_status.jumppower or 50
                             else
                                 hum.JumpPower = 50
                             end
@@ -3724,8 +3109,8 @@ local function loadup()
                 msg = "JumpPower may be detected. Use at your own risk?";
                 confirmationLoaded = false;
             }
-            local pb = {
-                msg = "Parachute Boost may be detected. Use at your own risk?";
+            local one_way_noclip = {
+                msg = "1 Way Noclip may be detected. Use at your own risk?";
                 confirmationLoaded = false;
             }
             local function loop()
@@ -3757,17 +3142,17 @@ local function loadup()
                         end)
                     end
                 end
-                if global.ui_status.parachute_boost then
-                    if not client.confirmation.confirmed.parachute_boost and not pb.confirmationLoaded then
-                        pb.confirmationLoaded = true
-                        local new = client.confirmation.new(pb.msg)
+                if global.ui_status.one_way_noclip then
+                    if not client.confirmation.confirmed.one_way_noclip and not one_way_noclip.confirmationLoaded then
+                        one_way_noclip.confirmationLoaded = true
+                        local new = client.confirmation.new(one_way_noclip.msg)
                         client.confirmation.onYes(new, function()
                             new = nil
-                            client.confirmation.confirmed.parachute_boost = true
+                            client.confirmation.confirmed.one_way_noclip = true
                         end)
                         client.confirmation.onNo(new, function()
                             new = nil
-                            client.confirmation.confirmed.parachute_boost = false
+                            client.confirmation.confirmed.one_way_noclip = false
                         end)
                     end
                 end
@@ -3775,59 +3160,28 @@ local function loadup()
             createloop(0, loop)
         end
         confirmation()
-        local function playExplosionFxCorrection()
-            local _playExplosionFx = client.modules.smoke._playExplosionFx
+        local function smokeGrenadeCorrection()
+            local smoke = client.modules.smoke
+            local smokeGrenade = client.modules.smokeGrenade
+            local function playExplosionFxCorrection()
+                local _playExplosionFx = smoke._playExplosionFx
+                local function hook(...)
+                    local bool = global.ui_status.disable_smoke_grenade_effect
+                    if bool then
+                        return task.wait(9e9)
+                    end
+                    return _playExplosionFx(...)
+                end
+                client.modules.smoke._playExplosionFx = hook
+            end
+            playExplosionFxCorrection()
+            local shootBegin = smokeGrenade.ShootBegin
             local function hook(...)
-                local bool = global.ui_status.disable_smoke_grenade_effect
-                if bool then
-                    return task.wait(9e9)
-                end
-                return _playExplosionFx(...)
+                return global.ui_status.anti_smoke_throw_limit and 0 or shootBegin(...)
             end
-            client.modules.smoke._playExplosionFx = hook
+            setupvalue(shootBegin, 1, hook)
         end
-        playExplosionFxCorrection()
-        local function playerUtilsCorrection()
-            local function KeycardCorrection()
-                local sys = client.modules.inventoryItemSystem
-                local function hook()
-                    local bool = global.ui_status.always_keycard
-                    if tostring(player.Team) == "Police" then
-                        return true
-                    end
-                    if sys.playerHasItem(player, "Key") then
-                        return true
-                    end
-                    if bool then
-                        return true
-                    end
-                    return false
-                end
-                client.modules.playerUtils.hasKey = hook
-            end
-            KeycardCorrection()
-            local function billboardCorrection()
-                local function loop()
-                    local bool = global.ui_status.hide_name_in_vehicle
-                    if bool then
-                        local char = client.playerCharacter
-                        if char then
-                            local root = char:FindFirstChild("HumanoidRootPart")
-                            if root then
-                                local PlayerBillboard = root:FindFirstChild("PlayerBillboard")
-                                if PlayerBillboard then
-                                    PlayerBillboard:Destroy()
-                                end
-                            end
-                        end
-                    end
-                end
-                createloop(0, loop)
-            end
-            billboardCorrection()
-            log("hi wassup dude!!! (◣_◢)")
-        end
-        playerUtilsCorrection()
+        smokeGrenadeCorrection()
         local function waterPartsCorrection()
             local function instance()
                 local function makePart()
@@ -3891,32 +3245,50 @@ local function loadup()
                 if not client.playerCharacter then
                     return false
                 end
-                local bool = global.ui_status.jesus
-                if bool then
-                    local inst = workspace:FindFirstChild("JESUS")
-                    if inst then
-                        local char = client.playerCharacter
-                        if char then
-                            local jesusPart
-                            if hasInVehicleTag(char) then
-                                local regVehicle = client.reg.getLocalVehicle
-                                if regVehicle and regVehicle.Model:FindFirstChild("Engine") then
-                                    jesusPart = regVehicle.Model.Engine
-                                end
-                            else
-                                jesusPart = char:FindFirstChild("HumanoidRootPart")
+                local inst = workspace:FindFirstChild("JESUS")
+                if inst then
+                    local char = client.playerCharacter
+                    if char then
+                        local jesusPart
+                        if hasInVehicleTag(char) then
+                            local regVehicle = client.reg.getLocalVehicle
+                            if regVehicle and regVehicle.Model:FindFirstChild("Engine") then
+                                jesusPart = regVehicle.Model.Engine
                             end
-                            if jesusPart then
-                                local isPartInWater = isPartInWater(jesusPart)
-                                if isPartInWater then
-                                    inst.Position = isPartInWater.Position - Vector3.new(0, 3, 0)
-                                    inst.Anchored = true
-                                    inst.Transparency = 1
-                                    inst.Size = Vector3.new(200, 4, 200)
-                                end
+                        else
+                            jesusPart = char:FindFirstChild("HumanoidRootPart")
+                        end
+                        if jesusPart then
+                            local isPartInWater = isPartInWater(jesusPart)
+                            if isPartInWater then
+                                inst.Position = isPartInWater.Position - Vector3.new(0, 3, 0)
+                                inst.Anchored = true
+                                inst.Transparency = 1
+                                inst.Size = Vector3.new(200, 4, 200)
                             end
                         end
                     end
+                end
+            end
+            local cache
+            local loopf
+            local function tagService()
+                cache = client.tags.new("jesus", 0, false, function(val)
+                    if val then
+                        loopf = createloop(0, loop)
+                    else
+                        if loopf then
+                            loopf:disconnect()
+                            loopf = nil
+                        end
+                    end
+                end)
+            end
+            tagService()
+            local function loop()
+                local bool = global.ui_status.jesus
+                if cache then
+                    cache.obj.Value = bool
                 end
             end
             createloop(0, loop)
@@ -3944,7 +3316,10 @@ local function loadup()
                 end)
             end
             tagService()
-            local add = client.modules.ui.CircleAction.Add
+            local module_ui = client.modules.ui.CircleAction
+            local localization = client.modules.localization
+            local add = module_ui.Add
+            local remove = module_ui.Remove
             local function hook(v, ...)
                 if v and v.Name and v.Name ~= "Rob" and v.Name ~= "Hack" and v.Name ~= "Open Crate" and v.Name ~= "Break In" then
                     if v.Duration then
@@ -3958,25 +3333,36 @@ local function loadup()
                 end
                 return add(v, ...)
             end
-            client.modules.ui.CircleAction.Add = hook
-            local localization = client.modules.localization
+            module_ui.Add = hook
+            for i,v in next, module_ui.Specs do
+                if v and v.Name and v.Duration and v.Name and v.Name ~= "Rob" and v.Name ~= "Hack" and v.Name ~= "Open Crate" and v.Name ~= "Break In" and not v.oldVal then
+                    v.oldVal = v.Duration
+                    if global.ui_status.master_switch_no_circle_delay then
+                        v.Duration = 0
+                    else
+                        v.Duration = v.oldVal
+                    end
+                end
+            end
             local function arrestCircleUpdate()
                 for i,v in next, getconnections(runservice.Heartbeat) do
-                    if v.Function and not is_synapse_function(v.Function) then
-                        local con = getconstants(v.Function)
+                    local func = v.Function
+                    if func and not is_synapse_function(func) then
+                        local con = getconstants(func)
                         if table.find(con, "Team") and table.find(con, "Police") and table.find(con, "OnTeamChanged") then
-                            local old = getupvalue(v.Function, 1)
-                            setupvalue(v.Function, 1, function()
+                            local old = getupvalue(getupvalue(func, 1), 5)
+                            setupvalue(getupvalue(func, 1), 5, function(action)
                                 local bool = global.ui_status.master_switch_no_circle_delay
                                 if bool then
-                                    for i,v in next, client.modules.ui.CircleAction.Specs do
-                                        if v.Name == localization:FormatByKey("Action.Arrest") then
-                                            v.Duration = 0
-                                        end
-                                    end
+                                    task.delay(0.1, function()
+                                        action.Duration = 0
+                                    end)
                                 end
-                                return old()
+                                return old(action)
                             end)
+                        end
+                        if table.find(con, "HasEscaped") then
+                            global.registry.slowdownFn = func
                         end
                     end
                 end
@@ -4069,22 +3455,6 @@ local function loadup()
                 if bool then
                     return task.wait(9e9)
                 end
-                local parachute_boost = global.ui_status.parachute_boost
-                if client.confirmation.confirmed.parachute_boost then
-                    if parachute_boost then
-                        setconstant(upv,5,0)
-                        setconstant(upv,23,2)
-                        setconstant(upv,26,1)
-                        setconstant(upv,29,0)
-                        setconstant(upv,31,-100)
-                    else
-                        setconstant(upv,5,const5)
-                        setconstant(upv,23,const23)
-                        setconstant(upv,26,const26)
-                        setconstant(upv,29,const29)
-                        setconstant(upv,31,const31)
-                    end
-                end
                 return parachute()
             end
             client.modules.paraglide.Parachute = hook_parachute
@@ -4133,17 +3503,27 @@ local function loadup()
                 if not string.find(debug.traceback(), "GunShopSystem") then
                     return region(tbl, ...)
                 end
-                if global.hideshopui then
+                if global.hideshopui or global.is_instant_reloading then
                     player.PlayerGui.GunShopGui.Enabled = false
                     player.PlayerGui.GunShopGui.Container.Visible = false
                 else
                     player.PlayerGui.GunShopGui.Container.Visible = true
                 end
                 local bool = global.ui_status.open_gunstore_ui
+                local open_shop = global.open_shop
+                local is_instant_reloading = global.is_instant_reloading
                 local function condition_hook(...)
+                    if is_instant_reloading then
+                        player.PlayerGui.GunShopGui.Container.Close.Visible = not is_instant_reloading
+                        return is_instant_reloading
+                    end
                     if bool then
                         player.PlayerGui.GunShopGui.Container.Close.Visible = not bool
                         return bool
+                    end
+                    if open_shop then
+                        player.PlayerGui.GunShopGui.Container.Close.Visible = not open_shop
+                        return open_shop
                     end
                     return vals.Condition ~= nil and vals.Condition(...)
                 end
@@ -4167,6 +3547,7 @@ local function loadup()
                     end
                     for i,v in next, getconnections(teamSwitch.MouseButton1Down) do
                         v.Function()
+                        break
                     end
                 end
                 local function pressYes()
@@ -4177,6 +3558,7 @@ local function loadup()
                     end
                     for i,v in next, getconnections(confirm.Button.MouseButton1Down) do
                         v.Function()
+                        break
                     end
                 end
                 local function goPrisoner()
@@ -4187,6 +3569,7 @@ local function loadup()
                     end
                     for i,v in next, getconnections(prisonerButton.MouseButton1Down) do
                         v.Function()
+                        break
                     end
                 end
                 local function goPolice()
@@ -4197,6 +3580,7 @@ local function loadup()
                     end
                     for i,v in next, getconnections(policeButton.MouseButton1Down) do
                         v.Function()
+                        break
                     end
                 end
                 local function goPlay()
@@ -4207,14 +3591,25 @@ local function loadup()
                     end
                     for i,v in next, getconnections(playgui.MouseButton1Down) do
                         v.Function()
+                        break
                     end
                 end
+                local equip = global.registry.equip
                 local function hook(num)
                     if string.find(debug.traceback(), "OnClientEvent") then
+                        local __className
+                        if client.reg.getEquippedItem then
+                            __className = client.reg.getEquippedItem.__ClassName
+                        end
                         local notaze = global.ui_status.antitaze
                         if notaze then
                             setupvalue(global.registry.stunnedFunc,1,false)
                             num = -1
+                            if __className then
+                                task.delay(0.1, function()
+                                    equip(__className)
+                                end)
+                            end
                         end
                         local team = tostring(player.Team)
                         local bool = global.ui_status.automatic_respawn_on_taze
@@ -4250,18 +3645,6 @@ local function loadup()
         end
         stunnedCorrection()
         local function jetpackCorrection()
-            local function antiFlightZones()
-                local function loop()
-                    local bool = global.ui_status.disable_anti_flight_zones
-                    if bool then
-                        for i,v in next, collectionservice:GetTagged("JetPackNoFly") do
-                            v:Destroy()
-                        end
-                    end
-                end
-                createloop(0, loop)
-            end
-            --antiFlightZones()
             local function fuel()
                 local init = getupvalue(client.modules.jetpack.Init, 9)
                 local cache
@@ -4310,6 +3693,10 @@ local function loadup()
         end
         sprintCorrection()
         local function vehicleCorrection()
+            local function force_bodycolor()
+
+            end
+            force_bodycolor()
             local function jump()
                 local function onInputBegan(key)
                     if global.ui_status.vehicle_jump then
@@ -4329,69 +3716,115 @@ local function loadup()
                 uis.InputBegan:connect(onInputBegan)
             end
             jump()
-            local function anchorOnSpeed()
-                local isAnchored = false
-                local stopAnchor = false
-                local function onInputBegan(key)
-                    if isAnchored then
-                        if key.KeyCode == Enum.KeyCode.S then
-                            isAnchored = false
-                            stopAnchor = true
-                            task.delay(0.2, function()
-                                stopAnchor = false
-                            end)
-                        end
-                    end
-                end
-                uis.InputBegan:connect(onInputBegan)
-                local function anchorLoop()
-                    local getLocalVehicle = client.reg.getLocalVehicle
-                    if getLocalVehicle then
-                        local primaryPart = getLocalVehicle.Model.PrimaryPart
-                        if primaryPart then
-                            local shouldAnchor = false
-                            if global.ui_status.anchor_vehicle_on_high_speed then
-                                if isAnchored then
-                                    shouldAnchor = true
-                                else
-                                    shouldAnchor = false
+            local function noTrailer()
+                local cache
+                local currentTrailer
+                local currentVehicle
+                local function tagService()
+                    cache = client.tags.new("noTrailer", 0, false, function(val)
+                        local vehicle = client.reg.getLocalVehicle
+                        if val then
+                            if vehicle and tostring(vehicle.Make) == "Semi" then
+                                if vehicle and vehicle.Model.Preset:FindFirstChild("Trailer") then
+                                    global.USER_INPUT_TYPE_SWITCH = true
+                                    currentTrailer = vehicle.Model.Preset.Trailer
+                                    currentVehicle = vehicle
+                                    vehicle.Model.Preset.Trailer.Parent = nil
                                 end
-                                if stopAnchor then
-                                    shouldAnchor = false
-                                end
-                            else
-                                shouldAnchor = false
-                            end
-                            if isAnchored and not shouldAnchor then
-                                primaryPart.Velocity = Vector3.new()
-                            end
-                            if primaryPart.Anchored ~= shouldAnchor then
-                                primaryPart.Anchored = shouldAnchor
-                            end
-                        end
-                    end
-                end
-                createloop(0, anchorLoop)
-                local function loop()
-                    local bool = global.ui_status.anchor_vehicle_on_high_speed
-                    if bool then
-                        local getSpeedometer = global.registry.getSpeedometer()
-                        if getSpeedometer then
-                            local high_speed_value = global.ui_status.high_speed_value or 200
-                            local speed = tonumber(getSpeedometer.Top.Speed.Text)
-                            if speed > high_speed_value and not isAnchored and not stopAnchor then
-                                isAnchored = true
                             end
                         else
-                            isAnchored = false
+                            if currentTrailer and currentVehicle then
+                                global.USER_INPUT_TYPE_SWITCH = false
+                                currentTrailer.Parent = currentVehicle.Model.Preset
+                                currentTrailer:SetPrimaryPartCFrame(currentVehicle.Model.PrimaryPart.CFrame)
+                                currentTrailer = nil
+                                currentVehicle = nil
+                            end
                         end
-                    else
-                        isAnchored = false
+                    end)
+                end
+                tagService()
+                local function onVehicleEntered(obj)
+                    if obj.Name == "InVehicle" then
+                        if global.ui_status.no_trailer then
+                            local vehicle
+                            while true do
+                                if vehicle then
+                                    break
+                                end
+                                vehicle = client.reg.getLocalVehicle
+                                task.wait()
+                            end
+                            if vehicle and tostring(vehicle.Make) == "Semi" then
+                                local trailer = vehicle.Model.Preset:FindFirstChild("Trailer")
+                                if trailer then
+                                    global.USER_INPUT_TYPE_SWITCH = true
+                                    currentTrailer = vehicle.Model.Preset.Trailer
+                                    currentVehicle = vehicle
+                                    vehicle.Model.Preset.Trailer.Parent = nil
+                                end
+                            end
+                        end
+                    end
+                end
+                local function onVehicleExit(obj)
+                    if obj.Name == "InVehicle" then
+                        if global.ui_status.no_trailer then
+                            if currentTrailer and currentVehicle then
+                                global.USER_INPUT_TYPE_SWITCH = false
+                                currentTrailer.Parent = currentVehicle.Model.Preset
+                                currentTrailer:SetPrimaryPartCFrame(currentVehicle.Model.PrimaryPart.CFrame)
+                                currentTrailer = nil
+                                currentVehicle = nil
+                            end
+                        end
+                    end
+                end
+                local function onCharacterAdded()
+                    player.Character.ChildAdded:connect(onVehicleEntered)
+                    player.Character.ChildRemoved:connect(onVehicleExit)
+                end
+                onCharacterAdded()
+                player.CharacterAdded:connect(onCharacterAdded)
+                local onJumpPressed = client.modules.defaultActions.onJumpPressed._handlerListHead._fn
+                local function onJumpPressedHook(...)
+                    if global.ui_status.no_trailer then
+                        if currentTrailer and currentVehicle then
+                            global.USER_INPUT_TYPE_SWITCH = false
+                            currentTrailer.Parent = currentVehicle.Model.Preset
+                            currentTrailer:SetPrimaryPartCFrame(currentVehicle.Model.PrimaryPart.CFrame)
+                            currentTrailer = nil
+                            currentVehicle = nil
+                        end
+                        task.wait(0.2)
+                    end
+                    return onJumpPressed(...)
+                end
+                client.modules.defaultActions.onJumpPressed._handlerListHead._fn = onJumpPressedHook
+                local onVehicleExited = client.modules.vehicle.OnVehicleExited._handlerListHead._fn
+                local function onVehicleExitedHook(...)
+                    if global.ui_status.no_trailer then
+                        if currentTrailer and currentVehicle then
+                            global.USER_INPUT_TYPE_SWITCH = false
+                            currentTrailer.Parent = currentVehicle.Model.Preset
+                            currentTrailer:SetPrimaryPartCFrame(currentVehicle.Model.PrimaryPart.CFrame)
+                            currentTrailer = nil
+                            currentVehicle = nil
+                        end
+                        task.wait(0.2)
+                    end
+                    return onVehicleExited(...)
+                end
+                client.modules.vehicle.OnVehicleExited._handlerListHead._fn = onVehicleExitedHook
+                local function loop()
+                    local bool = global.ui_status.no_trailer
+                    if cache then
+                        cache.obj.Value = bool
                     end
                 end
                 createloop(0, loop)
             end
-            anchorOnSpeed()
+            noTrailer()
             local function headlights()
                 local function headlights()
                     for i,v in next, client.modules.actionButtonService.active do
@@ -4470,19 +3903,7 @@ local function loadup()
                         vehicle.attemptPassengerEject(player.Name)
                     end
                 end
-                local function getSeats()
-                    local plrs = {}
-                    local getVehicle = getVehicle()
-                    if getVehicle then
-                        local getSeats = vehicle.getSeats(getVehicle.Model)
-                        for i,v in next, getSeats do
-                            if v.Player ~= player then
-                                table.insert(plrs, v)
-                            end
-                        end
-                    end
-                    return plrs
-                end
+                local getSeats = global.registry.getSeats
                 local function loop()
                     local bool = global.ui_status.automatic_eject_vehicle_player
                     if bool then
@@ -4529,7 +3950,7 @@ local function loadup()
                 local function drift()
                     for i,v in next, client.modules.actionButtonService.active do
                         if type(v) == "table" and v.keyCodes then
-                            if table.find(v.keyCodes, Enum.KeyCode.RightShift) then
+                            if table.find(v.keyCodes, Enum.KeyCode.LeftShift) then
                                 v.onPressed(true)
                             end
                         end
@@ -4596,92 +4017,109 @@ local function loadup()
             end
             automaticflip()
             local function breakVehicles()
-                local oldItem
+                global._oldItem = nil
                 local itemName
                 local function onCharacterAdded()
-                    if oldItem then
-                        oldItem = nil
+                    if global._oldItem then
+                        global._oldItem = nil
                         itemName = nil
-                        warn("oldItem reset")
                     end
                 end
                 player.CharacterAdded:connect(onCharacterAdded)
                 local function registerEquippedItem()
+                    local equip = global.registry.equip
+                    local unequipAll = global.registry.unequipAll
+                    local equip_only = {"Rifle", "Pistol", "Shotgun", "Revolver", "Flintlock", "AK47", "Uzi", "Sniper"}
                     local function loop()
-                        if oldItem then
+                        if global._oldItem then
+                            return false
+                        end
+                        if #client.reg.resolveEquippedItems == 0 then
                             return false
                         end
                         local bool = global.ui_status.break_vehicles
                         local instant_break = global.ui_status.instant_break
                         local getEquippedItem = client.reg.getEquippedItem
                         local unequipAfter = false
-                        if bool and not oldItem then
-                            local equip = global.registry.equip
-                            for i,v in next, client.reg.getInventoryItemsFor do
-                                if i ~= 0 then
-                                    if not getEquippedItem then
-                                        local equip_only = {"Rifle", "Pistol", "Shotgun", "Revolver", "Flintlock", "AK47", "Uzi", "Sniper"}
-                                        if table.find(equip_only, v.obj.name) then
-                                            equip(tostring(v.obj.name))
-                                            unequipAfter = true
+                        if bool and not global._oldItem and not global.is_registering_item then
+                            global.is_registering_item = true
+                            local getEquippedItem = client.reg.getEquippedItem
+                            if not getEquippedItem then
+                                unequipAfter = true
+                                for i,v in next, client.reg.resolveEquippedItems do
+                                    if table.find(equip_only, v) then
+                                        equip(v)
+                                        while true do
+                                            if getEquippedItem then
+                                                break
+                                            end
+                                            getEquippedItem = client.reg.getEquippedItem
+                                            task.wait()
                                         end
+                                        break
                                     end
                                 end
-                                task.wait()
                             end
-                            getEquippedItem = client.reg.getEquippedItem
-                            if getEquippedItem and getEquippedItem.BulletEmitter ~= nil then
+                            if global._oldItem then
+                                return false
+                            end
+                            if getEquippedItem and table.find(equip_only, getEquippedItem.__ClassName) then
                                 local className = getEquippedItem.__ClassName
                                 if className then
-                                    local equip = global.registry.equip
-                                    local unequipAll = global.registry.unequipAll
-                                    oldItem = getEquippedItem.BulletEmitter.OnHitSurface._handlerListHead._signal._handlerListHead._fn
-                                    task.delay(0.1, function()
-                                        className = getEquippedItem.__ClassName
+                                    global._oldItem = getEquippedItem.BulletEmitter.OnHitSurface._handlerListHead._signal._handlerListHead._fn
+                                    className = getEquippedItem.__ClassName
+                                    itemName = className
+                                    unequipAll()
+                                    if instant_break then
+                                        getEquippedItem.__ClassName = "Sniper"
+                                        itemName = "Sniper"
+                                    else
+                                        getEquippedItem.__ClassName = className
                                         itemName = className
-                                        unequipAll()
-                                        if instant_break then
-                                            getEquippedItem.__ClassName = "Sniper"
-                                            itemName = "Sniper"
-                                        else
-                                            getEquippedItem.__ClassName = className
-                                            itemName = className
-                                        end
-                                        task.delay(0.1, function()
-                                            if not client.reg.getEquippedItem and not unequipAfter then
-                                                equip(tostring(className))
-                                            end
-                                        end)
-                                    end)
+                                    end
                                 end
                             end
+                            task.delay(1, function()
+                                if global._weaponName then
+                                    while true do
+                                        if client.reg.getEquippedItem then
+                                            break
+                                        end
+                                        equip(global._weaponName)
+                                        task.wait()
+                                    end
+                                    global._weaponName = nil
+                                end
+                            end)
+                            global.is_registering_item = false
                         end
                     end
+                    loop()
                     createloop(0.6, loop)
                 end
                 registerEquippedItem()
                 local function popTire(v)
                     if global.ui_status.instant_break and itemName ~= "Sniper" then
-                        oldItem = nil
+                        global._oldItem = nil
                     elseif not global.ui_status.instant_break and itemName == "Sniper" then
                         if not table.find(client.reg.resolveOwnedItems, "Sniper") then
-                            oldItem = nil
+                            global._oldItem = nil
                         end
                     end
-                    if not oldItem then
+                    if not global._oldItem then
                         return false
                     end
                     local getPlayerVehicle = global.registry.getPlayerVehicle(v)
                     if getPlayerVehicle then
                         local engine = getPlayerVehicle:FindFirstChild("Engine") or getPlayerVehicle:FindFirstChild("BoundingBox")
                         if engine then
-                            for i=1, 8 do
+                            for i=1, 9 do
                                 local break_vehicles = global.ui_status.break_vehicles
                                 if not break_vehicles then
                                     break
                                 end
                                 pcall(function()
-                                    oldItem(engine, engine.Position, Vector3.new(), Enum.Material.SmoothPlastic)
+                                    global._oldItem(engine, engine.Position, Vector3.new(), Enum.Material.SmoothPlastic)
                                 end)
                                 task.wait()
                             end
@@ -4693,7 +4131,7 @@ local function loadup()
                     if not bool then
                         return false
                     end
-                    if oldItem then
+                    if global._oldItem then
                         local only_on_weapon_equipped = global.ui_status.only_on_weapon_equipped
                         if only_on_weapon_equipped then
                             local getEquippedItem = client.reg.getEquippedItem
@@ -4708,10 +4146,6 @@ local function loadup()
                         local isVulnerable = global.registry.isVulnerable
                         local target_enemy_team_only = global.ui_status.target_enemy_team_only  
                         for i,v in next, getClosestPlayerWithVehicleTag do
-                            local randomizer = math.random(10, 30)
-                            if randomizer >= 21 or randomizer <= 25 then
-                                break
-                            end
                             if target_enemy_team_only then
                                 if isVulnerable(player.Team, v.Team) then
                                     popTire(v)
@@ -4725,6 +4159,62 @@ local function loadup()
                 createloop(1, loop)
             end
             breakVehicles()
+            local function destroyDestructibles()
+                local function destructAll(getLocalVehicle)
+                    local folder = client.NonEmptyFolder:GetChildren()
+                    for i,v in next, folder do
+                        for i2,v2 in next, v:GetDescendants() do
+                            if v2:FindFirstChild("TouchInterest") then
+                                firetouchinterest(v2, getLocalVehicle.Model.Engine, 0)
+                                firetouchinterest(v2, getLocalVehicle.Model.Engine, 1)
+                            end
+                        end
+                    end
+                end
+                local delayLoopTick = tick()
+                local function loop()
+                    local bool = global.ui_status.destroy_all_destructibles
+                    if bool then
+                        local destruct_delay = global.ui_status.destruct_delay or 0
+                        if tick() - delayLoopTick > destruct_delay then
+                            local getLocalVehicle = client.reg.getLocalVehicle
+                            if getLocalVehicle then
+                                destructAll(getLocalVehicle)
+                                delayLoopTick = tick()
+                            end
+                        end
+                    end
+                end
+                createloop(0, loop)
+            end
+            destroyDestructibles()
+            local function pitAura()
+                local function loop()
+                    if tostring(player.Team) ~= "Police" then
+                        return false
+                    end
+                    local bool = global.ui_status.pit_aura
+                    if bool then
+                        local range = global.ui_status.pit_aura_range
+                        local getLocalVehicle = client.reg.getLocalVehicle
+                        if getLocalVehicle then
+                            local bumperCollide = getLocalVehicle.Model:FindFirstChild("BumperCollide")
+                            if bumperCollide then
+                                local getClosestPlayer = global.registry.getClosestPlayer(range)
+                                if getClosestPlayer then
+                                    local getPlayerVehicle = global.registry.getPlayerVehicle(getClosestPlayer)
+                                    if getPlayerVehicle then
+                                        firetouchinterest(getPlayerVehicle.BoundingBox, bumperCollide, 0)
+                                        firetouchinterest(getPlayerVehicle.BoundingBox, bumperCollide, 1)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+                createloop(2, loop)
+            end
+            pitAura()
             local function heliModify()
                 local function rope()
                     local module = client.modules.loadingBar.new
@@ -4735,14 +4225,16 @@ local function loadup()
                             if master_switch then
                                 local bool = global.ui_status.instant_rope
                                 if bool and not global.ui_status.rope_aura then
-                                    local getLocalVehicle = client.reg.getLocalVehicle
-                                    if getLocalVehicle then
-                                        local getHeliRope = global.registry.getHeliRope(getLocalVehicle)
-                                        if getHeliRope then
-                                            local getClosestHeliPickup = global.registry.getClosestHeliPickup(getHeliRope, 50)
-                                            if getClosestHeliPickup then
-                                                local cf = getClosestHeliPickup.PrimaryPart.CFrame:PointToObjectSpace(geomUtils.closestPointInPart(getClosestHeliPickup.PrimaryPart, getHeliRope.Position))
-                                                getHeliRope.ReqLink:FireServer(getClosestHeliPickup, cf)
+                                    if not global.ui_status.kill_all_in_vehicle then
+                                        local getLocalVehicle = client.reg.getLocalVehicle
+                                        if getLocalVehicle then
+                                            local getHeliRope = global.registry.getHeliRope(getLocalVehicle)
+                                            if getHeliRope then
+                                                local getClosestHeliPickup = global.registry.getClosestHeliPickup(getHeliRope, 50)
+                                                if getClosestHeliPickup then
+                                                    local cf = getClosestHeliPickup.PrimaryPart.CFrame:PointToObjectSpace(geomUtils.closestPointInPart(getClosestHeliPickup.PrimaryPart, getHeliRope.Position))
+                                                    getHeliRope.ReqLink:FireServer(getClosestHeliPickup, cf)
+                                                end
                                             end
                                         end
                                     end
@@ -4752,13 +4244,363 @@ local function loadup()
                         return module(...)
                     end
                     client.modules.loadingBar.new = hook
+                    local function setRopeLength(getLocalVehicle, num)
+                        local model = getLocalVehicle.Model
+                        if model then
+                            local winch = model:FindFirstChild("Winch")
+                            if winch then
+                                local ropeConstraint = winch:FindFirstChild("RopeConstraint")
+                                if ropeConstraint then
+                                    ropeConstraint.Length = num
+                                end
+                            end
+                        end
+                    end
+                    local function teleportPlayer()
+                        local module = client.modules.vehicle
+                        local heli = module.Classes.Heli
+                        local getPlayerVehicle = global.registry.getPlayerVehicle
+                        local getHeliRope = global.registry.getHeliRope
+                        local isUnderRoof = global.registry.isUnderRoof
+                        local function setHeliY500(getLocalVehicle)
+                            local model = getLocalVehicle.Model
+                            if model then
+                                model.PrimaryPart.CFrame = model.PrimaryPart.CFrame * CFrame.new(0, 500, 0)
+                                task.wait(0.5)
+                            end
+                        end
+                        local function getRopePull(getLocalVehicle)
+                            return getHeliRope(getLocalVehicle)
+                        end
+                        local function getRopeConstraint(getLocalVehicle)
+                            local model = getLocalVehicle.Model
+                            if model then
+                                local winch = model:FindFirstChild("Winch")
+                                if winch then
+                                    local ropeConstraint = winch:FindFirstChild("RopeConstraint")
+                                    if ropeConstraint then
+                                        return ropeConstraint
+                                    end
+                                end
+                            end
+                            return false
+                        end
+                        local function dropRope()
+                            return heli.attemptDropRope()
+                        end
+                        local function fireReqLink(getLocalVehicle, vehicle)
+                            local getRopePull = getRopePull(getLocalVehicle)
+                            if getRopePull then
+                                getRopePull.ReqLink:FireServer(vehicle, Vector3.new())
+                            end
+                        end
+                        local function findTarget(name)
+                            name = tostring(name)
+                            for i,v in next, client.players do
+                                if v.DisplayName == name or v.Name == name or (v.Name):find(name) or (v.DisplayName):find(name) then
+                                    local char = v.Character
+                                    if char then
+                                        return v
+                                    end
+                                end
+                            end
+                            return false
+                        end
+                        global.teleports = {}
+                        local location = "None"
+                        local statusRobberies = global.ui.statusRobberies
+                        statusRobberies["SELECTED_LOCATION"] = ("Current teleport location: %s"):format(location)
+                        local tp_locations = {
+                            Bossroom = Vector3.new(3154, -204, -4538);
+                            Casino = Vector3.new(237, -77, -4498);
+                            Diamonds = Vector3.new(973, -86, -203);
+                            Lava = Vector3.new(1333, -106, -1057);
+                            Powerplant = Vector3.new(118, -11, 2109);
+                            Bank = Vector3.new(113, 18, 925);
+                            Jewelry = Vector3.new(116, 18, 1297);
+                            Museum = Vector3.new(1133, 107, 1306);
+                            Computer = Vector3.new(-84, 69, -4626);
+                        }
+                        local function setLocation(key)
+                            assert(tp_locations[key], "Location invalid")
+                            location = key
+                            statusRobberies["SELECTED_LOCATION"] = ("Current teleport location: %s"):format(location)
+                        end
+                        global.teleports.setLocation = setLocation
+                        local function getLocation()
+                            if location == "None" then
+                                return false
+                            end
+                            return tp_locations[location] or false
+                        end
+                        global.teleports.getLocation = getLocation
+                        local is_teleporting = false
+                        local is_killing_all = false
+                        task.spawn(function()
+                            for i,v in next, client.players do
+                                local char = v.Character
+                                if char then
+                                    local root = char.PrimaryPart
+                                    if root then
+                                        player:RequestStreamAroundAsync(root.Position)
+                                    end
+                                end
+                            end
+                        end)
+                        local function teleport_player(name, shouldKillall)
+                            if is_teleporting then
+                                return false
+                            end
+                            local location = shouldKillall and tp_locations["Lava"] or getLocation()
+                            if not location then
+                                global.notify("Select a location!", 5)
+                                return false
+                            end
+                            is_teleporting = true
+                            local getLocalVehicle = client.reg.getLocalVehicle
+                            if not getLocalVehicle or getLocalVehicle and getLocalVehicle.Type ~= "Heli" then
+                                is_teleporting = false
+                                return global.notify("You have to be in a helicopter", 5)
+                            end
+                            if getLocalVehicle.Passenger then
+                                is_teleporting = false
+                                return false
+                            end
+                            local char = client.playerCharacter
+                            if char then
+                                local root = char.PrimaryPart
+                                if root then
+                                    if isUnderRoof(root) then
+                                        is_teleporting = false
+                                        return global.notify("You have something over you. Get to a open location!", 5)
+                                    end
+                                    local target = findTarget(name)
+                                    if target then
+                                        local character = target.Character
+                                        if not character or character and not character:FindFirstChild("InVehicle") then
+                                            is_teleporting = false
+                                            return global.notify("Target has to be in a vehicle!", 5)
+                                        end
+                                        local primaryPart = character.PrimaryPart
+                                        if primaryPart then
+                                            local targetVehicle = getPlayerVehicle(target)
+                                            if targetVehicle then
+                                                if targetVehicle.Name == "BankTruck" then
+                                                    is_teleporting = false
+                                                    return global.notify(("%s is in Bank Truck. Failed!"):format(target.Name), 5)
+                                                end
+                                                if getLocalVehicle.Model.PrimaryPart.Position.y < 500 then
+                                                    setHeliY500(getLocalVehicle)
+                                                end    
+                                                local preset = getLocalVehicle.Model.Preset
+                                                local winch = getLocalVehicle.Model.Winch
+                                                local rope = {
+                                                    pull = preset:FindFirstChild("RopePull");
+                                                    constraint = winch:FindFirstChild("RopeConstraint");
+                                                }
+                                                if not rope.pull then
+                                                    heli.attemptDropRope()
+                                                    local tg = tick()
+                                                    while true do
+                                                        if preset:FindFirstChild("RopePull") then
+                                                            break
+                                                        end
+                                                        if tick() - tg > 3 then
+                                                            is_teleporting = false
+                                                            break
+                                                        end
+                                                        task.wait()
+                                                    end
+                                                    if not is_teleporting then
+                                                        global.notify("Failed x3", 5)
+                                                        return false
+                                                    end
+                                                    preset = getLocalVehicle.Model.Preset
+                                                    winch = getLocalVehicle.Model.Winch
+                                                    rope.pull = preset.RopePull
+                                                    rope.constraint = winch.RopeConstraint
+                                                end
+                                                rope.pull.CanCollide = false
+                                                rope.constraint.WinchEnabled = true
+                                                local reqLink = rope.pull:FindFirstChild("ReqLink")
+                                                if reqLink then
+                                                    local hb, clock = nil, tick()
+                                                    hb = runservice.Heartbeat:connect(function()
+                                                        if tick() - clock > 2 then
+                                                            is_teleporting = false
+                                                            hb:disconnect()
+                                                            hb = nil
+                                                            return false
+                                                        end
+                                                        if not rope.pull or not rope.pull:IsDescendantOf(workspace) then
+                                                            is_teleporting = false
+                                                            hb:disconnect()
+                                                            hb = nil
+                                                            return false
+                                                        end
+                                                        if not root then
+                                                            is_teleporting = false
+                                                            hb:disconnect()
+                                                            hb = nil
+                                                            return false
+                                                        end
+                                                        if rope.pull:FindFirstChild("AttachedTo") and rope.pull.AttachedTo.Value then
+                                                            hb:disconnect()
+                                                            hb = nil
+                                                            return false
+                                                        end
+                                                        rope.pull.CFrame = targetVehicle.PrimaryPart.CFrame
+                                                        reqLink:FireServer(targetVehicle, Vector3.new())
+                                                    end)
+                                                    while true do
+                                                        if not hb then
+                                                            break
+                                                        end
+                                                        task.wait()
+                                                    end
+                                                    if not is_teleporting then
+                                                        global.notify("Failed!", 5)
+                                                        return false
+                                                    else
+                                                        local localWeld = root:FindFirstChild("Weld")
+                                                        if localWeld then
+                                                            localWeld.Part1 = targetVehicle.Seat
+                                                        end
+                                                        hb, clock = nil, tick()
+                                                        hb = runservice.Heartbeat:connect(function()
+                                                            if tick() - clock > 2 then
+                                                                is_teleporting = false
+                                                                hb:disconnect()
+                                                                hb = nil
+                                                                return false
+                                                            end
+                                                            if not client.reg.getLocalVehicle then
+                                                                is_teleporting = false
+                                                                hb:disconnect()
+                                                                hb = nil
+                                                                return false
+                                                            end
+                                                            if not rope.pull then
+                                                                is_teleporting = false
+                                                                hb:disconnect()
+                                                                hb = nil
+                                                                return false
+                                                            end
+                                                            if not rope.pull:FindFirstChild("AttachedTo") or not rope.pull.AttachedTo.Value then
+                                                                hb:disconnect()
+                                                                hb = nil
+                                                                return false
+                                                            end
+                                                            if not character:FindFirstChild("InVehicle") then
+                                                                hb:disconnect()
+                                                                hb = nil
+                                                                return false
+                                                            end
+                                                            character:PivotTo(CFrame.new(location))
+                                                        end)
+                                                        while true do
+                                                            if not hb then
+                                                                break
+                                                            end
+                                                            task.wait()
+                                                        end
+                                                        if not is_teleporting then
+                                                            global.notify("Failed x2!", 5)
+                                                            return false
+                                                        end
+                                                        if localWeld then
+                                                            localWeld.Part1 = getLocalVehicle.Seat
+                                                        end
+                                                        if rope.pull and rope.pull:FindFirstChild("AttachedTo") and rope.pull.AttachedTo.Value then
+                                                            heli.attemptDropRope()
+                                                            while true do
+                                                                if not rope.pull:IsDescendantOf(workspace) then
+                                                                    break
+                                                                end
+                                                                task.wait()
+                                                            end
+                                                        end
+                                                        if not shouldKillall then
+                                                            if localWeld then -- doar sa fie sigur :)
+                                                                localWeld.Part1 = getLocalVehicle.Seat
+                                                            end
+                                                            global.notify("Done.", 5)
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    else
+                                        is_teleporting = false
+                                        return global.notify(("Couldn't find target with name `%s`"):format(name), 5)
+                                    end
+                                end
+                            end
+                            is_teleporting = false
+                        end
+                        global.teleports.teleport_player = teleport_player
+                        local function loop()
+                            if is_killing_all then
+                                return false
+                            end
+                            if client.reg.getLocalVehicle and client.reg.getLocalVehicle.Type == "Heli" then
+                                is_killing_all = true
+                                local kill_all_vehicle_ignore_teammates = global.ui_status.kill_all_vehicle_ignore_teammates
+                                for i,v in next, client.players do
+                                    if not global.ui_status.kill_all_in_vehicle then
+                                        break
+                                    end
+                                    if kill_all_vehicle_ignore_teammates then
+                                        if tostring(v.Team) == tostring(player.Team) then
+                                            continue
+                                        end
+                                    end
+                                    local char = v.Character
+                                    if char then
+                                        if char:FindFirstChild("InVehicle") then
+                                            teleport_player(v.Name, true)
+                                        end
+                                    end
+                                    task.wait(0.15)
+                                end
+                                is_killing_all = false
+                            end
+                        end
+                        local tagCache
+                        local loopf
+                        local function tagService()
+                            tagCache = client.tags.new("kill_all_in_vehicle", 0, false, function(val)
+                                if val then
+                                    local vehicle = client.reg.getLocalVehicle
+                                    if not vehicle or vehicle and vehicle.Type ~= "Heli" then
+                                        global.notify("You have to be in a helicopter", 5)
+                                    end
+                                    loopf = createloop(0, loop)
+                                else
+                                    if loopf then
+                                        loopf:disconnect()
+                                        loopf = nil
+                                    end
+                                end
+                            end)
+                        end
+                        tagService()
+                        local function loop()
+                            local bool = global.ui_status.kill_all_in_vehicle
+                            if tagCache then
+                                tagCache.obj.Value = bool
+                            end
+                        end
+                        createloop(0, loop)
+                    end
+                    teleportPlayer()
                     local function loop()
                         local master_switch = global.ui_status.master_switch_heli_speed
                         if master_switch then
                             local bool = global.ui_status.rope_aura
-                            if bool and global.ui_status.instant_rope then
-                                local getLocalVehicle = client.reg.getLocalVehicle
-                                if getLocalVehicle then
+                            local getLocalVehicle = client.reg.getLocalVehicle
+                            if getLocalVehicle then
+                                if bool and global.ui_status.instant_rope and not global.ui_status.kill_all_in_vehicle then
                                     local getHeliRope = global.registry.getHeliRope(getLocalVehicle)
                                     if getHeliRope and getHeliRope.AttachedTo.Value == nil then
                                         local getClosestHeliPickup = global.registry.getClosestHeliPickup(getHeliRope, 150)
@@ -4768,6 +4610,8 @@ local function loadup()
                                         end
                                     end
                                 end
+                                local rope_length = global.ui_status.rope_length or 50
+                                setRopeLength(getLocalVehicle, rope_length)
                             end
                         end
                     end
@@ -4825,7 +4669,7 @@ local function loadup()
                     createloop(0, loop)
                 end
                 height()
-                local function droneHeight()
+                local function droneHeight() 
                     local module = client.modules.rayCast.RayIgnoreNonCollideWithIgnoreList
                     local function hook(...)
                         if string.find(debug.traceback(), "Heli") then
@@ -4841,7 +4685,9 @@ local function loadup()
                         end
                         return module(...)
                     end
-                    client.modules.rayCast.RayIgnoreNonCollideWithIgnoreList = hook
+                    table.insert(client.rayHooks, {
+                        fn = hook
+                    })
                 end
                 droneHeight()
             end
@@ -4876,7 +4722,7 @@ local function loadup()
                         end
                     end)
                     return vehicleEnter(...)
-                end
+                end 
                 local function onVoltVehicleLeave(...)
                     if #volts > 0 then
                         volts[#volts]:disconnect()
@@ -4935,8 +4781,6 @@ local function loadup()
                         if #bikes > 0 then
                             bikes[#bikes]:disconnect()
                             table.clear(bikes)
-                        else
-                            log("#bikes < 0")
                         end
                     end
                     return vehicleBikeLeave(bike)
@@ -5006,13 +4850,15 @@ local function loadup()
                     local seekingMissileUtils = client.modules.seekingMissileUtils
                     local setTargetPos = seekingMissileUtils.setTargetPos
                     local function onSetTargetPos(obj, x)
-                        local getClosestPlayer = client.reg.getClosestPlayerByFov
-                        if getClosestPlayer then
-                            local char = getClosestPlayer.Character
-                            if char then
-                                local primaryPart = char.PrimaryPart
-                                if primaryPart then
-                                    x = primaryPart.Position
+                        if #plane > 0 then
+                            local getClosestPlayer = client.reg.getClosestPlayerByFov
+                            if getClosestPlayer then
+                                local char = getClosestPlayer.Character
+                                if char then
+                                    local primaryPart = char.PrimaryPart
+                                    if primaryPart then
+                                        x = primaryPart.Position
+                                    end
                                 end
                             end
                         end
@@ -5069,7 +4915,7 @@ local function loadup()
                         if plane[x.Plane.Id] and y.Player == player then
                             global.PLANE_MEMORY = nil
                             plane[x.Plane.Id].LIFE:disconnect()
-                            table.clear(plane)
+                            plane[x.Plane.Id] = nil
                         end
                         return jetUnmountSeat(x, y)
                     end
@@ -5077,7 +4923,7 @@ local function loadup()
                         if plane[x.Plane.Id] then
                             global.PLANE_MEMORY = nil
                             plane[x.Plane.Id].LIFE:disconnect()
-                            table.clear(plane)
+                            plane[x.Plane.Id] = nil
                         end
                         return jetDestroy(x)
                     end
@@ -5129,7 +4975,7 @@ local function loadup()
                         if plane[x.Plane.Id] and y.Player == player then
                             global.PLANE_MEMORY = nil
                             plane[x.Plane.Id].LIFE:disconnect()
-                            table.clear(plane)
+                            plane[x.Plane.Id] = nil
                         end
                         return stuntUnmountSeat(x, y)
                     end
@@ -5137,7 +4983,7 @@ local function loadup()
                         if plane[x.Plane.Id] then
                             global.PLANE_MEMORY = nil
                             plane[x.Plane.Id].LIFE:disconnect()
-                            table.clear(plane)
+                            plane[x.Plane.Id] = nil
                         end
                         return stuntDestroy(x)
                     end
@@ -5162,10 +5008,10 @@ local function loadup()
                             end
                             if car.GarageEngineSpeed ~= nil and tostring(car.Make) ~= "Dirtbike" then
                                 local memory = {
-                                    speed = car.GarageEngineSpeed;
-                                    brakes = car.GarageBrakes;
-                                    turnspeed = car.TurnSpeed;
-                                    height = car.Height;
+                                    speed = car.GarageEngineSpeed or 1;
+                                    brakes = car.GarageBrakes or 1;
+                                    turnspeed = car.TurnSpeed or 1;
+                                    height = car.Height or 3;
                                 }
                                 global.registry.vehicle_memory = memory
                                 local bool = global.ui_status.master_switch_carmodify
@@ -5181,10 +5027,10 @@ local function loadup()
                                 end
                                 task.delay(0.1, function()
                                     local modifytbl = {
-                                        speed = global.ui_status.car_speed;
-                                        brakes = global.ui_status.car_brakes;
-                                        turnspeed = global.ui_status.car_turnspeed;
-                                        height = global.ui_status.car_height;
+                                        speed = global.ui_status.car_speed or 1;
+                                        brakes = global.ui_status.car_brakes or 1;
+                                        turnspeed = global.ui_status.car_turnspeed or 1;
+                                        height = global.ui_status.car_height or 3;
                                     }
                                     if car then
                                         car.GarageEngineSpeed = modifytbl.speed
@@ -5225,27 +5071,27 @@ local function loadup()
                     if not bool then
                         if memory then
                             if car and car.GarageEngineSpeed ~= nil and tostring(car.Make) ~= "Dirtbike" then
-                                car.GarageEngineSpeed = memory.speed
-                                car.GarageBrakes = memory.brakes
-                                car.TurnSpeed = memory.turnspeed
-                                car.Height = memory.height
+                                car.GarageEngineSpeed = memory.speed or 1
+                                car.GarageBrakes = memory.brakes or 1
+                                car.TurnSpeed = memory.turnspeed or 1
+                                car.Height = memory.height or 3
                             end
                         end
                         return false
                     end
                     if car and not memory then
                         memory = {}
-                        memory.speed = car.GarageEngineSpeed
-                        memory.brakes = car.GarageBrakes
-                        memory.turnspeed = car.TurnSpeed
-                        memory.height = car.Height
+                        memory.speed = car.GarageEngineSpeed or 1
+                        memory.brakes = car.GarageBrakes or 1
+                        memory.turnspeed = car.TurnSpeed or 1
+                        memory.height = car.Height or 3
                         global.registry.vehicle_memory = memory
                     end
                     if memory then
-                        local car_speed = global.ui_status.car_speed
-                        local car_brakes = global.ui_status.car_brakes
-                        local car_turnspeed = global.ui_status.car_turnspeed
-                        local car_height = global.ui_status.car_height
+                        local car_speed = global.ui_status.car_speed or 1
+                        local car_brakes = global.ui_status.car_brakes or 1
+                        local car_turnspeed = global.ui_status.car_turnspeed or 1
+                        local car_height = global.ui_status.car_height or 3
                         if car and car.GarageEngineSpeed ~= nil and tostring(car.Make) ~= "Dirtbike" then
                             car.GarageEngineSpeed = car_speed
                             car.GarageBrakes = car_brakes
@@ -5350,28 +5196,38 @@ local function loadup()
         vehicleCorrection()
         local function equipCorrection()
             local function onDuck()
-                local upv = getupvalue(global.registry._equipconditions, 1)
-                local hook = {
-                    GetLocalVehiclePacket = function()
-                        local bool = global.ui_status.allow_equip_in_vehicle
-                        if bool then
-                            return false
-                        end
-                        return upv.GetLocalVehiclePacket()
-                    end;
-                }
-                setupvalue(global.registry._equipconditions,1,hook)
+                local crawl = getupvalue(global.registry.iscrawling, 1)
                 local function loop()
                     local bool = global.ui_status.allow_equip_on_duck
                     if bool then
-                        if getupvalue(global.registry.iscrawling,1).IsCrawling then
-                            getupvalue(global.registry.iscrawling,1).IsCrawling = false
+                        if crawl.IsCrawling then
+                            crawl.IsCrawling = false
                         end
                     end
                 end
                 createloop(0, loop)
             end
             onDuck()
+            local function hasItems()
+                local function loop()
+                    local bool = global.ui_status.allow_equip_with_items
+                    local gem = player.Folder:FindFirstChild("Gem")
+                    local bag = player.Folder:FindFirstChild("Bag")
+                    local crate = player.Folder:FindFirstChild("Crate")
+                    local inventoryUtils = client.modules.inventoryItemUtils
+                    if gem then
+                        inventoryUtils.setLocked(gem, not bool)
+                    end
+                    if crate then
+                        inventoryUtils.setLocked(crate, not bool)
+                    end
+                    if bag then
+                        inventoryUtils.setLocked(bag, not bool)
+                    end
+                end
+                createloop(1, loop)
+            end
+            hasItems()
             local function isFlying()
                 local module = client.modules.jetpack.IsFlying
                 local function hook(...)
@@ -5417,6 +5273,83 @@ local function loadup()
         end
         soundCorrection()
         local function gunCorrection()
+            local function cacheForGetEq()
+                local cache
+                local function tagService()
+                    cache = client.tags.new("getEquippedItem", 0, false, function(val)
+                        if val then
+                            for i,v in next, client.onGetEq do
+                                v._fn()
+                            end
+                        else
+                            local playerGui = player.PlayerGui
+                            local crosshairs = {}
+                            for i,v in next, playerGui:GetChildren() do
+                                if v.Name == "CrossHairGui" then
+                                    table.insert(crosshairs, v)
+                                end
+                            end
+                            task.delay(0.2, function()
+                                for i,v in next, crosshairs do
+                                    v:Destroy()
+                                end
+                            end)
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local getEquippedItem = client.reg.getEquippedItem and true or false
+                    if cache then
+                        cache.obj.Value = getEquippedItem
+                    end
+                end
+                createloop(0, loop)
+            end
+            cacheForGetEq()
+            local function wallbang()
+                local cache
+                local function tagService()
+                    cache = client.tags.new("wallbang", 0, false, function(val)
+                        local getEquippedItem = client.reg.getEquippedItem
+                        if getEquippedItem and getEquippedItem.IgnoreList then
+                            local ignoreList = getEquippedItem.IgnoreList
+                            if val then
+                                table.insert(ignoreList, workspace)
+                            else
+                                for i,v in next, ignoreList do
+                                    if v == workspace then
+                                        table.remove(ignoreList)
+                                    end
+                                end
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function _fn()
+                    local bool = global.ui_status.wallbang
+                    if bool then
+                        local getEquippedItem = client.reg.getEquippedItem
+                        if getEquippedItem then
+                            if getEquippedItem.IgnoreList then
+                                table.insert(getEquippedItem.IgnoreList, workspace)
+                            end
+                        end
+                    end
+                end
+                table.insert(client.onGetEq, {
+                    _fn = _fn;
+                })
+                local function loop()
+                    local bool = global.ui_status.wallbang
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            wallbang()
             local function scopegui()
                 local function loop()
                     local bool = global.ui_status.anti_scope_ui
@@ -5435,6 +5368,214 @@ local function loadup()
                 createloop(0, loop)
             end
             scopegui()
+            local function instantSeek()
+                local rocketLauncherConsts = client.modules.rocketLauncherConsts
+                setreadonly(rocketLauncherConsts, false)
+                local cache
+                local function tagService()
+                    cache = client.tags.new("instantSeek", 0, false, function(val)
+                        if val then
+                            rocketLauncherConsts.SEEKING_LOCK_MIN_DURATION = 0
+                        else
+                            rocketLauncherConsts.SEEKING_LOCK_MIN_DURATION = 2
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.instant_seek
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            instantSeek()
+            local function instantReload()
+                local function getCurrentGun()
+                    local gun = client.reg.getEquippedItem
+                    if gun then
+                        return gun
+                    end
+                    return false
+                end
+                local function getCurrentGunClassName()
+                    local getCurrentGun = getCurrentGun()
+                    if getCurrentGun and getCurrentGun.BulletEmitter then
+                        return getCurrentGun.__ClassName
+                    end
+                    return "unknown"
+                end
+                local function hasPlayerEquippedClassNameGun(name)
+                    if table.find(client.reg.resolveEquippedItems, name) then
+                        return true
+                    end
+                    return false
+                end
+                local function isWeaponFlagOutOfAmmo(gun)
+                    local getCurrentGun = gun
+                    if getCurrentGun then
+                        if getCurrentGun.IsReloading then
+                            return true
+                        end
+                        if getCurrentGun.AmmoGui and getCurrentGun.AmmoGui.FlagOutOfAmmo then
+                            return true
+                        end
+                    end
+                    return false
+                end
+                local function getHotbarItems()
+                    return client.modules.hotbarItemSystem.getSortedHotbarItemsFor(player)
+                end
+                local function setDisplayOrder(obj, num)
+                    return client.modules.hotbarItemUtils.setDisplayOrder(obj, num)
+                end
+                local isReloading = false
+                local onLastReload = tick()
+                local function loop()
+                    if isReloading and global.is_instant_reloading then
+                        return false
+                    end
+                    local dropGun = global.registry.dropGun
+                    local equipOwnedItem = global.registry.equipOwnedItem
+                    local equip = global.registry.equip
+                    local currentGun = getCurrentGun()
+                    if currentGun and currentGun.BulletEmitter and isWeaponFlagOutOfAmmo(currentGun) then
+                        global.is_instant_reloading = true
+                        onLastReload = tick()
+                        isReloading = true
+                        local __ClassName = getCurrentGunClassName()
+                        if __ClassName == "unknown" or __ClassName == "C4" or __ClassName == "RocketLauncher" or __ClassName == "Grenade" or __ClassName == "SmokeGrenade" then
+                            isReloading = false
+                            global.is_instant_reloading = false
+                            return false
+                        end
+                        if __ClassName == "Flintlock" or __ClassName == "Sniper" then
+                            task.wait(0.2)
+                        end
+                        local reload_timeout
+                        reload_timeout = createloop(0, function()
+                            if not client.playerCharacter or client.playerCharacter and not client.playerCharacter.PrimaryPart then 
+                                isReloading = false
+                                global.is_instant_reloading = false
+                                reload_timeout:disconnect()
+                                reload_timeout = nil
+                                return false
+                            end
+                            if not isReloading then
+                                reload_timeout:disconnect()
+                                reload_timeout = nil
+                            else
+                                if tick() - onLastReload > 3 then
+                                    log("RELOAD TIMEOUT")
+                                    isReloading = false
+                                    global.is_instant_reloading = false
+                                    reload_timeout:disconnect()
+                                    reload_timeout = nil
+                                end
+                            end
+                        end)
+                        local hotbar1 = getHotbarItems()
+                        local oldPosition
+                        for i,v in next, hotbar1 do
+                            if v.obj and tostring(v.obj) == tostring(__ClassName) then
+                                oldPosition = i
+                                break
+                            end
+                        end
+                        if not global.is_instant_reloading then
+                            isReloading = false
+                            global.is_instant_reloading = false
+                            return false
+                        end
+                        equipOwnedItem(__ClassName, true)
+                        while true do
+                            if not getCurrentGun() then
+                                equipOwnedItem(__ClassName)
+                                break
+                            end
+                            if getCurrentGun() then
+                                equipOwnedItem(__ClassName, true)
+                            end
+                            task.wait()
+                        end
+                        while true do
+                            if hasPlayerEquippedClassNameGun(__ClassName) then
+                                equip(__ClassName)
+                                break
+                            end
+                            if not hasPlayerEquippedClassNameGun(__ClassName) then
+                                equipOwnedItem(__ClassName)
+                            end
+                            task.wait()
+                        end
+                        while true do
+                            if hasPlayerEquippedClassNameGun(__ClassName) then
+                                if getCurrentGun() then
+                                    break
+                                end
+                                equip(__ClassName)
+                            else
+                                equipOwnedItem(__ClassName)
+                                while true do
+                                    if hasPlayerEquippedClassNameGun(__ClassName) then
+                                        equip(__ClassName)
+                                        break
+                                    end
+                                    if not hasPlayerEquippedClassNameGun(__ClassName) then
+                                        equipOwnedItem(__ClassName)
+                                    end
+                                    task.wait()
+                                end
+                                if not getCurrentGun() then
+                                    equip(__ClassName)
+                                end
+                            end
+                            if not getCurrentGun() then
+                                equip(__ClassName)
+                                if getCurrentGun() then
+                                    break
+                                else
+                                    equip(__ClassName)
+                                end
+                            end
+                            task.wait()
+                        end
+                        local hotbar2 = getHotbarItems()
+                        for i,v in next, hotbar2 do
+                            if v.obj and tostring(v.obj) == tostring(__ClassName) then
+                                setDisplayOrder(v.obj, oldPosition)
+                                break
+                            end
+                        end
+                        global.is_instant_reloading = false
+                        isReloading = false
+                    end
+                end
+                local loopf
+                local cache
+                local function tagService()
+                    cache = client.tags.new("instantReload", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.instant_reload
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            instantReload()
             local function weaponHooks()
                 local rocketAccelerate
                 local flintlockAccelerate
@@ -5452,30 +5593,223 @@ local function loadup()
                     end
                     return flintlockAccelerate(...)
                 end
+                local function knockback()
+                    local getEquippedItem = client.reg.getEquippedItem
+                    if getEquippedItem and getEquippedItem.__ClassName == "Flintlock" then
+                        if not flintlockAccelerate then
+                            flintlockAccelerate = getEquippedItem.SpringKnockback.Accelerate
+                            getEquippedItem.SpringKnockback.Accelerate = knockbackHook
+                        end
+                    else
+                        flintlockAccelerate = nil
+                    end
+                end
+                local function recoil()
+                    local getEquippedItem = client.reg.getEquippedItem
+                    if getEquippedItem and getEquippedItem.__ClassName == "RocketLauncher" then
+                        if not rocketAccelerate then
+                            rocketAccelerate = getEquippedItem.SpringCamera.Accelerate
+                            getEquippedItem.SpringCamera.Accelerate = rocketHook
+                        end
+                    else
+                        rocketAccelerate = nil
+                    end
+                end
+                local kbcache, kbloop
+                local recoilcache, recoilloop
+                local function tagService()
+                    kbcache = client.tags.new("knockback", 0, false, function(val)
+                        if val then
+                            kbloop = createloop(0, knockback)
+                        else
+                            if kbloop then
+                                kbloop:disconnect()
+                                kbloop = nil
+                            end
+                        end
+                    end)
+                    recoilcache = client.tags.new("recoil", 0, false, function(val)
+                        if val then
+                            recoilloop = createloop(0, recoil)
+                        else
+                            if recoilloop then
+                                recoilloop:disconnect()
+                                recoilloop = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
                 local function loop()
-                    local no_recoil = global.ui_status.no_recoil
-                    local anti_flintlock_knockback = global.ui_status.anti_flintlock_knockback
-                    if no_recoil or anti_flintlock_knockback then
-                        local getEquippedItem = client.reg.getEquippedItem
-                        if getEquippedItem then
-                            if no_recoil then
-                                if getEquippedItem.__ClassName == "RocketLauncher" then
-                                    if not rocketAccelerate then
-                                        rocketAccelerate = getEquippedItem.SpringCamera.Accelerate
-                                        getEquippedItem.SpringCamera.Accelerate = rocketHook
+                    local bool = global.ui_status.no_recoil
+                    if recoilcache then
+                        recoilcache.obj.Value = bool
+                    end
+                    local kbbool = global.ui_status.anti_flintlock_knockback
+                    if kbcache then
+                        kbcache.obj.Value = kbbool
+                    end
+                end
+                createloop(0, loop)
+            end
+            weaponHooks()
+            local function killaura()
+                local validGuns = {
+                    "Rifle";
+                    "Pistol";
+                    "Shotgun";
+                    "Revolver";
+                    "Flintlock";
+                    "AK47";
+                    "Uzi";
+                    "PlasmaPistol";
+                    "Sniper";
+                }
+                local function isHoldingWeapon()
+                    return client.reg.getEquippedItem
+                end
+                local function hasPistolInInventory()
+                    return table.find(client.reg.resolveEquippedItems, "Pistol")
+                end
+                local equipOwnedItem = global.registry.equipOwnedItem
+                local shootGun = global.registry.shootGun
+                local unequipAll = global.registry.unequipAll
+                local equip = global.registry.equip
+                local last_shot_at = tick()
+                local oldTarget
+                local isScanning = false
+                local weapon_used
+                local function loop()
+                    if global.is_instant_reloading then
+                        return false
+                    end
+                    if global.is_registering_item then
+                        return false
+                    end
+                    if client.state.isLocalInVehicle then
+                        return false
+                    end
+                    if isScanning then
+                        return false
+                    end
+                    isScanning = true
+                    if weapon_used then
+                        if weapon_used == "Sniper" or weapon_used == "Flintlock" then
+                            task.wait(0.2)
+                        end
+                    end
+                    local hasPistolEquipped = false
+                    local getClosestVulnerablePlayer = client.reg.getClosestVulnerablePlayer
+                    if getClosestVulnerablePlayer then
+                        local isHolding = isHoldingWeapon()
+                        if not isHolding then
+                            hasPistolEquipped = false
+                            local hasPistol = hasPistolInInventory()
+                            if not hasPistol then
+                                while true do
+                                    if hasPistol then
+                                        break
                                     end
-                                else
-                                    rocketAccelerate = nil
+                                    equipOwnedItem("Pistol")
+                                    hasPistol = hasPistolInInventory()
+                                    task.wait(0.2)
                                 end
                             end
-                            if anti_flintlock_knockback then
-                                if getEquippedItem.__ClassName == "Flintlock" then
-                                    if not flintlockAccelerate then
-                                        flintlockAccelerate = getEquippedItem.SpringKnockback.Accelerate
-                                        getEquippedItem.SpringKnockback.Accelerate = knockbackHook
+                            while true do
+                                if isHolding then
+                                    break
+                                end
+                                equip("Pistol")
+                                isHolding = hasPistolInInventory()
+                                task.wait(0.2)
+                            end
+                        else
+                            if not table.find(validGuns, isHolding.__ClassName) then
+                                unequipAll()
+                                isScanning = false
+                                return false
+                            end
+                            weapon_used = isHolding.__ClassName
+                            hasPistolEquipped = true
+                        end
+                        if oldTarget ~= getClosestVulnerablePlayer then
+                            oldTarget = getClosestVulnerablePlayer
+                            local char = getClosestVulnerablePlayer.Character
+                            if char then
+                                local hum = char:FindFirstChild("Humanoid")
+                                if hum then
+                                    local connection
+                                    connection = hum.Died:connect(function()
+                                        connection:disconnect()
+                                        print("closest player died")
+                                        connection = nil
+                                        oldTarget = nil
+                                        if not hasPistolEquipped then
+                                            unequipAll()
+                                        end
+                                    end)
+                                end
+                            end
+                        end
+                        shootGun()
+                    end
+                    isScanning = false
+                end
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("killaura", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.killaura_masterswitch
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            killaura()
+            local function autoShoot()
+                local lastUsedShoot = tick()
+                local checkWallBeforePenetration = global.registry.checkWallBeforePenetration
+                local function loop()
+                    local master_switch = global.ui_status.master_switch_silentaim
+                    if master_switch and global._loaded then
+                        local bool = global.ui_status.automatic_shoot
+                        if bool then
+                            local getEquippedItem = client.reg.getEquippedItem 
+                            if getEquippedItem then
+                                local getClosestPlayerByFov = client.reg.getClosestPlayerByFov
+                                if getClosestPlayerByFov then
+                                    if global.ui_status.no_wall_penetration then
+                                        if not checkWallBeforePenetration(getClosestPlayerByFov) then
+                                            return false
+                                        end
                                     end
-                                else
-                                    flintlockAccelerate = nil
+                                    if getEquippedItem.__ClassName == "RocketLauncher" or getEquippedItem.__ClassName == "C4" or getEquippedItem.__ClassName == "SmokeGrenade" then
+                                        return false
+                                    end
+                                    if getEquippedItem.__ClassName == "Sniper" or getEquippedItem.__ClassName == "Flintlock" then
+                                        if tick() - lastUsedShoot < 1 then
+                                            return false
+                                        end
+                                        lastUsedShoot = tick()
+                                        task.wait(0.2)
+                                    end
+                                    local shootGun = global.registry.shootGun
+                                    if shootGun then
+                                        return shootGun()
+                                    end
                                 end
                             end
                         end
@@ -5483,7 +5817,7 @@ local function loadup()
                 end
                 createloop(0, loop)
             end
-            weaponHooks()
+            autoShoot()
             local function automatic_fire()
                 local automaticweapons = {
                     Flintlock = true;
@@ -5499,7 +5833,7 @@ local function loadup()
                     local bool = global.ui_status.automatic_fire
                     local getEquippedItem = client.reg.getEquippedItem
                     if getEquippedItem then
-                        if automaticweapons[getEquippedItem.inventoryItemValue.name] then
+                        if automaticweapons[getEquippedItem.__ClassName] then
                             getEquippedItem.Config.FireAuto = bool
                         end
                     end
@@ -5526,8 +5860,8 @@ local function loadup()
                     local getEquippedItem = client.reg.getEquippedItem
                     if getEquippedItem then
                         if not bool then
-                            if camShake[getEquippedItem.inventoryItemValue.name] then
-                                getEquippedItem.Config.CamShakeMagnitude = camShake[getEquippedItem.inventoryItemValue.name]
+                            if camShake[getEquippedItem.__ClassName] then
+                                getEquippedItem.Config.CamShakeMagnitude = camShake[getEquippedItem.__ClassName]
                             end
                         else
                             if getEquippedItem.Config.CamShakeMagnitude ~= nil then
@@ -5539,6 +5873,98 @@ local function loadup()
                 createloop(0, loop)
             end
             no_recoil()
+            local function no_spread()
+                local function loop()
+                    local bool = global.ui_status.no_spread
+                    local getEquippedItem = client.reg.getEquippedItem
+                    if getEquippedItem then
+                        local cfg = getEquippedItem.Config
+                        if not cfg.DefaultSpread then
+                            cfg.DefaultSpread = cfg.BulletSpread
+                        else
+                            if not bool then
+                                cfg.BulletSpread = cfg.DefaultSpread
+                            else
+                                cfg.BulletSpread = 0
+                            end
+                        end
+                    end
+                end
+                createloop(0, loop)
+            end
+            no_spread()
+            local function quickfire()
+                local shootGun = global.registry.shootGun
+                global.inputs = {
+                    mouse1 = false; 
+                }
+                local function onInputBegan(input)
+                    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        global.inputs.mouse1 = true
+                    end
+                end
+                local function onInputEnded(input)
+                    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        global.inputs.mouse1 = false
+                    end
+                end
+                uis.InputBegan:connect(onInputBegan)
+                uis.InputEnded:connect(onInputEnded)
+                local function _fn()
+                    if global.ui_status.quickfire and global._loaded then
+                        local loop
+                        local lastTimeShot = tick()
+                        loop = createloop(0, function()
+                            if not global.ui_status.quickfire then
+                                loop:disconnect()
+                                loop = nil
+                                return false
+                            end
+                            local gun = client.reg.getEquippedItem
+                            if not gun then
+                                loop:disconnect()
+                                loop = nil
+                                return false
+                            end
+                            if not gun or gun and not gun.CheckNextShotPossible then
+                                return false
+                            end
+                            if gun.CheckNextShotPossible and not gun:CheckNextShotPossible() then
+                                return false
+                            end
+                            if gun.__ClassName == "Sniper" or gun.__ClassName == "Flintlock" then
+                                if tick() - lastTimeShot < 0.4 then
+                                    return false
+                                end
+                                lastTimeShot = tick()
+                            end
+                            if global.inputs.mouse1 then
+                                shootGun()
+                            end
+                        end)
+                    end
+                end
+                local tagCache
+                local function tagService()
+                    tagCache = client.tags.new("quickfire", 0, false, function(val)
+                        if val then
+                            _fn()
+                        end
+                    end)
+                end
+                tagService()
+                table.insert(client.onGetEq, {
+                    _fn = _fn;
+                })
+                local function loop()
+                    local bool = global.ui_status.quickfire
+                    if tagCache then
+                        tagCache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            quickfire()
         end
         gunCorrection()
         local function npcCorrection()
@@ -5556,91 +5982,155 @@ local function loadup()
             isAirdrop()
         end
         npcCorrection()
-        local function museumCorrection()
-            local function getMuseumStatus()
-                local getRobberyStatus = global.registry.getRobberyStatus
-                local getMuseumStatus = getRobberyStatus("MUSEUM")
-                if getMuseumStatus == "OPENED" then
-                    return true
+        local function airdropCorrection()
+            --!!! adauga un check mai incolo daca se opreste, am uitat sa il bag mai de mult nush cum
+            local holdEAction
+            local actionButtonService = client.modules.actionButtonService
+            task.spawn(function()
+                for i,v in next, actionButtonService.active do
+                    if v.image == "rbxassetid://10770151584" then
+                        holdEAction = v
+                        break
+                    end
                 end
-                if getMuseumStatus == "STARTED" then
-                    return 0
-                end 
+            end)
+            local function isNearAirdrop()
+                local char = client.playerCharacter
+                if not char then
+                    return false
+                end
+                local root = char.PrimaryPart
+                if not root then
+                    return false
+                end
+                local airdrops_on_map = global.airdrops_on_map
+                if #airdrops_on_map == 0 then
+                    return false
+                end
+                for i,v in next, airdrops_on_map do
+                    if (root.Position - v.Position).magnitude < 10 then
+                        return true
+                    end
+                end
                 return false
             end
-            local function status()
+            local isPlayerNearAirdrop
+            local function tagService()
+                isPlayerNearAirdrop = client.tags.new("isPlayerNearAirdrop", 0, false, function(val)
+                    if val then
+                        if not holdEAction._pressed then
+                            holdEAction._pressState()
+                        end
+                    else
+                        holdEAction._pressed = false
+                    end
+                end)
+            end
+            tagService()
+            local function loop()
+                local bool = global.ui_status.automatic_hold
+                if isPlayerNearAirdrop then
+                    if bool then
+                        isPlayerNearAirdrop.obj.Value = isNearAirdrop()
+                    else
+                        isPlayerNearAirdrop.obj.Value = false
+                    end
+                end
+            end
+            createloop(0, loop)
+        end
+        airdropCorrection()
+        local function worldLoadingCorrection()
+            setreadonly(client.modules.worldUnloadConsts, false)
+            setreadonly(client.modules.humanoidUnloadConsts, false)
+            local WorldUnloadMaxDistToLoad = client.modules.worldUnloadConsts.MAX_DIST_TO_LOAD
+            local HumanoidUnloadMaxDistToLoad = client.modules.humanoidUnloadConsts.MAX_DIST_TO_LOAD
+            local function loop()
+                local bool = global.ui_status.never_unload_world
+                local extended_aimbot_range = global.ui_status.extended_aimbot_range
+                if bool or extended_aimbot_range then
+                    client.modules.worldUnloadConsts.MAX_DIST_TO_LOAD = math.huge
+                    client.modules.humanoidUnloadConsts.MAX_DIST_TO_LOAD = math.huge
+                else
+                    client.modules.worldUnloadConsts.MAX_DIST_TO_LOAD = WorldUnloadMaxDistToLoad
+                    client.modules.humanoidUnloadConsts.MAX_DIST_TO_LOAD = HumanoidUnloadMaxDistToLoad
+                end
+            end
+            createloop(0, loop)
+        end
+        worldLoadingCorrection()
+        local function museumCorrection()
+            local function puzzleCorrection()
+                local museum = workspace:FindFirstChild("Museum")
                 local function loop()
-                    if global.ui.statusRobberies["Museum Status"] then
-                        local getMuseumStatus = getMuseumStatus()
-                        if getMuseumStatus == 0 then
-                            global.ui.statusRobberies["Museum Status"] = ("Status: %s"):format("Started")
-                            global.ui.colorForcing["Museum Status"] = Color3.fromRGB(255, 178, 102)
-                            return true
+                    if not museum then
+                        museum = workspace:FindFirstChild("Museum")
+                        if not museum then
+                            return false
                         end
-                        if getMuseumStatus then
-                            global.ui.statusRobberies["Museum Status"] = ("Status: %s"):format("Open")
-                            global.ui.colorForcing["Museum Status"] = Color3.fromRGB(178, 255, 104)
-                            return true
+                    end
+                    local puzzle1 = museum.Puzzle1:GetDescendants()
+                    local puzzle2 = museum.Puzzle2:GetDescendants()
+                    for i,v in next, puzzle1 do
+                        if v:FindFirstChild("ClickDetector") then
+                            for i=1, math.random(1, 5) do
+                                task.wait()
+                                fireclickdetector(v.ClickDetector)
+                            end
                         end
-                        global.ui.statusRobberies["Museum Status"] = ("Status: %s"):format("Closed")
-                        global.ui.colorForcing["Museum Status"] = Color3.fromRGB(255, 102, 102)
+                    end
+                    for i,v in next, puzzle2 do
+                        if v:FindFirstChild("ClickDetector") then
+                            for i=1, math.random(1, 5) do
+                                task.wait()
+                                fireclickdetector(v.ClickDetector)
+                            end
+                        end
+                    end
+                end
+                local loopf
+                local cache
+                local function tagService()
+                    cache = client.tags.new("puzzle", 0, false, function(val)
+                        if val then
+                            loopf = createloop(1, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.break_museum_puzzle
+                    if cache then
+                        cache.obj.Value = bool
                     end
                 end
                 createloop(0, loop)
             end
-            status()
-            local function puzzleCorrection()
-                local function loop()
-                    local bool = global.ui_status.break_museum_puzzle
-                    if bool then
-                        local museum = workspace:FindFirstChild("Museum")
-                        if not museum then
-                            return false
-                        end
-                        local puzzle1 = museum.Puzzle1:GetDescendants()
-                        local puzzle2 = museum.Puzzle2:GetDescendants()
-                        for i,v in next, puzzle1 do
-                            if v:FindFirstChild("ClickDetector") then
-                                for i=1, math.random(1, 5) do
-                                    task.wait()
-                                    fireclickdetector(v.ClickDetector, math.huge)
-                                end
-                            end
-                        end
-                        for i,v in next, puzzle2 do
-                            if v:FindFirstChild("ClickDetector") then
-                                for i=1, math.random(1, 5) do
-                                    task.wait()
-                                    fireclickdetector(v.ClickDetector, math.huge)
-                                end
-                            end
-                        end
-                        return true
-                    end
-                    return false
-                end
-                createloop(1, loop)
-            end
             puzzleCorrection()
             local function mouseClickCorrection()
-                local mouse = player:GetMouse()
-                local settings = {
-                    Nuke = {
-                        Speed = 650;
-                        Duration = 10;
-                        TimeDilation = 1.5;
-                    };
-                    Shockwave = {
-                        MaxRadius = 10000;
-                        Duration = 10;
-                    };
-                }
+                local mouse = global.LocalMouse
                 local function onPressedMouse()
                     if global.ui_status.clicklightning then
                         local lightningSystem = client.modules.lightningSystem
                         lightningSystem.StrikePosition(mouse.Hit.p + Vector3.new(0, 100, 0), mouse.Hit.p)
                     end
                     if global.ui_status.clicknuke then
+                        local settings = {
+                            Nuke = {
+                                Speed = global.ui_status.nuke_speed or 650;
+                                Duration = global.ui_status.nuke_duration or 10;
+                                TimeDilation = global.ui_status.nuke_timedilation or 1.5;
+                            };
+                            Shockwave = {
+                                MaxRadius = global.ui_status.nuke_shockwave_maxradius or 10000;
+                                Duration = global.ui_status.nuke_shockwave_duration or 10;
+                            };
+                        }
                         local nukecontrol = global.registry.nukecontrol
                         settings.Nuke.Target = mouse.Hit.p
                         settings.Nuke.Origin = mouse.Hit.p
@@ -5664,7 +6154,7 @@ local function loadup()
                     for i,v in next, spinners:GetChildren() do
                         local name = connections:FindFirstChild(v.Name)
                         if name and name.Color == Color3.fromRGB(89, 144, 255) then
-                            fireclickdetector(v.ClickDetector, math.huge)
+                            fireclickdetector(v.ClickDetector)
                         end
                     end
                 end
@@ -5678,14 +6168,15 @@ local function loadup()
                     end
                     local pieces = museum.Puzzle2.Pieces
                     local targetOnlyPieces = {2, 3, 10, 11, 12, 19, 20, 13, 14}
-                    for i,v in next, pieces:GetChildren() do
+                    for i,v in next, targetOnlyPieces do
+                        local v = pieces:FindFirstChild(tostring(v))
                         if table.find(targetOnlyPieces, tonumber(v.Name)) then
                             if tonumber(v.Name) == 2 then
                                 while true do
                                     if v.Orientation == Vector3.new(0, -38, 0) then
                                         break
                                     end
-                                    fireclickdetector(v.ClickDetector, math.huge)
+                                    fireclickdetector(v.ClickDetector)
                                     task.wait(0.3)
                                 end
                             end
@@ -5694,7 +6185,7 @@ local function loadup()
                                     if v.Orientation == Vector3.new(0, -38, 0) then
                                         break
                                     end
-                                    fireclickdetector(v.ClickDetector, math.huge)
+                                    fireclickdetector(v.ClickDetector)
                                     task.wait(0.3)
                                 end
                             end
@@ -5703,7 +6194,7 @@ local function loadup()
                                     if v.Orientation == Vector3.new(0, -38, 180) then
                                         break
                                     end
-                                    fireclickdetector(v.ClickDetector, math.huge)
+                                    fireclickdetector(v.ClickDetector)
                                     task.wait(0.3)
                                 end
                             end
@@ -5712,7 +6203,7 @@ local function loadup()
                                     if v.Orientation == Vector3.new(0, -38, 180) then
                                         break
                                     end
-                                    fireclickdetector(v.ClickDetector, math.huge)
+                                    fireclickdetector(v.ClickDetector)
                                     task.wait(0.3)
                                 end
                             end
@@ -5721,7 +6212,7 @@ local function loadup()
                                     if v.Orientation == Vector3.new(0, -38, 0) then
                                         break
                                     end
-                                    fireclickdetector(v.ClickDetector, math.huge)
+                                    fireclickdetector(v.ClickDetector)
                                     task.wait(0.3)
                                 end
                             end
@@ -5730,7 +6221,7 @@ local function loadup()
                                     if v.Orientation == Vector3.new(0, -38, 180) then
                                         break
                                     end
-                                    fireclickdetector(v.ClickDetector, math.huge)
+                                    fireclickdetector(v.ClickDetector)
                                     task.wait(0.3)
                                 end
                             end
@@ -5739,7 +6230,7 @@ local function loadup()
                                     if v.Orientation == Vector3.new(0, -38, -90) then
                                         break
                                     end
-                                    fireclickdetector(v.ClickDetector, math.huge)
+                                    fireclickdetector(v.ClickDetector)
                                     task.wait(0.3)
                                 end
                             end
@@ -5748,7 +6239,7 @@ local function loadup()
                                     if v.Orientation == Vector3.new(0, -38, 90) then
                                         break
                                     end
-                                    fireclickdetector(v.ClickDetector, math.huge)
+                                    fireclickdetector(v.ClickDetector)
                                     task.wait(0.3)
                                 end
                             end
@@ -5757,33 +6248,56 @@ local function loadup()
                                     if v.Orientation == Vector3.new(0, -38, 0) then
                                         break
                                     end
-                                    fireclickdetector(v.ClickDetector, math.huge)
+                                    fireclickdetector(v.ClickDetector)
                                     task.wait(0.3)
                                 end
                             end
                         end
                     end
                 end
+                local loopf
+                local cache
                 local function loop()
                     local break_museum_puzzle = global.ui_status.break_museum_puzzle
                     if break_museum_puzzle then
                         return false
                     end
-                    local bool = global.ui_status.automatic_resolve_museum_puzzle
-                    if bool then
-                        local isInMuseum = global.registry.isInMuseum()
-                        if isInMuseum then
-                            puzzle1()
-                            puzzle2()
-                        end
+                    local isInMuseum = global.registry.isInMuseum()
+                    if isInMuseum then
+                        puzzle1()
+                        puzzle2()
                     end
                 end
-                createloop(0.3, loop)
+                local function tagService()
+                    cache = client.tags.new("museumPuzzle", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0.3, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_resolve_museum_puzzle
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
             end
             museumResolverCorrection()
             local function dynamiteCorrection()
+                local dynamite = collectionservice:GetTagged("Museum_DynamiteNode")
                 local function isDetonatorDown()
-                    for i,v in next, workspace.Museum.Roof:GetDescendants() do
+                    local museum = workspace.Museum
+                    if museum.Roof.Hole.RoofPart.Transparency == 1 then
+                        return false
+                    end
+                    for i,v in next, museum.Roof:GetDescendants() do
                         if v.Name == "Arm" then
                             if v.Transparency == 1 then
                                 if v.Parent.Name == "Detonator0" then
@@ -5804,18 +6318,48 @@ local function loadup()
                         end
                     end
                 end
+                local getRobberyStatus = global.registry.getRobberyStatus
+                local function getMuseumStatus()
+                    local getMuseumStatus = getRobberyStatus("MUSEUM")
+                    if getMuseumStatus then
+                        return true
+                    elseif getMuseumStatus == 0 then
+                        return 0
+                    elseif not getMuseumStatus then
+                        return false
+                    end
+                    return false
+                end
                 local function loop()
                     if tostring(player.Team) ~= "Criminal" then
                         return false
                     end
-                    local bool = global.ui_status.automatic_place_dynamite
-                    if bool then
-                        if getMuseumStatus() == true then
-                            isDetonatorDown()
-                        end
+                    if getMuseumStatus() == true then
+                        isDetonatorDown()
                     end
                 end
-                createloop(1, loop)
+                local loopf
+                local cache
+                local function tagService()
+                    cache = client.tags.new("placeDynamite", 0, false, function(val)
+                        if val then
+                            loopf = createloop(1, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_place_dynamite
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
             end
             dynamiteCorrection()
         end
@@ -5835,6 +6379,746 @@ local function loadup()
             client.modules.gamepassSystem.DoesPlayerOwn = hook
         end
         robberyMarkerDelayCorrection()
+        local function c4Exploits()
+            local c4s = {}
+            local function onAddedWorkspace(obj)
+                if obj.Name == "C4" then
+                    if obj:FindFirstChild("CreatorId") then
+                        local creator = tonumber(obj.CreatorId.Value)
+                        if creator == player.UserId then
+                            table.insert(c4s, obj)
+                        end
+                    end
+                end
+            end
+            table.insert(client.onWorkspaceSpawnRun, {
+                _fn = onAddedWorkspace
+            })
+            local function onRemovedWorkspace(obj)
+                if obj.Name == "C4" then
+                    for i,v in next, c4s do
+                        if v == obj then
+                            table.remove(c4s, i)
+                        end
+                    end
+                end
+            end
+            table.insert(client.onWorkspaceRemovedRun, {
+                _fn = onRemovedWorkspace
+            })
+            local function getC4s()
+                return c4s
+            end
+            local function setC4Pos(target, idx, c4)
+                local override_length = global.ui_status.override_length
+                if override_length then
+                    local dick_length = global.ui_status.dick_length or 1
+                    if dick_length and idx > dick_length then
+                        return false
+                    end
+                end
+                if c4 and c4:FindFirstChild("StickRemote") then
+                    local lowerTorso = target.Character:FindFirstChild("LowerTorso")
+                    if lowerTorso then
+                        c4.StickRemote:FireServer(lowerTorso, CFrame.new(0, -2 * idx, 0) * CFrame.Angles(math.rad(80), 0, 0))
+                    end
+                end
+            end
+            local hasItemEquipped = global.registry.hasItemEquipped
+            local function isHoldingC4()
+                if hasItemEquipped("C4") then
+                    return true
+                end
+                return false
+            end
+            local function hasC4InInventory()
+                return table.find(client.reg.resolveEquippedItems, "C4")
+            end
+            local function equipC4()
+                local equip = global.registry.equip
+                if equip then
+                    equip("C4")
+                end
+            end
+            local function ownsC4()
+                return table.find(client.reg.resolveOwnedItems, "C4")
+            end
+            local function findTarget(name)
+                name = tostring(name)
+                for i,v in next, client.players do
+                    if v.DisplayName == name or v.Name == name or v.Name:find(name) or v.DisplayName:find(name) then
+                        local char = v.Character
+                        if char then
+                            return v
+                        end
+                    end
+                end
+                return false
+            end
+            local function getC4AmmoCurrent()
+                local c4 = player.Folder:FindFirstChild("C4")
+                if c4 then
+                    return c4:GetAttribute("AmmoCurrent")
+                end
+                return "_n"
+            end
+            local equipOwnedItem = global.registry.equipOwnedItem
+            local unequipAll = global.registry.unequipAll
+            local getPlayerVehicle = global.registry.getPlayerVehicle
+            local function explodeTruck()
+                local isInProcess = false
+                local function throw_c4_on_truck(truck)
+                    if not ownsC4() then
+                        return global.notify("You do not own C4.", 5)
+                    end
+                    if client.reg.getLocalVehicle then
+                        return global.notify("Get out of the vehicle.", 5)
+                    end
+                    if isInProcess then
+                        return global.notify("Already in process.", 3)
+                    end
+                    isInProcess = true
+                    local hasC4 = hasC4InInventory()
+                    if not hasC4 then
+                        local c4
+                        while true do
+                            c4 = hasC4InInventory()
+                            if c4 then
+                                break
+                            end
+                            equipOwnedItem("C4")
+                            task.wait(0.4)
+                        end
+                        hasC4 = c4
+                    end
+                    local ammoCurrent = getC4AmmoCurrent()
+                    if ammoCurrent == "_n" then
+                        isInProcess = false
+                        return global.notify("Failed throwing c4 on truck!", 5)
+                    else
+                        if ammoCurrent < 1 then
+                            local ammo
+                            while true do
+                                ammo = getC4AmmoCurrent()
+                                if ammo >= 1 then
+                                    break
+                                end
+                                equipOwnedItem("C4Ammo")
+                                task.wait(0.4)
+                            end
+                            ammoCurrent = ammo
+                        end
+                    end
+                    if hasC4 then
+                        if not isHoldingC4() then
+                            equipC4()
+                            task.wait(0.2)
+                        end
+                        if truck then
+                            local backDoorRight = truck:FindFirstChild("BackDoorRight")
+                            if backDoorRight then
+                                local decal = backDoorRight.Decal
+                                if decal then
+                                    local c4s = getC4s()
+                                    while #c4s == 0 do
+                                        c4s = getC4s()
+                                        task.wait()
+                                    end
+                                    local c4 = c4s[1] or c4s[#c4s]
+                                    if c4 and c4:FindFirstChild("StickRemote") and not c4.Stuck.Value then
+                                        c4.PrimaryPart.CFrame = decal.CFrame
+                                        c4.StickRemote:FireServer(decal, c4.PrimaryPart.CFrame:ToObjectSpace(decal.CFrame))
+                                        local stuck_at, detonated = tick(), false
+                                        while true do
+                                            if detonated then
+                                                break
+                                            end
+                                            if tick() - stuck_at > 3 then
+                                                detonated = false
+                                                break
+                                            end
+                                            if c4:FindFirstChild("DetonateRemote") then
+                                                if tick() - stuck_at > 0.4 then
+                                                    detonated = true
+                                                    break
+                                                end
+                                            end
+                                            task.wait()
+                                        end
+                                        if detonated then 
+                                            c4.DetonateRemote:FireServer()
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    unequipAll()
+                    isInProcess = false
+                end
+                global.registry.throw_c4_on_truck = throw_c4_on_truck
+                local tagCache
+                local loopf
+                local function getRobberyStatus(key)
+                    key = key:upper()
+                    local getRobberyStatus = global.registry.getRobberyStatus
+                    local status = getRobberyStatus(key)
+                    if status == "OPENED" then
+                        return true
+                    end
+                    if status == "STARTED" then
+                        return 0
+                    end
+                    return false
+                end
+                local loopInProcess = false
+                local function loop()
+                    if tostring(player.Team) == "Police" then
+                        return false
+                    end
+                    if loopInProcess then
+                        return false
+                    end
+                    if isInProcess then
+                        return false
+                    end
+                    if not ownsC4() then
+                        return false
+                    end
+                    if not getRobberyStatus("money_truck") then
+                        return false
+                    end
+                    loopInProcess = true
+                    local char = client.playerCharacter
+                    if char then
+                        local root = char.PrimaryPart
+                        if root then
+                            local bankTruck = client.descendants.vehicles:FindFirstChild("BankTruck")
+                            if bankTruck then
+                                if not bankTruck:FindFirstChild("BackDoorLeft") or not bankTruck:FindFirstChild("BackDoorRight") then
+                                    loopInProcess = false
+                                    return false
+                                end
+                                if bankTruck:FindFirstChild("LockMovement") then
+                                    loopInProcess = false
+                                    return false
+                                end
+                                local primaryPart = bankTruck.PrimaryPart
+                                if primaryPart then
+                                    if (root.Position - primaryPart.Position).magnitude < 80 then
+                                        throw_c4_on_truck(bankTruck)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    loopInProcess = false
+                end
+                local function tagService()
+                    tagCache = client.tags.new("automatic_explode_truck", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0.5, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_explode_truck
+                    if tagCache then
+                        tagCache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            explodeTruck()
+            local function bombVest()
+                local isInProcess = false
+                task.spawn(function()
+                    local a;
+                    local b;
+                end)
+            end
+            bombVest()
+            local function kill()
+                local isInProcess = false
+                local function kill_player(name)
+                    if not ownsC4() then
+                        return global.notify("You do not own C4.", 5)
+                    end
+                    if client.reg.getLocalVehicle then
+                        return global.notify("Get out of the vehicle.", 5)
+                    end
+                    if isInProcess then
+                        return global.notify("Killing already in process. Wait!", 5)
+                    end
+                    isInProcess = true
+                    local hasC4 = hasC4InInventory()
+                    if not hasC4 then
+                        local c4
+                        while true do
+                            c4 = hasC4InInventory()
+                            if c4 then
+                                break
+                            end
+                            equipOwnedItem("C4")
+                            task.wait(0.2)
+                        end
+                        hasC4 = c4
+                    end
+                    if hasC4 then
+                        local target = findTarget(name)
+                        if target then
+                            if target.Name == player.Name then
+                                isInProcess = false
+                                return global.notify("hey, don't kill yourself. :)", 5)
+                            end
+                            local char = target.Character
+                            if not char then
+                                isInProcess = false
+                                return global.notify("Target has no character.", 5)
+                            end
+                            local torso = char:FindFirstChild("LowerTorso")
+                            if not torso then
+                                isInProcess = false
+                                return global.notify("Target has no torso. Get closer to the target!", 5)
+                            end
+                            local limit = 0
+                            local function spawnAndStickC4()
+                                if limit > 5 then
+                                    isInProcess = false
+                                    unequipAll()
+                                    return false
+                                end
+                                local c4s = getC4s()
+                                while #c4s == 0 do
+                                    task.wait()
+                                    c4s = getC4s()
+                                end
+                                for i, obj in next, c4s do
+                                    if obj and obj:FindFirstChild("StickRemote") and not obj.Stuck.Value then
+                                        local rate = i == 1 and 0.2 or 3.2 * i
+                                        obj.PrimaryPart.CFrame = torso.CFrame * CFrame.new(rate, -1.5 * rate, rate)
+                                        obj.StickRemote:FireServer(torso, obj.PrimaryPart.CFrame:ToObjectSpace(torso.CFrame))
+                                    end
+                                end
+                                task.delay(0.1, function()
+                                    unequipAll()
+                                    limit += 1
+                                    if limit < 3 then
+                                        task.delay(0.1, function()
+                                            equipC4()
+                                            task.delay(0.2, function()
+                                                spawnAndStickC4()
+                                            end)
+                                        end)
+                                    else
+                                        global.notify("Great! Do not detonate the C4's if you want to kill them. Might take some time!", 5)
+                                        local loop
+                                        loop = createloop(0, function()
+                                            if not target.Character then
+                                                loop:disconnect()
+                                                loop = nil
+                                                for i, obj in next, c4s do
+                                                    if obj and obj:FindFirstChild("DetonateRemote")  then
+                                                        obj.DetonateRemote:FireServer()
+                                                    end
+                                                end
+                                            end
+                                            if target.Character and target.Character.Humanoid and target.Character.Humanoid.Health < 1 then
+                                                loop:disconnect()
+                                                loop = nil
+                                                for i, obj in next, c4s do
+                                                    if obj and obj:FindFirstChild("DetonateRemote") then
+                                                        obj.DetonateRemote:FireServer()
+                                                    end
+                                                end
+                                            end
+                                        end)
+                                    end
+                                end)
+                            end
+                            if isHoldingC4() then
+                                spawnAndStickC4()
+                            else
+                                equipC4()
+                                task.wait(0.2)
+                                spawnAndStickC4()
+                            end
+                        else
+                            global.notify(("Couldn't find player with name `%s`"):format(name), 10)
+                        end
+                    end
+                    isInProcess = false
+                end
+                global.registry.kill_player = kill_player
+            end
+            kill()
+            local function dick()
+                local function dick_player(name)
+                    if not ownsC4() then
+                        return global.registry("You do not own C4.", 5)
+                    end
+                    --creds to Nexus42 and Snipehype200
+                    if global.ui_status.c4dick_masterswitch then
+                        local hasC4 = hasC4InInventory()
+                        if not hasC4 then
+                            local c4
+                            while true do
+                                c4 = hasC4InInventory()
+                                if c4 then
+                                    break
+                                end
+                                warn("Waiting to equipOwnItem C4 X2")
+                                equipOwnedItem("C4")
+                                task.wait(0.2)
+                            end
+                            hasC4 = c4
+                        end
+                        if hasC4 then
+                            if name == player.Name then
+                                local target = player
+                                if isHoldingC4() then
+                                    unequipAll()
+                                    task.wait(0.4)
+                                    equipC4()
+                                    task.wait(0.4)
+                                else
+                                    equipC4()
+                                    task.wait(0.4)
+                                end
+                                local c4s = getC4s()
+                                while #c4s == 0 do
+                                    task.wait()
+                                    c4s = getC4s()
+                                end
+                                for i,v in next, c4s do
+                                    setC4Pos(target, i, v)
+                                    v.PrimaryPart.Anchored = false
+                                    task.wait()
+                                end
+                            else
+                                local target = findTarget(name)
+                                if target then
+                                    if isHoldingC4() then
+                                        unequipAll()
+                                        task.wait(0.4)
+                                        equipC4()
+                                        task.wait(0.4)
+                                    else
+                                        equipC4()
+                                        task.wait(0.4)
+                                    end
+                                    local c4s = getC4s()
+                                    while #c4s == 0 do
+                                        task.wait()
+                                        c4s = getC4s()
+                                    end
+                                    for i,v in next, c4s do
+                                        setC4Pos(target, i, v)
+                                        v.PrimaryPart.Anchored = false
+                                        task.wait()
+                                    end
+                                else
+                                    global.notify(("Couldn't find player with name `%s`"):format(name), 10)
+                                end
+                            end
+                            task.wait(1)
+                            global.registry.unequipAll()
+                        end
+                    end
+                end
+                global.registry.dick_player = dick_player
+            end
+            dick()
+        end
+        c4Exploits()
+        local function rocketLauncherExploits()
+            local hasItemEquipped = global.registry.hasItemEquipped
+            local unequipAll = global.registry.unequipAll
+            local equip = global.registry.equip
+            local equipOwnedItem = global.registry.equipOwnedItem
+            local sh = client.modules.seekingMissileShared
+            local run = sh._run
+            local explode = sh._explode
+            local netObjPool = client.modules.netObjPool._constructor
+            local get = netObjPool.Get
+            local cf = CFrame.new()
+            local function ownsItem()
+                return table.find(client.reg.resolveOwnedItems, "RocketLauncher")
+            end
+            local function isInInventory()
+                return table.find(client.reg.resolveEquippedItems, "RocketLauncher")
+            end
+            local function isEquipped()
+                return hasItemEquipped("RocketLauncher")
+            end
+            local function getMissileHolderPool()
+                local rL = player.Folder:FindFirstChild("RocketLauncher")
+                if rL then
+                    local poolHolder = rL:FindFirstChild("RocketLauncherHolderMissilePool")
+                    if poolHolder then
+                        return poolHolder
+                    end
+                end
+                return false
+            end
+            local function findTarget(name)
+                name = tostring(name)
+                for i,v in next, client.players do
+                    if v.DisplayName == name or v.Name == name or v.Name:find(name) or v.DisplayName:find(name) then
+                        local char = v.Character
+                        if char then
+                            return v
+                        end
+                    end
+                end
+                return false
+            end
+            local function hasRocketAmmo()
+                local getEquippedItem = client.reg.getEquippedItem
+                return getEquippedItem and getEquippedItem.__ClassName == "RocketLauncher" and getEquippedItem.inventoryItemValue:GetAttribute("AmmoCurrentLocal") or 0
+            end
+            local function canPurchaseAmmo()
+                return player.leaderstats.Money.Value >= 1000
+            end
+            local function getObjInPool()
+                local holder = getMissileHolderPool()
+                local obj
+                local noPoolError = pcall(function()
+                    obj = get({obj = holder}) or nil
+                end)
+                if not noPoolError then
+                    obj = nil
+                end
+                return obj
+            end
+            local function launchRocket()
+                local getEquippedItem = client.reg.getEquippedItem
+                if getEquippedItem and getEquippedItem.__ClassName == "RocketLauncher" then
+                    local currentAmmo = getEquippedItem.inventoryItemValue:GetAttribute("AmmoCurrentLocal")
+                    getEquippedItem:LaunchRocket(cf, cf.LookVector, 0)
+                    task.delay(0.1, function()
+                        getEquippedItem.inventoryItemValue:SetAttribute("AmmoCurrentLocal", currentAmmo - 1)
+                    end)
+                end
+            end
+            local is_spawning = false
+            local target
+            local function spawnRocket(_target, shouldInstantExplode)
+                assert(_target, "Target is missing")
+                if is_spawning then
+                    global.notify("Killing is already in process", 3)
+                    return false
+                end
+                if not ownsItem() then
+                    return global.notify("You have to own a Rocket Launcher to spawn a rocket", 5)
+                end
+                is_spawning = true
+                if not isInInventory() then
+                    while true do
+                        if isInInventory() then
+                            break
+                        end
+                        equipOwnedItem("RocketLauncher")
+                        task.wait()
+                    end
+                end
+                local objects
+                if not isEquipped() then
+                    while true do
+                        if client.reg.getEquippedItem and client.reg.getEquippedItem.__ClassName == "RocketLauncher" then
+                            break
+                        end
+                        equip("RocketLauncher")
+                        task.wait()
+                    end
+                end
+                local tic, reset = tick(), false
+                while true do
+                    if objects then
+                        task.wait()
+                        break
+                    end
+                    objects = getObjInPool()
+                    if tick() - tic > 0.2 and not objects then
+                        reset = true
+                        break
+                    end
+                    task.wait()
+                end
+                if reset then
+                    unequipAll()
+                    while true do
+                        if not client.reg.getEquippedItem then
+                            break
+                        end
+                        task.wait()
+                    end
+                    is_spawning = false
+                    spawnRocket(_target, shouldInstantExplode or false)
+                    return false
+                end
+                local getObjInPool = objects
+                if not getObjInPool or getObjInPool and not getObjInPool.obj then
+                    unequipAll()
+                    while true do
+                        if not client.reg.getEquippedItem then
+                            break
+                        end
+                        task.wait()
+                    end
+                    task.wait()
+                    while true do
+                        if client.reg.getEquippedItem then
+                            break
+                        end
+                        equip("RocketLauncher")
+                        task.wait()
+                    end
+                    task.wait()
+                end
+                if getObjInPool then
+                    local getEquippedItem = client.reg.getEquippedItem
+                    target = _target
+                    local ammo
+                    if shouldInstantExplode then
+                        local bool = Instance.new("BoolValue")
+                        bool.Name = "ShouldInstantExplode"
+                        bool.Parent = getObjInPool.obj
+                    else
+                        ammo = hasRocketAmmo()
+                        if ammo == 0 then
+                            if not canPurchaseAmmo() then
+                                global.notify("You need at least $1,000 to spawn a rocket.", 5)
+                                is_spawning = false
+                                return false
+                            end
+                            equipOwnedItem("RocketAmmo")
+                            while true do
+                                if ammo > 0 then
+                                    break
+                                end
+                                ammo = hasRocketAmmo()
+                                task.wait()
+                            end
+                        end
+                        local bool = Instance.new("BoolValue")
+                        bool.Name = "ShouldTrail"
+                        bool.Parent = getObjInPool.obj
+                    end
+                    pcall(launchRocket)
+                    is_spawning = false
+                else
+                    is_spawning = false
+                end
+            end
+            local function spawn_rocket(name, spawnExplosion)
+                if not spawnExplosion then
+                    if not ownsItem() then
+                        return global.notify("You have to own a Rocket Launcher to spawn a rocket", 5)
+                    end
+                    if hasRocketAmmo() == 0 then
+                        if not canPurchaseAmmo() then
+                            global.notify("You need at least $1,000 to spawn a rocket.", 5)
+                            return false
+                        end
+                    end
+                end
+                local target
+                local isSelf = false
+                if player.Name == name then
+                    target = player
+                    isSelf = true
+                else
+                    target = findTarget(name)
+                end
+                if target then
+                    local char = target.Character
+                    if char then
+                        local primaryPart = char.PrimaryPart
+                        local explosion_size = global.ui_status.explosion_size or 1
+                        if spawnExplosion then
+                            for i=1, explosion_size do
+                                spawnRocket(primaryPart, true)
+                            end
+                        else
+                            if not isSelf then
+                                local cr = player.Character
+                                if cr then
+                                    local pp = cr.PrimaryPart
+                                    if pp then
+                                        if (pp.Position - primaryPart.Position).magnitude > 500 then --@scoate asta mai incolo, nu prea are sens.
+                                            return global.notify("Target is too far away! Cannot render Missile", 10)
+                                        end
+                                    end
+                                end
+                            end
+                            spawnRocket(primaryPart)
+                        end
+                    else
+                        global.notify("Couldn't find target's character.", 10)
+                    end
+                else
+                    global.notify(("Couldn't find player with name `%s`"):format(name), 10)
+                end
+            end
+            global.registry.spawn_rocket = spawn_rocket
+            local function explode_hook(missile)
+                if missile.obj:FindFirstChild("ShouldInstantExplode") then
+                    missile.obj.CFrame = target.CFrame
+                    return explode(missile)
+                end
+                if missile.obj:FindFirstChild("ShouldTrail") then
+                    return false
+                end
+                return explode(missile)
+            end
+            local function run_hook(missile)
+                if missile.obj:FindFirstChild("ShouldInstantExplode") then
+                    missile.obj.CFrame = target.CFrame
+                    return explode(missile)
+                end
+                if missile.obj:FindFirstChild("ShouldTrail") and global.ui_status.rocket_trail then
+                    local run_at = tick()
+                    local _loop
+                    local is_new_connected = false
+                    local target = target
+                    _loop = createloop(0, function()
+                        if is_new_connected then
+                            _loop:disconnect()
+                            _loop = nil
+                            return false
+                        end
+                        if tick() - run_at > 1.2 then
+                            _loop:disconnect()
+                            _loop = nil
+                            return false
+                        end
+                        local _tasks = missile.runMaid._tasks
+                        _tasks[1] = runservice.Heartbeat:connect(function()
+                            if not is_new_connected then
+                                is_new_connected = true
+                            end
+                            if _loop then
+                                _loop:disconnect()
+                                _loop = nil
+                                return false
+                            end
+                            missile.obj.CFrame = target.CFrame * CFrame.new(0, 0, 5) * CFrame.Angles(math.rad(180), 0, 0)
+                        end)
+                    end)
+                end
+                return run(missile)
+            end
+            sh._run = run_hook
+            sh._explode = explode_hook
+        end
+        rocketLauncherExploits()
         local function placeDynamite()
             local function place_dynamite()
                 for i,v in next, client.modules.ui.CircleAction.Specs do
@@ -5846,18 +7130,37 @@ local function loadup()
                 end
             end
             local function loop()
-                local bool = global.ui_status.auto_place_dynamite
-                if bool then
-                    local getClosestBankDoor = global.registry.getClosestBankDoor
-                    if getClosestBankDoor(300) then
-                        place_dynamite()
-                    end
+                local getClosestBankDoor = global.registry.getClosestBankDoor
+                if getClosestBankDoor(300) then
+                    place_dynamite()
                 end
             end
-            createloop(3, loop)
+            local loopf
+            local cache
+            local function tagService()
+                cache = client.tags.new("placeBankDynamite", 0, false, function(val)
+                    if val then
+                        loopf = createloop(3, loop)
+                    else
+                        if loopf then
+                            loopf:disconnect()
+                            loopf = nil
+                        end
+                    end
+                end)
+            end
+            tagService()
+            local function loop()
+                local bool = global.ui_status.auto_place_dynamite
+                if cache then
+                    cache.obj.Value = bool
+                end
+            end
+            createloop(0, loop)
         end
-        --placeDynamite()
+        placeDynamite()
         local function touchClosestVault()
+            --@aici se fute performanta, sa dai recode candva (9.12.2022)
             local function touchVault(part)
                 local char = client.playerCharacter
                 if not char then
@@ -5875,10 +7178,6 @@ local function loadup()
             end
             local door
             local function loop()
-                local bool = global.ui_status.auto_touch_vault
-                if not bool then
-                    return false
-                end
                 local getClosestTriggerDoor = global.registry.getClosestTriggerDoor(400)
                 if not getClosestTriggerDoor then
                     door = nil
@@ -5892,29 +7191,64 @@ local function loadup()
                 end
                 touchVault(door)
             end
+            local loopf
+            local cache
+            local function tagService()
+                cache = client.tags.new("touchVault", 0, false, function(val)
+                    if val then
+                        loopf = createloop(2, loop)
+                    else
+                        if loopf then
+                            loopf:disconnect()
+                            loopf = nil
+                            door = nil
+                        end
+                    end
+                end)
+            end
+            tagService()
+            local function loop()
+                local bool = global.ui_status.auto_touch_vault
+                if cache then
+                    cache.obj.Value = bool
+                end
+            end
             createloop(0, loop)
         end
-        --touchClosestVault()
+        touchClosestVault()
         local function resolvePuzzle()
-            local function loop()
-                local bool = global.ui_status.puzzle_resolver
-                if not bool then
-                    return false
-                end
-                local flow = getupvalue(client.modules.puzzleFlow.Init,3)
-                if not flow.IsOpen then
-                    return false
-                end
-                local resolvePowerplant = global.registry.resolvePowerplant
-                if not resolvePowerplant then
-                    return false
-                end
-                return resolvePowerplant()
+            local flow = getupvalue(client.modules.puzzleFlow.Init,3)
+            local resolvePowerplant = global.registry.resolvePowerplant
+            local cache
+            local upv
+            local function tagService()
+                cache = client.tags.new("puzzle_resolver", 0, false, function(val)
+                    if flow.IsOpen and val then
+                        resolvePowerplant(flow)
+                    end
+                end)
+                upv = client.tags.new("flow_IsOpen", 0, false, function(val)
+                    if cache.obj.Value and val then
+                        resolvePowerplant(flow)
+                    end
+                end)
             end
-            createloop(0.5, loop)
+            tagService()
+            local function loop()
+                local isOpen = flow.IsOpen
+                if upv then
+                    upv.obj.Value = isOpen
+                end
+                local bool = global.ui_status.puzzle_resolver
+                if cache then
+                    cache.obj.Value = bool
+                end
+            end
+            createloop(0, loop)
         end
         resolvePuzzle()
         local function museumFillBag()
+            local cashLeftBeforeMax = global.registry.cashLeftBeforeMax
             local function grab(player)
                 local char = client.playerCharacter
                 if not char then
@@ -5936,10 +7270,6 @@ local function loadup()
                 if tostring(player.Team) == "Police" then
                     return false
                 end
-                local bool = global.ui_status.auto_fill_bag
-                if not bool then
-                    return false
-                end
                 local isInMuseum = global.registry.isInMuseum()
                 if isInMuseum then
                     grab(player)
@@ -5947,7 +7277,28 @@ local function loadup()
                 end
                 return false
             end
-            createloop(1, loop)
+            local cache
+            local loopf
+            local function tagService()
+                cache = client.tags.new("fillbag", 0, false, function(val)
+                    if val then
+                        loopf = createloop(1, loop)
+                    else
+                        if loopf then
+                            loopf:disconnect()
+                            loopf = nil
+                        end
+                    end
+                end)
+            end
+            tagService()
+            local function loop()
+                local bool = global.ui_status.auto_fill_bag
+                if cache then
+                    cache.obj.Value = bool
+                end
+            end
+            createloop(0, loop)
         end
         museumFillBag()
         local function hackClosestComputer()
@@ -5970,61 +7321,7 @@ local function loadup()
             createloop(0.5, loop)
         end
         hackClosestComputer()
-        local function airdropCorrection()
-            local function getAirdropStatus()
-                return workspace:FindFirstChild("Drop") ~= nil
-            end
-            local function status()
-                local function loop()
-                    if global.ui.statusRobberies["Airdrop Status"] then
-                        local getAirdropStatus = getAirdropStatus()
-                        if getAirdropStatus then
-                            global.ui.statusRobberies["Airdrop Status"] = ("Status: %s"):format("Open")
-                            global.ui.colorForcing["Airdrop Status"] = Color3.fromRGB(178, 255, 104)
-                        elseif not getAirdropStatus then
-                            global.ui.statusRobberies["Airdrop Status"] = ("Status: %s"):format("Closed")
-                            global.ui.colorForcing["Airdrop Status"] = Color3.fromRGB(255, 102, 102)
-                        end
-                    end
-                end
-                createloop(0, loop)
-            end
-            status()
-        end
-        airdropCorrection()
         local function cargoPlaneCorrection()
-            local function getCargoplaneStatus()
-                local getRobberyStatus = global.registry.getRobberyStatus
-                local status = getRobberyStatus("CARGO_PLANE")
-                if status == "OPENED" then
-                    return true
-                end
-                if status == "STARTED" then
-                    return 0
-                end 
-                return false
-            end
-            local function status()
-                local function loop()
-                    if global.ui.statusRobberies["Cargoplane Status"] then
-                        local getCargoplaneStatus = getCargoplaneStatus()
-                        if getCargoplaneStatus == 0 then
-                            global.ui.statusRobberies["Cargoplane Status"] = ("Status: %s"):format("Started")
-                            global.ui.colorForcing["Cargoplane Status"] = Color3.fromRGB(255, 178, 102)
-                            return true
-                        end
-                        if getCargoplaneStatus then
-                            global.ui.statusRobberies["Cargoplane Status"] = ("Status: %s"):format("Open")
-                            global.ui.colorForcing["Cargoplane Status"] = Color3.fromRGB(178, 255, 104)
-                            return true
-                        end
-                        global.ui.statusRobberies["Cargoplane Status"] = ("Status: %s"):format("Closed")
-                        global.ui.colorForcing["Cargoplane Status"] = Color3.fromRGB(255, 102, 102)
-                    end
-                end
-                createloop(0, loop)
-            end
-            status()
             local function autoCollectPlaneCrate()
                 local function collectCrate(crate)
                     for i,v in next, client.modules.ui.CircleAction.Specs do
@@ -6050,9 +7347,8 @@ local function loadup()
                     for i,v in next, client.modules.ui.CircleAction.Specs do
                         if v.Name == "Open Door" then
                             if v.Part.Name == "Lever" then
-                                if v.Enabled then
-                                    v:Callback(true)
-                                end
+                                v:Callback(true)
+                                break
                             end
                         end
                     end
@@ -6077,6 +7373,7 @@ local function loadup()
         end
         cargoPlaneCorrection()
         local function autoCollectCasinoLoot()
+            local cashLeftBeforeMax = global.registry.cashLeftBeforeMax
             local function collectCash()
                 for i,v in next, client.modules.ui.CircleAction.Specs do
                     if string.find(v.Name, "Collect") then
@@ -6085,6 +7382,9 @@ local function loadup()
                 end
             end
             local function loop()
+                if tostring(player.Team) == "Police" then
+                    return false
+                end
                 local bool = global.ui_status.auto_collect_cash
                 if bool then
                     local getClosestCasinoLoot = global.registry.getClosestCasinoLoot
@@ -6097,57 +7397,11 @@ local function loadup()
         end
         autoCollectCasinoLoot()
         local function collectClosestCash()
-            --[[
-            local char = client.playerCharacter
-            if not char then
-                return false
-            end
-            local root = char:FindFirstChild("HumanoidRootPart")
-            if not root then
-                return false
-            end
-            if #workspace.DroppedCash:GetChildren() > 0 then
-                for i,v in next, workspace.DroppedCash:GetChildren() do
-                    local part = v.Part
-                    if part then
-                        if (part.Position - root.Position).magnitude < range then
-                            return v
-                        end
-                    end
-                end
-            end
-            ]]
-            local function onChildAdded(obj)
-                local bool = global.ui_status.droppedcashaura
-                if bool then
-                    local cache
-                    cache = createloop(0.2, function()
-                        local range = global.ui_status.droppedcashrange
-                        bool = global.ui_status.droppedcashaura
-                        if not bool then
-                            cache:disconnect()
-                        end
-                        if obj:IsDescendantOf(workspace) then
-                            local char = client.playerCharacter
-                            if char then
-                                local root = char:FindFirstChild("HumanoidRootPart")
-                                if root then
-                                    if (obj.PrimaryPart - root.Position).magnitude < range then
-
-                                    end
-                                end
-                            end
-                        else
-                            cache:disconnect()
-                        end    
-                    end)
-                end
-            end
-            --workspace.DroppedCash.ChildAdded:connect(onChildAdded)
             local function collectCash(droppedcash)
                 for i,v in next, client.modules.ui.CircleAction.Specs do
-                    if string.find(v.Name, "Collect") and v.Part == droppedcash.PrimaryPart then -- prevent lag
+                    if string.find(v.Name, "Collect") and string.find(v.Name, "from") and v.Part == droppedcash then
                         v:Callback(droppedcash, true)
+                        break
                     end
                 end
             end
@@ -6168,6 +7422,7 @@ local function loadup()
         end
         collectClosestCash()
         local function damageDealersCorrection()
+            --@doamne ajuta functiuna asta ca e cea mai proasta pe care am scris o vreo data.
             local function lasers()
                 local function hookForBank(bool)
                     for i,v in next, collectionservice:GetAllTags() do
@@ -6205,42 +7460,42 @@ local function loadup()
                 end
                 local function breakCasinoLasers(bool)
                     local casino = workspace:FindFirstChild("Casino")
-                    if not casino then
-                        return false
-                    end
-                    local vaultLaserControl = casino:FindFirstChild("VaultLaserControl")
-                    if vaultLaserControl then
-                        for i,v in next, vaultLaserControl:GetDescendants() do
-                            if v:FindFirstChild("TouchInterest") then
-                                v.CanTouch = not bool
+                    if casino then
+                        local vaultLaserControl = casino:FindFirstChild("VaultLaserControl")
+                        if vaultLaserControl then
+                            for i,v in next, vaultLaserControl:GetDescendants() do
+                                if v:FindFirstChild("TouchInterest") then
+                                    v.CanTouch = not bool
+                                end
                             end
                         end
-                    end
-                    local lasersMoving = casino:FindFirstChild("LasersMoving")
-                    if lasersMoving then
-                        for i,v in next, lasersMoving:GetDescendants() do
-                            if v:FindFirstChild("TouchInterest") then
-                                v.CanTouch = not bool
+                        local lasersMoving = casino:FindFirstChild("LasersMoving")
+                        if lasersMoving then
+                            for i,v in next, lasersMoving:GetDescendants() do
+                                if v:FindFirstChild("TouchInterest") then
+                                    v.CanTouch = not bool
+                                end
                             end
                         end
-                    end
-                    local laserCarousel = casino:FindFirstChild("LaserCarousel")
-                    if laserCarousel then
-                        for i,v in next, laserCarousel:GetDescendants() do
-                            if v:FindFirstChild("TouchInterest") then
-                                v.CanTouch = not bool
+                        local laserCarousel = casino:FindFirstChild("LaserCarousel")
+                        if laserCarousel then
+                            for i,v in next, laserCarousel:GetDescendants() do
+                                if v:FindFirstChild("TouchInterest") then
+                                    v.CanTouch = not bool
+                                end
                             end
                         end
-                    end
-                    local lasers = casino:FindFirstChild("Lasers")
-                    if lasers then
-                        for i,v in next, lasers:GetDescendants() do
-                            if v:FindFirstChild("TouchInterest") then
-                                v.CanTouch = not bool
+                        local lasers = casino:FindFirstChild("Lasers")
+                        if lasers then
+                            for i,v in next, lasers:GetDescendants() do
+                                if v:FindFirstChild("TouchInterest") then
+                                    v.CanTouch = not bool
+                                end
                             end
                         end
                     end
                 end
+                global.registry.breakCasinoLasers = breakCasinoLasers
                 local function breakLasers(bool)
                     for i,v in next, workspace:GetDescendants() do
                         if v.Name == "BarbedWire" then
@@ -6250,19 +7505,16 @@ local function loadup()
                 end
                 local cache
                 local function bank()
-                    print("bank")
                     hookForBank(not cache.obj.Value)
                     task.wait(1)
                     hookForBank(cache.obj.Value)
                 end
                 local function jewelry()
-                    print("jewelry")
                     hookForJewelry(not cache.obj.Value)
                     task.wait(1)
                     hookForJewelry(cache.obj.Value)
                 end
                 local function mansion()
-                    print("mansion")
                     hookForMansion(not cache.obj.Value)
                     task.wait(1)
                     hookForMansion(cache.obj.Value)
@@ -6270,7 +7522,6 @@ local function loadup()
                 local function train(child)
                     for i,v in next, child:GetDescendants() do
                         if v:FindFirstChild("TouchInterest") then
-                            print("train")
                             hookForTrain(not cache.obj.Value)
                             task.wait(1)
                             hookForTrain(cache.obj.Value)
@@ -6278,11 +7529,20 @@ local function loadup()
                     end
                 end
                 local function onCasinoSpawned()
-                    print("barbed wire")
                     breakLasers(not cache.obj.Value)
                     task.wait(1)
                     breakLasers(cache.obj.Value)
                 end
+                local function mansionRobberyLasers(bool)
+                    if workspace.MansionRobbery.InRobberyFolder:FindFirstChild(player.UserId) then
+                        for i,v in next, workspace.MansionRobbery.Lasers:GetDescendants() do
+                            if v:IsA("BasePart") then
+                                v.CanTouch = not global.ui_status.disable_lasers
+                            end
+                        end
+                    end
+                end
+                local loopf
                 local function tagService()
                     cache = client.tags.new("lasers", 0, false, function(val)
                         breakLasers(val)
@@ -6290,6 +7550,14 @@ local function loadup()
                         hookForJewelry(val)
                         hookForTrain(val)
                         hookForMansion(val)
+                        if loopf then
+                            loopf:disconnect()
+                            loopf = nil
+                        else
+                            loopf = createloop(0.5, function()
+                                mansionRobberyLasers(val)
+                            end)
+                        end
                     end)
                 end
                 tagService()
@@ -6301,29 +7569,53 @@ local function loadup()
                 end
                 createloop(0, loop)
                 local function workspaceChildAdded(obj)
-                    local Model = obj:FindFirstChild("Model", true)
-                    if Model then
-                        local barbedWire = Model:FindFirstChild("BarbedWire", true)
-                        if barbedWire then
-                            for i2,v2 in next, Model:GetChildren() do
-                                v2.CanTouch = not cache.obj.Value
-                                print(i2,v2)
-                            end
-                        end
+                    local barbedWire = obj:FindFirstChild("BarbedWire", true)
+                    if barbedWire then
+                        barbedWire.CanTouch = cache.obj.Value
+                        task.delay(0.1, function()
+                            barbedWire.CanTouch = not cache.obj.Value
+                        end)
                     end
-                    if obj:FindFirstChild("BarbedWire", true) then
+                    if obj.Name == "BarbedWire" then
+                        obj.CanTouch = cache.obj.Value
+                        task.delay(0.1, function()
+                            obj.CanTouch = not cache.obj.Value
+                        end)
+                    end
+                    if obj:IsA("Model") then
                         for i,v in next, obj:GetDescendants() do
                             if v.Name == "BarbedWire" then
                                 v.CanTouch = not cache.obj.Value
                             end
                         end
                     end
-                    if obj.Name == "BarbedWire" then
-                        obj.CanTouch = not cache.obj.Value
+                    local Model = obj:FindFirstChild("Model", true)
+                    if Model then
+                        local barbedWire = Model:FindFirstChild("BarbedWire", true)
+                        if barbedWire then
+                            for i2,v2 in next, Model:GetChildren() do
+                                if v2:IsA("Part") then
+                                    v2.CanTouch = not cache.obj.Value
+                                end
+                            end
+                        end
                     end
                     if obj.Name == "Banks" then
                         workspace.Banks.ChildAdded:connect(function(obj)
-                            workspace.Banks:GetChildren()[1]:FindFirstChild("Layout").ChildAdded:connect(bank)
+                            local bank1 = workspace.Banks:FindFirstChild("Bank")
+                            if bank1 then
+                                local layout = bank1:FindFirstChild("Layout")
+                                if layout then
+                                    layout.ChildAdded:connect(bank)
+                                end
+                            end
+                            local bank2 = workspace.Banks:FindFirstChild("Bank2")
+                            if bank2 then
+                                local layout = bank2:FindFirstChild("Layout")
+                                if layout then
+                                    layout.ChildAdded:connect(bank2)
+                                end
+                            end
                         end)
                     end
                     if obj.Name == "Jewelrys" then
@@ -6332,8 +7624,8 @@ local function loadup()
                         end)
                     end
                     if obj.Name == "Casino" then
+                        onCasinoSpawned()
                         breakCasinoLasers(cache.obj.Value)
-                        --onCasinoSpawned()
                     end
                     if obj.Name == "MansionRobbery" then
                         mansion()
@@ -6341,9 +7633,13 @@ local function loadup()
                     end
                 end
                 if workspace:FindFirstChild("Banks") then
-                    local getFirstChild = workspace.Banks:GetChildren()[1]
-                    if getFirstChild then
-                        getFirstChild:FindFirstChild("Layout").ChildAdded:connect(bank)
+                    local bank1 = workspace.Banks:FindFirstChild("Bank")
+                    if bank1 then
+                        bank1:FindFirstChild("Layout").ChildAdded:connect(bank)
+                    end
+                    local bank2 = workspace.Banks:FindFirstChild("Bank2")
+                    if bank2 then
+                        bank2:FindFirstChild("Layout").ChildAdded:connect(bank)
                     end
                 end
                 if workspace:FindFirstChild("Jewelrys") then
@@ -6354,6 +7650,7 @@ local function loadup()
                 end
                 if workspace:FindFirstChild("Casino") then
                     onCasinoSpawned()
+                    breakCasinoLasers(cache.obj.Value)
                 end
                 if workspace:FindFirstChild("MansionRobbery") then
                     workspace.MansionRobbery.Lasers.Changed:connect(mansion)
@@ -6365,38 +7662,6 @@ local function loadup()
             end
             lasers()
             local function powerplant()
-                local function getPowerplantStatus()
-                    local getRobberyStatus = global.registry.getRobberyStatus
-                    local status = getRobberyStatus("POWER_PLANT")
-                    if status == "OPENED" then
-                        return true
-                    end
-                    if status == "STARTED" then
-                        return 0
-                    end 
-                    return false
-                end
-                local function status()
-                    local function loop()
-                        if global.ui.statusRobberies["Powerplant Status"] then
-                            local getPowerplantStatus = getPowerplantStatus()
-                            if getPowerplantStatus == 0 then
-                                global.ui.statusRobberies["Powerplant Status"] = ("Status: %s"):format("Started")
-                                global.ui.colorForcing["Powerplant Status"] = Color3.fromRGB(255, 178, 102)
-                                return true
-                            end
-                            if getPowerplantStatus then
-                                global.ui.statusRobberies["Powerplant Status"] = ("Status: %s"):format("Open")
-                                global.ui.colorForcing["Powerplant Status"] = Color3.fromRGB(178, 255, 104)
-                                return true
-                            end
-                            global.ui.statusRobberies["Powerplant Status"] = ("Status: %s"):format("Closed")
-                            global.ui.colorForcing["Powerplant Status"] = Color3.fromRGB(255, 102, 102)
-                        end
-                    end
-                    createloop(0, loop)
-                end
-                status()
                 local function powerplant_piston()
                     local piston = client.modules.piston.SlamPlayer
                     local function hook(...)
@@ -6475,38 +7740,6 @@ local function loadup()
             end
             powerplant()
             local function tomb()
-                local function getTombStatus()
-                    local getRobberyStatus = global.registry.getRobberyStatus
-                    local status = getRobberyStatus("TOMB")
-                    if status == "OPENED" then
-                        return true
-                    end
-                    if status == "STARTED" then
-                        return 0
-                    end 
-                    return false
-                end
-                local function status()
-                    local function loop()
-                        if global.ui.statusRobberies["Tomb Status"] then
-                            local getTombStatus = getTombStatus()
-                            if getTombStatus == 0 then
-                                global.ui.statusRobberies["Tomb Status"] = ("Status: %s"):format("Started")
-                                global.ui.colorForcing["Tomb Status"] = Color3.fromRGB(255, 178, 102)
-                                return true
-                            end
-                            if getTombStatus then
-                                global.ui.statusRobberies["Tomb Status"] = ("Status: %s"):format("Open")
-                                global.ui.colorForcing["Tomb Status"] = Color3.fromRGB(178, 255, 104)
-                                return true
-                            end 
-                            global.ui.statusRobberies["Tomb Status"] = ("Status: %s"):format("Closed")
-                            global.ui.colorForcing["Tomb Status"] = Color3.fromRGB(255, 102, 102)
-                        end
-                    end
-                    createloop(0, loop)
-                end
-                status()
                 local function resolver()
                     local function isLocalNearbyTeleporter()
                         local robberyTomb = workspace:FindFirstChild("RobberyTomb")
@@ -6556,14 +7789,32 @@ local function loadup()
                         end
                     end
                     local function loop()
-                        local bool = global.ui_status.automatic_resolve_dart_room
-                        if bool then
-                            if not isTeleporting and isLocalNearbyTeleporter() then
-                                teleportToEveryPillar()
-                            end
+                        if not isTeleporting and isLocalNearbyTeleporter() then
+                            teleportToEveryPillar()
                         end
                     end
-                    createloop(0.1, loop)
+                    local cache
+                    local loopf
+                    local function tagService()
+                        cache = client.tags.new("automaticresolvedart", 0, false, function(val)
+                            if val then
+                                loopf = createloop(0.1, loop)
+                            else
+                                if loopf then
+                                    loopf:disconnect()
+                                    loopf = nil
+                                end
+                            end
+                        end)
+                    end
+                    tagService()
+                    local function loop()
+                        local bool = global.ui_status.automatic_resolve_dart_room
+                        if cache then
+                            cache.obj.Value = bool
+                        end
+                    end
+                    createloop(0, loop)
                 end
                 resolver()
                 local function darts()
@@ -6580,11 +7831,7 @@ local function loadup()
                 darts()
                 local function wood()
                     local function breakWoods(bool)
-                        local robberyTomb = workspace:FindFirstChild("RobberyTomb")
-                        if not robberyTomb then
-                            return false
-                        end
-                        for i,v in next, robberyTomb.Cart.Planks:GetDescendants() do
+                        for i,v in next, workspace.RobberyTomb.Cart.Planks:GetDescendants() do
                             if v.Name == "Wood" then
                                 v.CanTouch = not bool
                             end
@@ -6599,13 +7846,12 @@ local function loadup()
                     tagService()
                     local function forceChange()
                         breakWoods(not cache.obj.Value)
-                        task.wait()
+                        task.wait(0.1)
                         breakWoods(cache.obj.Value)
                     end
                     local function robberyTombAdded(obj)
                         if obj.Name == "RobberyTomb" then
-                            workspace.RobberyTomb.ChildAdded:connect(forceChange)
-                            workspace.RobberyTomb.Changed:connect(forceChange)
+                            forceChange()
                         end
                     end
                     table.insert(client.onWorkspaceSpawnRun, {
@@ -6742,7 +7988,6 @@ local function loadup()
                 end
                 tagService()
                 local function changeOnChildAdded()
-                    print("cameras")
                     task.wait(0.1)
                     breakLights(not cache.obj.Value)
                     task.wait(0.1)
@@ -6781,221 +8026,304 @@ local function loadup()
         end
         damageDealersCorrection()
         local function robberyStatusCorrection()
-            local function bank()
-                local function getBankStatus()
-                    local getRobberyStatus = global.registry.getRobberyStatus
-                    local status = getRobberyStatus("BANK")
-                    if status == "OPENED" then
-                        return true
-                    end
-                    if status == "STARTED" then
-                        return 0
-                    end 
-                    return false
+            local getRobbery = global.registry.getRobberyStatus
+            local function getRobberyStatus(key)
+                if key == "airdrop" then
+                    return workspace:FindFirstChild("Drop") ~= nil
                 end
-                local function status()
-                    local function loop()
-                        if global.ui.statusRobberies["Bank Status"] then
-                            local getBankStatus = getBankStatus()
-                            if not getBankStatus then
-                                global.ui.statusRobberies["Bank Status"] = ("Status: %s"):format("Open")
-                                global.ui.colorForcing["Bank Status"] = Color3.fromRGB(178, 255, 104)
-                                return true
-                            end
-                            if getBankStatus == 0 then
-                                global.ui.statusRobberies["Bank Status"] = ("Status: %s"):format("Started")
-                                global.ui.colorForcing["Bank Status"] = Color3.fromRGB(255, 178, 102)
-                                return true
-                            end
-                            global.ui.statusRobberies["Bank Status"] = ("Status: %s"):format("Closed")
-                            global.ui.colorForcing["Bank Status"] = Color3.fromRGB(255, 102, 102)
+                key = key:upper()
+                local status = getRobbery(key)
+                if status == "OPENED" then
+                    return true
+                end
+                if status == "STARTED" then
+                    return 0
+                end
+                return false
+            end
+            local cache
+            local function tagService()
+                cache = client.tags.new("casino_status", 0, false, function(val)
+                    local breakCasinoLasers = global.registry.breakCasinoLasers
+                    if breakCasinoLasers then
+                        breakCasinoLasers(val)
+                    end
+                end)
+            end
+            tagService()
+            local openColor = Color3.fromRGB(178, 255, 104)
+            local startedColor = Color3.fromRGB(255, 178, 102)
+            local closedColor = Color3.fromRGB(255, 102, 102)
+            local status = {
+                start = "Status: Started";
+                open = "Status: Open";
+                closed = "Status: Closed";
+            }
+            local function loop()
+                local statusRobberies = global.ui.statusRobberies
+                local colorForcing = global.ui.colorForcing
+                if statusRobberies["Bank Status"] then
+                    local getBankStatus = getRobberyStatus("bank")
+                    if getBankStatus == 0 then
+                        statusRobberies["Bank Status"] = "Rising City: Started"
+                        colorForcing["Bank Status"] = startedColor
+                    elseif getBankStatus then
+                        statusRobberies["Bank Status"] = "Rising City: Open"
+                        colorForcing["Bank Status"] = openColor
+                    elseif not getBankStatus then
+                        statusRobberies["Bank Status"] = "Rising City: Closed"
+                        colorForcing["Bank Status"] = closedColor
+                    end
+                end
+                if statusRobberies["BANK2_ROBBERY_STATUS"] then
+                    local getBank2Status = getRobberyStatus("BANK2")
+                    if getBank2Status == 0 then
+                        statusRobberies["BANK2_ROBBERY_STATUS"] = "Crater City: Started"
+                        colorForcing["BANK2_ROBBERY_STATUS"] = startedColor
+                    elseif getBank2Status then
+                        statusRobberies["BANK2_ROBBERY_STATUS"] = "Crater City: Open"
+                        colorForcing["BANK2_ROBBERY_STATUS"] = openColor
+                    elseif not getBank2Status then
+                        statusRobberies["BANK2_ROBBERY_STATUS"] = "Crater City: Closed"
+                        colorForcing["BANK2_ROBBERY_STATUS"] = closedColor
+                    end
+                end
+                if statusRobberies["Museum Status"] then
+                    local getMuseumStatus = getRobberyStatus("museum")
+                    if getMuseumStatus == 0 then
+                        statusRobberies["Museum Status"] = status.start
+                        colorForcing["Museum Status"] = startedColor
+                    elseif getMuseumStatus then
+                        statusRobberies["Museum Status"] = status.open
+                        colorForcing["Museum Status"] = openColor
+                    elseif not getMuseumStatus then
+                        statusRobberies["Museum Status"] = status.closed
+                        colorForcing["Museum Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Jewelry Status"] then
+                    local getJewelryStatus = getRobberyStatus("jewelry")
+                    if getJewelryStatus == 0 then
+                        statusRobberies["Jewelry Status"] = status.start
+                        colorForcing["Jewelry Status"] = startedColor
+                    elseif getJewelryStatus then
+                        statusRobberies["Jewelry Status"] = status.open
+                        colorForcing["Jewelry Status"] = openColor
+                    elseif not getJewelryStatus then
+                        statusRobberies["Jewelry Status"] = status.closed
+                        colorForcing["Jewelry Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Casino Status"] then
+                    local getCasinoStatus = getRobberyStatus("casino")
+                    if cache then
+                        if global.ui_status.disable_lasers then
+                            local status = getCasinoStatus or getCasinoStatus == 0 and true or false
+                            cache.obj.Value = status
+                        else
+                            cache.obj.Value = false
                         end
                     end
-                    createloop(0, loop)
+                    if getCasinoStatus == 0 then
+                        statusRobberies["Casino Status"] = status.start
+                        colorForcing["Casino Status"] = startedColor
+                    elseif getCasinoStatus then
+                        statusRobberies["Casino Status"] = status.open
+                        colorForcing["Casino Status"] = openColor
+                    elseif not getCasinoStatus then
+                        statusRobberies["Casino Status"] = status.closed
+                        colorForcing["Casino Status"] = closedColor
+                    end
                 end
-                status()
+                if statusRobberies["Trains Status"] then
+                    local getTrainStatus = getRobberyStatus("train_passenger") or getRobberyStatus("train_cargo")
+                    if getTrainStatus == 0 then
+                        statusRobberies["Trains Status"] = status.start
+                        colorForcing["Trains Status"] = startedColor
+                    elseif getTrainStatus then
+                        statusRobberies["Trains Status"] = status.open
+                        colorForcing["Trains Status"] = openColor
+                    else
+                        statusRobberies["Trains Status"] = status.closed
+                        colorForcing["Trains Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Airdrop Status"] then
+                    local getAirdropStatus = getRobberyStatus("airdrop")
+                    if getAirdropStatus then
+                        statusRobberies["Airdrop Status"] = status.open
+                        colorForcing["Airdrop Status"] = openColor
+                    elseif not getAirdropStatus then
+                        statusRobberies["Airdrop Status"] = status.closed
+                        colorForcing["Airdrop Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Tomb Status"] then
+                    local getTombStatus = getRobberyStatus("tomb")
+                    if getTombStatus == 0 then
+                        statusRobberies["Tomb Status"] = status.start
+                        colorForcing["Tomb Status"] = startedColor
+                    elseif getTombStatus then
+                        statusRobberies["Tomb Status"] = status.open
+                        colorForcing["Tomb Status"] = openColor
+                    elseif not getTombStatus then
+                        statusRobberies["Tomb Status"] = status.closed
+                        colorForcing["Tomb Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Cargoplane Status"] then
+                    local getCargoplaneStatus = getRobberyStatus("cargo_plane")
+                    if getCargoplaneStatus == 0 then
+                        statusRobberies["Cargoplane Status"] = status.start
+                        colorForcing["Cargoplane Status"] = startedColor
+                    elseif getCargoplaneStatus then
+                        statusRobberies["Cargoplane Status"] = status.open
+                        colorForcing["Cargoplane Status"] = openColor
+                    elseif not getCargoplaneStatus then
+                        statusRobberies["Cargoplane Status"] = status.closed
+                        colorForcing["Cargoplane Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Banktruck Status"] then
+                    local getBankTruckStatus = getRobberyStatus("money_truck")
+                    if getBankTruckStatus == 0 then
+                        statusRobberies["Banktruck Status"] = status.start
+                        colorForcing["Banktruck Status"] = startedColor
+                    elseif getBankTruckStatus then
+                        statusRobberies["Banktruck Status"] = status.open
+                        colorForcing["Banktruck Status"] = openColor
+                    elseif not getCargoplaneStatus then
+                        statusRobberies["Banktruck Status"] = status.closed
+                        colorForcing["Banktruck Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Powerplant Status"] then
+                    local getPowerplantStatus = getRobberyStatus("power_plant")
+                    if getPowerplantStatus == 0 then
+                        statusRobberies["Powerplant Status"] = status.start
+                        colorForcing["Powerplant Status"] = startedColor
+                    elseif getPowerplantStatus then
+                        statusRobberies["Powerplant Status"] = status.open
+                        colorForcing["Powerplant Status"] = openColor
+                    elseif not getPowerplantStatus then
+                        statusRobberies["Powerplant Status"] = status.closed
+                        colorForcing["Powerplant Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Cargoship Status"] then
+                    local getCargoshipStatus = getRobberyStatus("cargo_ship")
+                    if getCargoshipStatus == 0 then
+                        statusRobberies["Cargoship Status"] = status.start
+                        colorForcing["Cargoship Status"] = startedColor
+                    elseif getCargoshipStatus then
+                        statusRobberies["Cargoship Status"] = status.open
+                        colorForcing["Cargoship Status"] = openColor
+                    elseif not getCargoshipStatus then
+                        statusRobberies["Cargoship Status"] = status.closed
+                        colorForcing["Cargoship Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Mansion Status"] then
+                    local getMansionStatus = getRobberyStatus("mansion")
+                    if getMansionStatus == 0 then
+                        statusRobberies["Mansion Status"] = status.start
+                        colorForcing["Mansion Status"] = startedColor
+                    elseif getMansionStatus then
+                        statusRobberies["Mansion Status"] = status.open
+                        colorForcing["Mansion Status"] = openColor
+                    elseif not getMansionStatus then
+                        statusRobberies["Mansion Status"] = status.closed
+                        colorForcing["Mansion Status"] = closedColor
+                    end
+                end
+                if statusRobberies["Donut Shop"] then
+                    local getDonutShopStatus = getRobberyStatus("store_donut")
+                    if getDonutShopStatus == 0 then
+                        statusRobberies["Donut Shop"] = ("%s"):format("Donut Shop: Started")
+                        colorForcing["Donut Shop"] = startedColor
+                    elseif getDonutShopStatus then
+                        statusRobberies["Donut Shop"] = ("%s"):format("Donut Shop: Opened")
+                        colorForcing["Donut Shop"] = openColor
+                    elseif not getDonutShopStatus then
+                        statusRobberies["Donut Shop"] = ("%s"):format("Donut Shop: Closed")
+                        colorForcing["Donut Shop"] = closedColor
+                    end
+                end
+                if statusRobberies["Gas Station"] then
+                    local getGasStationStatus = getRobberyStatus("store_gas")
+                    if getGasStationStatus == 0 then
+                        statusRobberies["Gas Station"] = ("%s"):format("Gas Station: Started")
+                        colorForcing["Gas Station"] = startedColor
+                    elseif getGasStationStatus then
+                        statusRobberies["Gas Station"] = ("%s"):format("Gas Station: Opened")
+                        colorForcing["Gas Station"] = openColor
+                    elseif not getGasStationStatus then
+                        statusRobberies["Gas Station"] = ("%s"):format("Gas Station: Closed")
+                        colorForcing["Gas Station"] = closedColor
+                    end
+                end
             end
-            bank()
+            createloop(0, loop)
         end
         robberyStatusCorrection()
+        local function minimapCorrection()
+            local function noFlash()
+                local roact = client.modules.roact
+                local minimapService = client.modules.minimapService
+                local isVulnerable = global.registry.isVulnerable
+                local function loop()
+                    local bool = global.ui_status.disable_minimap_flash
+                    for i,v in next, minimapService.points do
+                        local plr = players:FindFirstChild(v.name)
+                        if plr then
+                            if isVulnerable(player.Team, plr.Team) then
+                                v.flash = not bool
+                            end
+                        end
+                    end
+                end
+                createloop(1, loop)
+            end
+            noFlash()
+        end
+        minimapCorrection()
+        local function radioCorrection()
+            local actionButtonService = client.modules.actionButtonService
+            task.spawn(function()
+                for i,v in next, actionButtonService.active do
+                    if table.find(v.keyCodes, Enum.KeyCode.R) and v._groupKey == "outer" then
+                        local onPressed = v.onPressed   
+                        v.onPressed = function(...)
+                            if global.ui_status.disable_radio_keybind then
+                                return task.wait(9e9)
+                            end
+                            return onPressed(...)
+                        end
+                    end
+                end
+            end)
+        end
+        radioCorrection()
         local function givingCorrection()
-            local function equip_owned_guns()
-                if global.ui_status.ui_gunstore then
-                    return false
-                end
-                if global.is_special_equip then
-                    return false
-                end
-                global.special_equip2 = true
-                global.hideshopui = true
-                local gunshopgui = player.PlayerGui.GunShopGui
-                global.ui_status.open_gunstore_ui = true
-                local container = gunshopgui.Container.Container.Main.Container
-                while true do
-                    if container:FindFirstChild("Slider") then
-                        break
-                    end
-                    task.wait()
-                end
-                local slider = container:FindFirstChild("Slider")
-                local resolveOwnedItems = client.reg.resolveOwnedItems
-                if not resolveOwnedItems then
-                    global.special_equip2 = false
-                    global.hideshopui = false
-                    global.ui_status.open_gunstore_ui = false
-                    return false
-                end
-                local resolveEquippedItems = client.reg.resolveEquippedItems
-                if not resolveEquippedItems then
-                    global.special_equip2 = false
-                    global.hideshopui = false
-                    global.ui_status.open_gunstore_ui = false
-                    return false
-                end
-                if #resolveOwnedItems == #resolveEquippedItems then
-                    global.special_equip2 = false
-                    global.hideshopui = false
-                    global.ui_status.open_gunstore_ui = false
-                    return false
-                end
-                if #resolveOwnedItems == 0 then
-                    local button = slider:FindFirstChild("Pistol")
-                    if not button then
-                        log("Couldnt find Pistol")
-                        global.special_equip2 = false
-                        global.hideshopui = false
-                        global.ui_status.open_gunstore_ui = false
-                        return false
-                    end
-                    local action = button.Bottom.Action
-                    if not action then
-                        log("Couldnt find Action")
-                        global.special_equip2 = false
-                        global.hideshopui = false
-                        global.ui_status.open_gunstore_ui = false
-                        return false
-                    end
-                    for _, connection in next, getconnections(action.MouseButton1Down) do
-                        if action.Text == "FREE" then
-                            connection.Function()
-                        end
-                    end
-                    task.wait(1)
-                end
-                for i,v in next, resolveOwnedItems do
-                    if v ~= "Grenade" and v ~= "Flashlight" and v ~= "Binoculars" and not table.find(resolveEquippedItems, v) then
-                        local slider = container:FindFirstChild("Slider")
-                        if not slider then
-                            log("Couldnt find Slider")
-                            global.special_equip2 = false
-                            global.hideshopui = false
-                            global.ui_status.open_gunstore_ui = false
-                            return false
-                        end
-                        local button = slider:FindFirstChild(v)
-                        if not button then
-                            log(("Couldnt find %s"):format(v))
-                            global.special_equip2 = false
-                            global.hideshopui = false
-                            global.ui_status.open_gunstore_ui = false
-                            return false
-                        end
-                        local action = button.Bottom.Action
-                        if not action then
-                            log("Couldnt find Action")
-                            global.special_equip2 = false
-                            global.hideshopui = false
-                            global.ui_status.open_gunstore_ui = false
-                            return false
-                        end
-                        for _, connection in next, getconnections(action.MouseButton1Down) do
-                            connection.Function()
-                        end
-                    end
-                end
-                global.special_equip2 = false
-                global.hideshopui = false
-                global.ui_status.open_gunstore_ui = false
-            end
-            global.registry.equip_owned_guns = equip_owned_guns
-            local lastUsed = tick()
-            local function equipOwnedItem(item, unequip)
-                global.hideshopui = true
-                global.ui_status.open_gunstore_ui = true
-                local gunshopgui = player.PlayerGui.GunShopGui
-                local container = gunshopgui.Container.Container.Main.Container
-                while true do
-                    if container:FindFirstChild("Slider") then
-                        break
-                    end
-                    task.wait()
-                end
-                local resolveOwnedItems = client.reg.resolveOwnedItems
-                local slider = container:FindFirstChild("Slider")
-                if not slider then
-                    log("Couldnt find Slider")
-                    global.hideshopui = false
-                    global.ui_status.open_gunstore_ui = false
-                    return false
-                end
-                if #resolveOwnedItems == 0 then
-                    local button = slider:FindFirstChild("Pistol")
-                    if not button then
-                        log("Couldnt find Pistol")
-                        global.hideshopui = false
-                        global.ui_status.open_gunstore_ui = false
-                        return false
-                    end
-                    local action = button.Bottom.Action
-                    if not action then
-                        log("Couldnt find Action")
-                        global.hideshopui = false
-                        global.ui_status.open_gunstore_ui = false
-                        return false
-                    end
-                    for _, connection in next, getconnections(action.MouseButton1Down) do
-                        if action.Text == "FREE" then
-                            connection.Function()
-                        end
-                    end
-                    return false
-                end
-                for i,v in next, resolveOwnedItems do
-                    if v == tostring(item) then
-                        local button = slider:FindFirstChild(v)
-                        if not button then
-                            log(("Couldnt find %s"):format(v))
-                            global.hideshopui = false
-                            global.ui_status.open_gunstore_ui = false
-                            return false
-                        end
-                        local action = button.Bottom.Action
-                        if not action then
-                            log("Couldnt find Action")
-                            global.hideshopui = false
-                            global.ui_status.open_gunstore_ui = false
-                            return false
-                        end
-                        for _, connection in next, getconnections(action.MouseButton1Down) do
-                            connection.Function()
-                        end
-                    end
-                end
-                global.hideshopui = false
-                global.ui_status.open_gunstore_ui = false
-            end
-            global.registry.equipOwnedItem = equipOwnedItem
+            local isProjectile = global.registry.isProjectile
             local function always_equip()
+                local equipOwnedItem = global.registry.equipOwnedItem
                 local function loop()
                     local bool = global.ui_status.always_equip_owned_guns
                     if bool then
-                        if global.is_special_equip then
+                        if not client.playerCharacter then
+                            return false
+                        end
+                        if global.is_instant_reloading then
+                            return false
+                        end
+                        if global.ui_status.spam_drop_guns then
                             return false
                         end
                         local resolveOwnedItems = client.reg.resolveOwnedItems
                         local resolveEquippedItems = client.reg.resolveEquippedItems
                         for i,v in next, resolveOwnedItems do
-                            if not table.find(resolveEquippedItems, v) then
+                            if not table.find(resolveEquippedItems, v) and not isProjectile(v) then
                                 equipOwnedItem(v)
                             end
                         end
@@ -7005,17 +8333,26 @@ local function loadup()
             end
             always_equip()
             local function dropdown()
+                local isProjectile = global.registry.isProjectile
+                local config = global.config
                 local function assignGuns()
-                    local config = global.config
                     local cfg = config.equip_guns
-                    cfg.list = client.reg.resolveOwnedItems
+                    local list = {}
+                    for i,v in next, client.reg.resolveOwnedItems do
+                        if not isProjectile(v) then
+                            table.insert(list, v)
+                        end
+                    end
+                    cfg.list = list
                     task.delay(0.2, function()
                         cfg.reload(cfg.list)
                     end)
                 end
                 assignGuns()
                 local function onNewItem(obj)
-                    local config = global.config
+                    if isProjectile(obj.Name) then
+                        return false
+                    end
                     local cfg = config.equip_guns
                     cfg.list = {obj.Name}
                     task.delay(0.2, function()
@@ -7029,73 +8366,203 @@ local function loadup()
         end
         givingCorrection()
         local function jewelryCorrection()
-            local function getJewelryStatus()
-                local getRobberyStatus = global.registry.getRobberyStatus
-                local status = getRobberyStatus("JEWELRY")
-                if status == "OPENED" then
-                    return true
-                end
-                if status == "STARTED" then
-                    return 0
+            local function isInJewelry()
+                local getPartsInRegion = global.registry.getPartsInRegion
+                local char = client.playerCharacter
+                if char then
+                    local primarypart = char.PrimaryPart
+                    if primarypart then
+                        local tbl = {
+                            x = {
+                                max = 156;
+                                min = 103;
+                            };
+                            y = {
+                                max = 70;
+                                min = 15;
+                            };
+                            z = {
+                                max = 1350;
+                                min = 1265;
+                            };
+                        }
+                        local pos = {
+                            x = primarypart.Position.x;
+                            y = primarypart.Position.y;
+                            z = primarypart.Position.z;
+                        }
+                        local getPartsInRegion = getPartsInRegion(pos.x, pos.y, pos.z, tbl.x.min, tbl.y.min, tbl.z.min, tbl.x.max, tbl.y.max, tbl.z.max)
+                        if getPartsInRegion then
+                            return true
+                        end
+                    end
                 end
                 return false
             end
-            local function status()
+            local function grabGems()
                 local function loop()
-                    if global.ui.statusRobberies["Jewelry Status"] then
+                    if tostring(player.Team) == "Police" then
+                        return false
+                    end
+                    local bool = global.ui_status.automatic_grab_nearby_jewels
+                    if bool then
+                        local isInJewelry = isInJewelry()
+                        if isInJewelry then
+                            if workspace:FindFirstChild("Jewelrys") then
+                                for i,v in next, client.modules.ui.CircleAction.Specs do
+                                    if v.Name == "Grab Jewel" and v.Part:IsDescendantOf(workspace.Jewelrys) then
+                                        v:Callback(true)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+                createloop(0.2, loop)
+            end
+            grabGems()
+            local function automaticPunch()
+                local getPartsInRegion = global.registry.getPartsInRegion
+                local parts = {}
+                local function scanParts()
+                    local scan = {"Head", "RightLowerArm", "RightUpperArm", "LeftLowerArm", "LeftUpperArm"}
+                    local function onCharacterAdded(char)
+                        for i=1, #scan do
+                            local v = scan[i]
+                            local part = char:WaitForChild(v)
+                            if part then
+                                table.insert(parts, part)
+                            end
+                        end
+                    end
+                    player.CharacterAdded:connect(onCharacterAdded)
+                    local function onCharacterRemoving(char)
+                        for i=1, #parts do
+                            table.remove(parts, i)
+                        end
+                    end
+                    player.CharacterRemoving:connect(onCharacterRemoving)
+                    local char = client.playerCharacter
+                    if char then
+                        for i,v in next, char:GetChildren() do
+                            if table.find(scan, v.Name) then
+                                table.insert(parts, v)
+                            end
+                        end
+                    end
+                end
+                scanParts()
+                local function getJewelrys()
+                    return workspace:FindFirstChild("Jewelrys")
+                end
+                local function getJewelryModel()
+                    local getJewelrys = getJewelrys()
+                    if not getJewelrys then
+                        return false
+                    end
+                    return getJewelrys:GetChildren()[1]
+                end
+                local function getBoxes()
+                    return getJewelryModel().Boxes:GetChildren()
+                end
+                local function getJewelryFloor()
+                    return getJewelryModel().Floors:GetChildren()[1]
+                end
+                local function getJewelryFloorPart()
+                    return getJewelryFloor().PrimaryPart
+                end
+                local function isBoxBroken(box)
+                    return box.Transparency ~= -2
+                end
+                local function isFacingBox(box, part)
+                    local u = ((box.Position - part.Position) * Vector3.new(1,0,1)).unit
+                    local lookvec = part.CFrame.LookVector * Vector3.new(1, 0, 1)
+                    return lookvec:Dot(u) > 0.78
+                end
+                local function isPlayerNearbyBox(box, part)
+                    local mag = (box.Position - part.Position).magnitude
+                    if mag < 5 then
+                        return true
+                    end
+                    return false
+                end
+                local lastPunch = tick()
+                local function canPunch()
+                    if tick() - lastPunch > 0.2 then
+                        return true
+                    end
+                    return false
+                end
+                local function attemptPunch()
+                    local buttons = global.registry.buttons
+                    if canPunch() then
+                        buttons.attemptPunch()
+                        lastPunch = tick()
+                    end
+                end
+                local function getJewelryStatus()
+                    local getJewelryStatus = global.registry.getRobberyStatus("jewelry")
+                    return getJewelryStatus
+                end
+                local function loop()
+                    if tostring(player.Team) == "Police" then
+                        return false
+                    end
+                    local bool = global.ui_status.automatic_punch_jewelry_boxes
+                    if bool then
+                        if client.reg.getEquippedItem then
+                            return false
+                        end
+                        if not canPunch() then
+                            return false
+                        end
                         local getJewelryStatus = getJewelryStatus()
-                        if not getJewelryStatus then
-                            global.ui.statusRobberies["Jewelry Status"] = ("Status: %s"):format("Open")
-                            global.ui.colorForcing["Jewelry Status"] = Color3.fromRGB(178, 255, 104)
-                            return true
+                        if getJewelryStatus or getJewelryStatus == 0 then
+                            local isInJewelry = isInJewelry()
+                            if isInJewelry then
+                                local getBoxes = getBoxes()
+                                if getBoxes then
+                                    local partsindex = #parts
+                                    if partsindex > 0 then
+                                        for i=1, partsindex do
+                                            local v = parts[i]
+                                            for i2=1, #getBoxes do
+                                                local v2 = getBoxes[i2]
+                                                local isBoxBroken = isBoxBroken(v2)
+                                                if not isBoxBroken then
+                                                    local isPlayerNearbyBox = isPlayerNearbyBox(v2, v)
+                                                    if isPlayerNearbyBox then
+                                                        local isFacingBox = isFacingBox(v2, v)
+                                                        if isFacingBox then
+                                                            attemptPunch()
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
                         end
-                        if getJewelryStatus == 0 then
-                            global.ui.statusRobberies["Jewelry Status"] = ("Status: %s"):format("Started")
-                            global.ui.colorForcing["Jewelry Status"] = Color3.fromRGB(255, 178, 102)
-                            return true
-                        end
-                        global.ui.statusRobberies["Jewelry Status"] = ("Status: %s"):format("Closed")
-                        global.ui.colorForcing["Jewelry Status"] = Color3.fromRGB(255, 102, 102)
                     end
                 end
                 createloop(0, loop)
+                --@NU LE STERGE!!!!!!!!! 
+                global.registry.scannedParts = parts
+                global.registry.getBoxes = getBoxes
+                global.registry.getJewelryFloorPart = getJewelryFloorPart
+                global.registry.isJewelryBoxBroken = isJewelryBoxBroken
+                global.registry.getJewelryFloor = getJewelryFloor
+                global.registry.getJewelryModel = getJewelryModel
+                global.registry.isFacingPart = isFacingBox
+                global.registry.isNearbyJewelryBox = isPlayerNearbyJewelryBox
+                global.registry.isInJewelry = isInJewelry
+                global.registry.lastUsedPunchingForJewelry = lastPunch
             end
-            status()
+            automaticPunch()
         end
         jewelryCorrection()
         local function casinoCorrection()
-            local function getCasinoStatus()
-                local getRobberyStatus = global.registry.getRobberyStatus
-                local status = getRobberyStatus("CASINO")
-                if status == "OPENED" then
-                    return true
-                end
-                if status == "STARTED" then
-                    return 0
-                end 
-                return false
-            end
-            local function status()
-                local function loop()
-                    if global.ui.statusRobberies["Casino Status"] then
-                        local getCasinoStatus = getCasinoStatus()
-                        if not getCasinoStatus then
-                            global.ui.statusRobberies["Casino Status"] = ("Status: %s"):format("Open")
-                            global.ui.colorForcing["Casino Status"] = Color3.fromRGB(178, 255, 104)
-                            return true
-                        end
-                        if getCasinoStatus == 0 then
-                            global.ui.statusRobberies["Casino Status"] = ("Status: %s"):format("Started")
-                            global.ui.colorForcing["Casino Status"] = Color3.fromRGB(255, 178, 102)
-                            return true
-                        end
-                        global.ui.statusRobberies["Casino Status"] = ("Status: %s"):format("Closed")
-                        global.ui.colorForcing["Casino Status"] = Color3.fromRGB(255, 102, 102)
-                    end
-                end
-                createloop(0, loop)
-            end
-            status()
             local function elevator()
                 local call_elevator_to_floor = global.registry.call_elevator_to_floor
                 local function loop()
@@ -7110,194 +8577,296 @@ local function loadup()
             end
             elevator()
             local function vault()
-                local function crack()
-                    for i,v in next, client.modules.ui.CircleAction.Specs do
-                        if v.Name == "Crack" then
-                            v:Callback(true)
-                        end
-                    end
-                end
-                local function changeDirection()
-                    for i,v in next, client.modules.ui.CircleAction.Specs do
-                        if v.Name == "Change Direction" then
-                            v:Callback(true)
-                        end
-                    end
-                end
-                local function getVault()
-                    local casino = workspace:FindFirstChild("Casino")
-                    if casino then
-                        return casino.HackableVaults.VaultDoorMain
-                    end
-                    return false
-                end
-                local function getLED()
-                    local getVault = getVault()
-                    if not getVault then
-                        return false
-                    end
-                    return getVault.InnerModel.Model:FindFirstChild("UnlockedLED")
-                end
-                local function doCrackVault()
-                    local vault = getVault()
-                    if vault then
-                        crack()
-                    end
-                end
-                local function doSwitchDirection()
-                    local vault = getVault()
-                    if vault then
-                        changeDirection()
-                    end
-                end
-                local function getHacker()
-                    local getVault = getVault()
-                    if not getVault then
-                        return false
-                    end
-                    for i,v in next, getVault:GetDescendants() do
-                        if v:GetAttribute("VaultHackerId") == player.UserId then
-                            return player.UserId
-                        end
-                    end
-                    return false
-                end
-                local function onObjChanged(obj)
-                    if tonumber(getHacker()) ~= player.UserId then
-                        return false
-                    end
-                    if string.find(obj, "BrickColor") then
-                        local getLED = getLED()
-                        if getLED.BrickColor == BrickColor.new("Lime green") then
-                            doSwitchDirection()
-                        end
-                    end
-                end
-                local function onAddedCasino(obj)
-                    if obj.Name == "Casino" then
-                        local getLED = getLED()
-                        getLED.Changed:connect(onObjChanged)
-                    end
-                end
-                table.insert(client.onWorkspaceSpawnRun, {
-                    _fn = onAddedCasino
-                })
-                local function loop()
-                    if not client.playerCharacter then
-                        return false
-                    end
-                    local primarypart = client.playerCharacter.PrimaryPart
-                    if not primarypart then
-                        return false
-                    end
-                    local bool = global.ui_status.auto_crack_vault
-                    if bool then
-                        local vault = getVault()
-                        if vault then
-                            if (vault.InnerModel.Puzzle.InnerModel.Root.Position - primarypart.Position).magnitude < 25 then
-                                local getHacker = getHacker()
-                                if not getHacker or tostring(getHacker) == tostring(player.UserId) then
-                                    return doCrackVault()
+                player:RequestStreamAroundAsync(client.gamelocations.casino)
+                local ui = client.modules.ui
+                local specs = ui.CircleAction.Specs
+                local vaults = {}
+                local actions = {}
+                local vaultPuzzle = collectionservice:GetTagged("VaultDoorPuzzle")
+                local function onInstanceAdded(obj)
+                    if obj.Parent.Parent.Name ~= "Vault" then
+                        table.insert(vaults, {
+                            puzzle = obj;
+                            doorName = obj.Parent.Parent.Name;
+                            specPart = obj.Part;
+                        })
+                        specs = ui.CircleAction.Specs
+                        for i,v in next, vaults do
+                            for i2,v2 in next, specs do
+                                if v2.Part == v.specPart then
+                                    local model = v.puzzle.Parent.Model
+                                    if v.doorName == "VaultDoorMain" then
+                                        local unlockedLed = model.UnlockedLED
+                                        unlockedLed.Changed:connect(function(obj)
+                                            onLEDChange(obj, v2, v, model) 
+                                        end)
+                                    elseif v.doorName == "VaultDoorSlider" then
+                                        local light = model.Light
+                                        light.Changed:connect(function(obj)
+                                            onLightChange(obj, v2, v, model)
+                                        end)
+                                    end
+                                    v2.vaultIdx = i
+                                    v2.vaultType = v.doorName
+                                    v2.puzzle = v.puzzle
+                                    table.insert(actions, v2)
                                 end
                             end
                         end
                     end
                 end
-                createloop(0.1, loop)
+                collectionservice:GetInstanceAddedSignal("VaultDoorPuzzle"):connect(onInstanceAdded)
+                for i,v in next, vaultPuzzle do
+                    if v.Parent.Parent.Name ~= "Vault" then
+                        table.insert(vaults, {
+                            puzzle = v;
+                            doorName = v.Parent.Parent.Name;
+                            specPart = v.Part;
+                        })
+                    end
+                end 
+                local function onLEDChange(obj, v2, v, model)
+                    if v.puzzle:GetAttribute("VaultHackerId") ~= nil and v.puzzle:GetAttribute("VaultHackerId") ~= player.UserId then
+                        return false
+                    end
+                    if string.find(obj, "BrickColor") then
+                        local led = model.UnlockedLED
+                        if led.BrickColor == BrickColor.new("Lime green") then
+                            v2:Callback(true)
+                        end
+                    end
+                end
+                local function onLightChange(obj, v2, v, model)
+                    if v.puzzle:GetAttribute("VaultHackerId") ~= nil and v.puzzle:GetAttribute("VaultHackerId") ~= player.UserId then
+                        return false
+                    end
+                    if string.find(obj, "BrickColor") then
+                        local light = model.Light
+                        if light.BrickColor == BrickColor.new("Lime green") then
+                            v2:Callback(true)
+                        end
+                    end
+                end
+                task.spawn(function()
+                    for i,v in next, vaults do
+                        for i2,v2 in next, specs do
+                            if v2.Part == v.specPart then
+                                local model = v.puzzle.Parent.Model
+                                if v.doorName == "VaultDoorMain" then
+                                    local unlockedLed = model.UnlockedLED
+                                    unlockedLed.Changed:connect(function(obj)
+                                        onLEDChange(obj, v2, v, model) 
+                                    end)
+                                elseif v.doorName == "VaultDoorSlider" then
+                                    local light = model.Light
+                                    light.Changed:connect(function(obj)
+                                        onLightChange(obj, v2, v, model)
+                                    end)
+                                end
+                                v2.vaultIdx = i
+                                v2.vaultType = v.doorName
+                                v2.puzzle = v.puzzle
+                                table.insert(actions, v2)
+                            end
+                        end
+                    end
+                end)
+                local function getClosestVault()
+                    local char = client.playerCharacter
+                    if not char then
+                        return false
+                    end
+                    local root = char.PrimaryPart
+                    if not root then
+                        return false
+                    end
+                    local closest, dist = nil, 10
+                    for i,v in next, actions do
+                        local magnitude = (root.Position - v.Part.Position).magnitude
+                        if magnitude < dist then
+                            closest = v
+                            dist = magnitude
+                        end
+                    end
+                    return closest
+                end
+                global.registry.getClosestVault = getClosestVault
+                local function loop()
+                    if tostring(player.Team) ~= "Criminal" then
+                        return false
+                    end
+                    local getClosestVault = getClosestVault()
+                    if not getClosestVault or getClosestVault and getClosestVault.puzzle.Parent.Parent:GetAttribute("DoorOpen") == true then
+                        return false
+                    end
+                    if getClosestVault and getClosestVault.puzzle:GetAttribute("VaultHackerId") == nil then
+                        getClosestVault:Callback(true)
+                    end
+                end
+                local loopf
+                local tagCache
+                local function tagService()
+                    tagCache = client.tags.new("auto_crack_vault", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0.2, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.auto_crack_vault
+                    if tagCache then
+                        tagCache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
             end
             vault()
         end
         casinoCorrection()
         local function trainCorrection()
-            local function getTrainStatus()
-                local getRobberyStatus = global.registry.getRobberyStatus
-                local status = getRobberyStatus("TRAIN_PASSENGER") or getRobberyStatus("TRAIN_CARGO")
-                if status == "OPENED" then
-                    return true
+            local function switches()
+                local click_switch1
+                local rail1
+                local function switch1()
+                    local switches = workspace:FindFirstChild("Switches")
+                    if not switches then 
+                        return false
+                    end
+                    local branchBack = switches:FindFirstChild("BranchBack")
+                    if not branchBack then
+                        return false
+                    end
+                    for i,v in next, branchBack:GetDescendants() do
+                        if v.Name == "Click" then
+                            click_switch1 = v.ClickDetector
+                        end
+                        if v.Name == "Rail" then
+                            rail1 = v
+                        end
+                    end
                 end
-                if status == "STARTED" then
-                    return 0
-                end 
-                return false
-            end
-            local function status()
+                switch1()
+                local click_switch2
+                local rail2
+                local function switch2()
+                    local switches = workspace:FindFirstChild("Switches")
+                    if not switches then 
+                        return false
+                    end
+                    local branchForward = switches:FindFirstChild("BranchForward")
+                    if not branchForward then
+                        return false
+                    end
+                    for i,v in next, branchForward:GetDescendants() do
+                        if v.Name == "Click" then
+                            click_switch2 = v.ClickDetector
+                        end
+                        if v.Name == "Rail" then
+                            rail2 = v
+                        end
+                    end
+                end
+                switch2()
                 local function loop()
-                    if global.ui.statusRobberies["Trains Status"] then
-                        local getTrainStatus = getTrainStatus()
-                        if getTrainStatus == 0 then
-                            global.ui.statusRobberies["Trains Status"] = ("Status: %s"):format("Started")
-                            global.ui.colorForcing["Trains Status"] = Color3.fromRGB(255, 178, 102)
-                            return true
+                    if not rail1 then
+                        return false
+                    end
+                    if not rail2 then
+                        return false
+                    end
+                    if rail1.Transparency ~= 1 then
+                        fireclickdetector(click_switch1)
+                    end
+                    if rail2.Transparency ~= 0 then
+                        fireclickdetector(click_switch2)
+                    end
+                end
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("anti_station_stop", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0.1, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
                         end
-                        if getTrainStatus then
-                            global.ui.statusRobberies["Trains Status"] = ("Status: %s"):format("Open")
-                            global.ui.colorForcing["Trains Status"] = Color3.fromRGB(178, 255, 104)
-                            return true
-                        end
-                        global.ui.statusRobberies["Trains Status"] = ("Status: %s"):format("Closed")
-                        global.ui.colorForcing["Trains Status"] = Color3.fromRGB(255, 102, 102)
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.anti_station_stop
+                    if cache then
+                        cache.obj.Value = bool
                     end
                 end
                 createloop(0, loop)
             end
-            status()
+            switches()
+            local function isTrainClose()
+                local trains = workspace.Trains
+                if #trains:GetChildren() == 0 then
+                    return false
+                end
+                local char = client.playerCharacter
+                if not char then
+                    return false
+                end
+                local root = char:FindFirstChild("HumanoidRootPart")
+                if not root then
+                    return false
+                end
+                local cart = trains:GetChildren()[1]:FindFirstChildWhichIsA("Part")
+                if (cart.Position - root.Position).magnitude < 35 then
+                    return true
+                end
+            end
             local function passenger()
                 local function grab()
                     local grabber = {"computer", "documents", "briefcase", "phone", "Cash", "spyglasses"}
                     for i,v in next, client.modules.ui.CircleAction.Specs do
                         for i2,v2 in next, grabber do
                             if string.find(v.Name, ("Grab %s"):format(v2)) then
-                                if v.Part:IsDescendantOf(workspace.Trains) then
-                                    if v.Enabled then
-                                        v:Callback(true)
-                                        task.wait(2)
-                                    end
+                                if v.Part:IsDescendantOf(workspace.Trains) and v.Enabled then
+                                    v:Callback(true)
+                                    task.wait(2)
                                 end
-                            end
-                        end
-                    end
-                end
-                local function isTrainClose()
-                    if #workspace.Trains:GetChildren() == 0 then
-                        return false
-                    end
-                    
-                    local char = client.playerCharacter
-                    if not char then
-                        return false
-                    end
-                    local root = char:FindFirstChild("HumanoidRootPart")
-                    if not root then
-                        return false
-                    end
-                    for i,v in next, workspace.Trains:GetDescendants() do
-                        if v:IsA("Part") or v:IsA("BasePart") then
-                            if (v.Position - root.Position).magnitude < 25 then
-                                return true
                             end
                         end
                     end
                 end
                 local function loop()
-                    local bool = global.ui_status.automatic_train_fillbag
-                    local automatic_delivery = global.ui_status.automatic_delivery
-                    if tostring(player.Team) == "Police" then
-                        if automatic_delivery then
-                            if #workspace.Trains:GetChildren() > 0 then
-                                local isTrainClose = isTrainClose()
-                                if isTrainClose then
-                                    grab()
-                                end
-                            end
-                        end
-                        return true
+                    local trains = workspace.Trains
+                    if #trains:GetChildren() == 0 then
+                        return false
                     end
+                    local automatic_delivery = global.ui_status.automatic_delivery
+                    if automatic_delivery then
+                        if tostring(player.Team) ~= "Police" then
+                            return false
+                        end
+                        local isTrainClose = isTrainClose()
+                        if isTrainClose then
+                            grab()
+                        end
+                        return true 
+                    end
+                    local bool = global.ui_status.automatic_train_fillbag
                     if bool then
-                        if #workspace.Trains:GetChildren() > 0 then
-                            local isTrainClose = isTrainClose()
-                            if isTrainClose then
-                                grab()
-                            end
+                        if tostring(player.Team) == "Police" then
+                            return false
+                        end
+                        local isTrainClose = isTrainClose()
+                        if isTradeClose then
+                            grab()
                         end
                     end
                 end
@@ -7323,280 +8892,351 @@ local function loadup()
                         end
                     end
                 end
-                local function isTrainClose()
-                    if #workspace.Trains:GetChildren() == 0 then
-                        return false
-                    end
-                    local char = client.playerCharacter
-                    if not char then
-                        return false
-                    end
-                    local root = char:FindFirstChild("HumanoidRootPart")
-                    if not root then
-                        return false
-                    end
-                    for i,v in next, workspace.Trains:GetDescendants() do
-                        if v:IsA("Part") or v:IsA("BasePart") then
-                            if (v.Position - root.Position).magnitude < 25 then
-                                return true
-                            end
-                        end
-                    end
-                end
                 local function loop()
                     local bool = global.ui_status.automatic_breach_vault
                     if bool then
-                        if #workspace.Trains:GetChildren() > 0 then
-                            local isTrainClose = isTrainClose()
-                            if isTrainClose then
-                                openDoor()
-                                breachVault()
-                            end
+                        local isTrainClose = isTrainClose()
+                        if isTrainClose then
+                            openDoor()
+                            breachVault()
                         end
                     end
                 end
-                createloop(1, loop)
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("automatic_breach_vault", 0, false, function(val)
+                        if val then
+                            loopf = createloop(1, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_breach_vault
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
             end
             cargo()
         end
         trainCorrection()
         local function prisonCorrection()
-            local function automatic_punch_electric_gate()
-                local doors_garbageCollected = global.registry.doors_garbageCollected
-                local doorsOpener_garbageCollected = global.registry.doorsOpener_garbageCollected
-                if doors_garbageCollected and doorsOpener_garbageCollected then
-                    for i,v in next, doors_garbageCollected do
-                        doorsOpener_garbageCollected(v)
+            local function elevator()
+                local tagElevator = collectionservice:GetTagged("Elevator")
+                local function getMaxSecurityElevator()
+                    for i,v in next, tagElevator do
+                        for i2,v2 in next, v:GetDescendants() do
+                            if v2:IsA("TextLabel") and v2.Text:find("*") then
+                                return v2.Parent.Parent
+                            end
+                        end
+                    end
+                    return false
+                end
+                local maxSecurityElevator = getMaxSecurityElevator()
+                if not maxSecurityElevator then
+                    return false
+                end
+                local function callElevatorTo1()
+                    fireclickdetector(maxSecurityElevator.ClickDetector)
+                end
+                local tagCache
+                local loopf
+                local function tagService()
+                    tagCache = client.tags.new("elevator_manipulation_prison", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0.5, callElevatorTo1)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.break_maximum_security_elevator
+                    if tagCache then
+                        tagCache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            elevator()
+            local function ext()
+                --@astea le-am furat din ice tray v2 ca inca merg si sunt bune :D:D:D
+                global.ext = {
+                    doors = {};
+                    gates = {};
+                    cells = {};
+                    new_doors = {};
+                }
+                for i,v in next, getgc(true) do
+                    if type(v) == "table" and rawget(v, "OpenFun") and rawget(v, "State") then
+                        table.insert(global.ext.doors, v)
+                    end
+                    if type(v) == "function" and islclosure(v) and not is_synapse_function(v) then
+                        local con = getconstants(v)
+                        if table.find(con, "SequenceRequireState") then
+                            global.registry.attemptOpenDoor = v
+                        end
+                    end
+                end
+                for i,v in next, global.ext.doors do
+                    if type(v) == "table" then
+                        for i2,v2 in next, v do
+                            if typeof(v2) == "Instance" then
+                                if not v2.Model:FindFirstChild("Fence_Post") and not v2.Parent.Name == "Cell" then
+                                    table.insert(global.ext.new_doors, v)
+                                end
+                                if v2.Model:FindFirstChild("Fence_Post") then
+                                    table.insert(global.ext.gates, {
+                                        call = v;
+                                        pos = tostring(v2.Model.PrimaryPart.Position);
+                                    })
+                                end
+                                if v2.Parent.Name == "Cell" then
+                                    table.insert(global.ext.cells, v)
+                                end
+                            end
+                        end
                     end
                 end
             end
+            ext()
+            local function spotlights()
+                local trackingSpotlight = client.modules.trackingSpotlight._constructor
+                local trackPlayer = trackingSpotlight.TrackPlayer
+                local function hook(...)
+                    local bool = global.ui_status.disable_spotlight_tracking
+                    if bool then
+                        return false
+                    end
+                    return trackPlayer(...)
+                end
+                trackingSpotlight.TrackPlayer = hook
+            end
+            spotlights()
+            local function automatic_open_main_gate()
+                local function open()
+                    local prisonGate = global.registry.prisonGate
+                    if prisonGate then
+                        for i,v in next, prisonGate do
+                            for i2,v2 in next, getconnections(v) do
+                                v2.Function(player)
+                            end
+                        end
+                    end
+                end
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("automatic_open_main_gate", 0, false, function(val)
+                        if val then
+                            loopf = createloop(2, open) 
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_open_main_gate
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            automatic_open_main_gate()
             local function automatic_open_cells()
-                local cellDoors = global.registry.cellDoors
-                local doorsOpener_garbageCollected = global.registry.doorsOpener_garbageCollected
-                if cellDoors and doorsOpener_garbageCollected then
-                    for i,v in next, cellDoors do
-                        doorsOpener_garbageCollected(v)
-                    end
-                end
-            end
-            local function open_prison_gates()
-                local prisonGate = global.registry.prisonGate
-                if prisonGate then
-                    for i,v in next, prisonGate do
-                        for i2,v2 in next, getconnections(v) do
-                            v2.Function(player)
-                        end
-                    end
-                else
-                    log("No prisonGate")
-                end
-            end
-            local function explodeWall()
-                for i,v in next, client.modules.ui.CircleAction.Specs do
-                    if v.Name == "Explode Wall" then
-                        if v.Enabled then
-                            v:Callback(true)
+                local function open()
+                    local attemptOpen = global.registry.attemptOpenDoor
+                    local cells = global.ext.cells
+                    if cells and attemptOpen then
+                        for i,v in next, cells do
+                            attemptOpen(v)
                         end
                     end
                 end
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("automatic_open_cells", 0, false, function(val)
+                        if val then
+                            loopf = createloop(1, open)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_open_cells
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
             end
-            local function liftGate()
-                for i,v in next, client.modules.ui.CircleAction.Specs do
-                    if v.Name == "Lift Gate" then
-                        if v.Enabled then
-                            v:Callback(true) 
+            automatic_open_cells()
+            local function automatic_open_front_gates()
+                local function open()
+                    local attemptOpen = global.registry.attemptOpenDoor
+                    local gates = global.ext.gates
+                    for i,v in next, gates do
+                        if v.pos:find("-1196") or v.pos:find("-1159") then -- @doamne ajuta sa nu se schimbe pos-ul
+                            attemptOpen(v.call)
                         end
                     end
                 end
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("automatic_open_front_gates", 0, false, function(val)
+                        if val then
+                            loopf = createloop(1, open)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_open_front_gates
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
             end
-            local punch_gate
-            local prison_gate
-            local lift_gate
-            local explode_wall
-            local open_cells
-            local function tagService()
-                local function punchGateFn()
-                    local cache
-                    punch_gate = client.tags.new("punchgate", 0, false, function(val)
-                        if not val then
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
-                            end
-                            return false
+            automatic_open_front_gates()
+            local function automatic_open_side_gate()
+                local function open()
+                    local attemptOpen = global.registry.attemptOpenDoor
+                    local gates = global.ext.gates
+                    for i,v in next, gates do
+                        if v.pos:find("-1438") or v.pos:find("-1428") then -- @ si aici la fel
+                            attemptOpen(v.call)
+                        end
+                    end
+                end
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("automatic_open_side_gate", 0, false, function(val)
+                        if val then
+                            loopf = createloop(1, open)
                         else
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
                             end
                         end
-                        automatic_punch_electric_gate()
-                        cache = createloop(2, function()
-                            if not punch_gate.obj.Value then
-                                if cache then
-                                    cache:disconnect()
-                                    cache = nil
-                                end
-                                return false
-                            end
-                            automatic_punch_electric_gate()
-                        end)
                     end)
                 end
-                punchGateFn()
-                local function prisonGateFn()
-                    local cache
-                    prison_gate = client.tags.new("prisongate", 0, false, function(val)
-                        if not val then
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
-                            end
-                            return false
-                        else
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
-                            end
-                        end
-                        open_prison_gates()
-                        cache = createloop(2, function()
-                            if not prison_gate.obj.Value then
-                                if cache then
-                                    cache:disconnect()
-                                    cache = nil
-                                end
-                                return false
-                            end
-                            open_prison_gates()
-                        end)
-                    end)
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_open_side_gate
+                    if cache then
+                        cache.obj.Value = bool
+                    end
                 end
-                prisonGateFn()
-                local function liftGateFn()
-                    local cache
-                    lift_gate = client.tags.new("liftgate", 0, false, function(val)
-                        if not val then
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
-                            end
-                            return false
-                        else
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
-                            end
-                        end
-                        liftGate()
-                        cache = createloop(2, function()
-                            if not lift_gate.obj.Value then
-                                if cache then
-                                    cache:disconnect()
-                                    cache = nil
-                                end
-                                return false
-                            end
-                            liftGate()
-                        end)
-                    end)
-                end
-                liftGateFn()
-                local function explodeWallFn()
-                    local cache
-                    explode_wall = client.tags.new("explodewall", 0, false, function(val)
-                        if not val then
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
-                            end
-                            return false
-                        else
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
-                            end
-                        end
-                        explodeWall()
-                        cache = createloop(2, function()
-                            if not explode_wall.obj.Value then
-                                if cache then
-                                    cache:disconnect()
-                                    cache = nil
-                                end
-                                return false
-                            end
-                            explodeWall()
-                        end)
-                    end)
-                end
-                explodeWallFn()
-                local function openCellsFn()
-                    local cache
-                    open_cells = client.tags.new("opencells", 0, false, function(val)
-                        if not val then
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
-                            end
-                            return false
-                        else
-                            if cache then
-                                cache:disconnect()
-                                cache = nil
-                            end
-                        end
-                        automatic_open_cells()
-                        cache = createloop(2, function()
-                            if not open_cells.obj.Value then
-                                if cache then
-                                    cache:disconnect()
-                                    cache = nil
-                                end
-                                return false
-                            end
-                            automatic_open_cells()
-                        end)
-                    end)
-                end
-                openCellsFn()
+                createloop(0, loop)
             end
-            tagService()
-            local function loop()
-                local automatic_punch_electric_gate = global.ui_status.automatic_punch_electric_gate
-                local automatic_open_prison_gate = global.ui_status.automatic_open_prison_gate
-                local automatic_liftgate = global.ui_status.automatic_liftgate
-                local automatic_explode_wall = global.ui_status.automatic_explode_wall
-                local automatic_open_prison_gate = global.ui_status.automatic_open_prison_gate
-                if punch_gate then
-                    punch_gate.obj.Value = automatic_punch_electric_gate
+            automatic_open_side_gate()
+            local function automatic_punch_electric_gate()
+                local function open()
+                    local attemptOpen = global.registry.attemptOpenDoor
+                    local gates = global.ext.gates
+                    for i,v in next, gates do
+                        if v.pos:find("-1138") then -- @ si aici
+                            attemptOpen(v.call)
+                        end
+                    end
                 end
-                if prison_gate then
-                    prison_gate.obj.Value = automatic_open_prison_gate
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("automatic_punch_electric_gate", 0, false, function(val)
+                        if val then
+                            loopf = createloop(1, open)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
                 end
-                if lift_gate then
-                    lift_gate.obj.Value = automatic_liftgate
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_punch_electric_gate
+                    if cache then
+                        cache.obj.Value = bool
+                    end
                 end
-                if explode_wall then
-                    explode_wall.obj.Value = automatic_explode_wall
-                end
-                if open_cells then
-                    open_cells.obj.Value = automatic_open_prison_gate
-                end
+                createloop(0, loop)
             end
-            createloop(0, loop)
+            automatic_punch_electric_gate()
+            local function automatic_open_yard_gates()
+                local function open()
+                    local attemptOpen = global.registry.attemptOpenDoor
+                    local gates = global.ext.gates
+                    for i,v in next, gates do
+                        if v.pos:find("-1341") or v.pos:find("-1291") or v.pos:find("-1192") then -- @ si aici
+                            attemptOpen(v.call)
+                        end
+                    end
+                end
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("automatic_open_yard_gates", 0, false, function(val)
+                        if val then
+                            loopf = createloop(1, open)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.automatic_open_yard_gates
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
+            end
+            automatic_open_yard_gates()
         end
         prisonCorrection()
         local function bulletCorrection()
-            local num = global.ui_status.prediction_value or 13
-            if num < 10 then
-                num = 13
-            end
-            local decimals = tonumber(("0.%s"):format(tostring(num)))
-            num = decimals
             local function prediction(target)
                 local function predict(part)
-                    return part.Position + part.Velocity * num
+                    return part.Position + part.Velocity * 0.13
                 end
                 local predict = predict(target)
                 if predict then
@@ -7605,8 +9245,9 @@ local function loadup()
                 return false
             end
             local a = 0
-            local hsv --@Color3.fromHSV(1, 0.921569, 0.552941)
+            local hsv --culoarea normal din jailbreak: Color3.fromHSV(1, 0.921569, 0.552941)
             local function createColorfulTable()
+                --@nu mai stiu de unde am furat asta dar mersi! 
                 while true do
                     for i=0, 1, 1/300 do
                         hsv = Color3.fromHSV(i, 1, 1)
@@ -7614,7 +9255,7 @@ local function loadup()
                     end
                 end
             end
-            spawn(createColorfulTable)
+            task.spawn(createColorfulTable)
             local function colorBullet()
                 local update = client.modules.bulletEmitter.Update
                 local function hook(...)
@@ -7689,65 +9330,71 @@ local function loadup()
             local function rayIgnoreNonCollideHooks()
                 local module = client.modules.rayCast.RayIgnoreNonCollideWithIgnoreList
                 local function selectTaserTarget()
-                    local function target(...)
-                        local resolver = client.reg.getClosestPlayerByFov
-                        if resolver == nil then
-                            return nil
-                        end
-                        return resolver
+                    local getTarget = client.reg.getClosestPlayerByFov
+                    if not getTarget then
+                        return false
                     end
-                    if target() == nil then
-                        return nil
-                    end
-                    return target() and target().Character and target().Character.PrimaryPart
+                    local char = getTarget.Character
+                    local primaryPart = char and char.PrimaryPart
+                    return primaryPart
                 end
                 local function selectTarget(...)
-                    local function target(...)
-                        local resolver = client.reg.getClosestPlayerByFov
-                        if resolver == nil then
-                            return nil
+                    local getTarget = client.reg.getClosestPlayerByFov
+                    if not getTarget then
+                        return false
+                    end
+                    if getTarget:FindFirstChild("DefenseObjValueName") then
+                        local root = getTarget.HumanoidRootPart
+                        if root then
+                            return root
                         end
-                        return resolver
                     end
-                    if target() == nil then
-                        return nil
-                    end
-                    if target() and target():FindFirstChild("DefenseObjValueName") then
-                        return target() and target().HumanoidRootPart and target().HumanoidRootPart
-                    end
-                    if target() and target():IsDescendantOf(workspace.MansionRobbery) then
-                        local bool = global.ui_status.always_target_boss_head
-                        if bool then
-                            if target() and target().Name == "ActiveBoss" then
-                                return target() and target().Head and target().Head
+                    if getTarget:IsDescendantOf(workspace.MansionRobbery) then
+                        local always_head = global.ui_status.always_target_boss_head
+                        if getTarget.Name == "ActiveBoss" then
+                            local head = getTarget:FindFirstChild("Head")
+                            if head then
+                                return head
                             end
-                            return target() and target().HumanoidRootPart and target().HumanoidRootPart
                         end
-                        return target() and target().HumanoidRootPart and target().HumanoidRootPart
                     end
-                    return target() and target().Character and target().Character.PrimaryPart
+                    local char = getTarget.Character
+                    local primaryPart = char and char.PrimaryPart
+                    return primaryPart
                 end
+                local traceback = debug.traceback
                 local function hook(...)
-                    if not client.playerCharacter then
+                    if not client.playerCharacter or client.playerCharacter and not client.playerCharacter.PrimaryPart then
                         return module(...)
                     end
                     local getEquippedItem = client.reg.getEquippedItem
                     if not getEquippedItem then
                         return module(...)
                     end
-                    if global.ui_status.master_switch_silentaim then
-                        if string.find(debug.traceback(), "BulletEmitter") then
-                            if getEquippedItem and not getEquippedItem.BulletEmitter then
+                    if global.ui_status.killaura_masterswitch then
+                        if traceback():find("BulletEmitter") then
+                            local target = client.reg.getClosestVulnerablePlayer
+                            if target then
+                                local char = target.Character
+                                if char then
+                                    local primaryPart = char.PrimaryPart
+                                    if primaryPart then
+                                        return primaryPart, primaryPart.Position, ...
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    if global.ui_status.master_switch_silentaim and not global.ui_status.no_wall_penetration then
+                        if traceback():find("BulletEmitter") then
+                            if not getEquippedItem.BulletEmitter or getEquippedItem.__ClassName == "RocketLauncher" then
                                 return module(...)
                             end
-                            local no_wall_penetration = global.ui_status.no_wall_penetration
-                            if no_wall_penetration then
+                            local target = selectTarget()
+                            if not target then
                                 return module(...)
                             end
-                            local target, position = selectTarget(), selectTarget() and selectTarget().Position
-                            if target == nil then
-                                return module(...)
-                            end
+                            local position = target.Position
                             local always_predict = global.ui_status.always_predict
                             if not always_predict then
                                 return target, position, ...
@@ -7759,9 +9406,44 @@ local function loadup()
                             return target, position, ...
                         end
                     end
+                    if traceback():find("Taser") then
+                        if global.ui_status.master_switch_silentaim and global.ui_status.allow_taser_aimbot then
+                            local target = selectTaserTarget()
+                            if not target then
+                                return module(...)
+                            end
+                            local position = target.Position
+                            return target, position, ...
+                        elseif global.ui_status.allow_tase_target and global.AI_TASER_USE then
+                            local target = selectTaserTarget()
+                            if not target then
+                                return module(...)
+                            end
+                            return target, target.Position, ...
+                        end
+                    end
                     return module(...)
                 end
-                client.modules.rayCast.RayIgnoreNonCollideWithIgnoreList = hook
+                table.insert(client.rayHooks, {
+                    silent = true;
+                    fn = hook;
+                })
+                local function rayHooks(...)
+                    if traceback():find("Taser") or traceback():find("BulletEmitter") then
+                        for i,v in next, client.rayHooks do
+                            if v.silent then
+                                return v.fn(...)
+                            end
+                        end
+                    else
+                        for i,v in next, client.rayHooks do
+                            if not v.silent then
+                                return v.fn(...)
+                            end
+                        end
+                    end
+                end
+                client.modules.rayCast.RayIgnoreNonCollideWithIgnoreList = rayHooks
             end
             rayIgnoreNonCollideHooks()
         end
@@ -7919,7 +9601,8 @@ local function loadup()
             local last_time_trashtalked = tick()
             local isTrashtalking = false
             local function trashtalk()
-                if not global.ui_status.talk_on_arrest then
+                local talk_on_arrest = global.ui_status.talk_on_arrest
+                if not talk_on_arrest then
                     return false
                 end
                 if tick() - last_time_trashtalked < 1.5 then
@@ -7928,27 +9611,30 @@ local function loadup()
                 last_time_trashtalked = tick()
                 local phrase2 = {
                     [1] = {
-                        "prietene n-ai bani de ice tray v4?";
-                        "disgord.gg/icetray";
-                        "5Eqt6QBfYY";
+                        "e prea usor cu ice tray";
+                        "icetray.lua > all";
                     };
                     [2] = {
-                        "I got ice tray v3 for FREE";
-                        "Get it too on disgord.gg/icetray";
+                        "all dogs say reported but me BLESSED by ice tray 😈";
                     };
                     [3] = {
-                        "too ez with ice tray v3";
-                        "Purchase ice tray v4 now and it will be even easier! disgord.gg/icetray";
+                        "loool";
+                        "that was so easy";
+                        "why you so bad XD";
                     };
                     [4] = {
                         "ez noob";
-                        "get better with ice tray";
-                        "disgord.gg/icetray";
+                        "get better";
                     };
                     [5] = {
-                        "cioc cioc";
-                        "de la gaze";
-                        "buy ice tray v4";
+                        "l2p noob";
+                        "please dont cry XD";
+                    };
+                    [6] = {
+                        "hahahah";
+                        "that was so easy";
+                        "you're so bad";
+                        "XD";
                     };
                 }
                 local event = textService.TextChannels.RBXGeneral
@@ -7969,9 +9655,9 @@ local function loadup()
                 local unequipAll = global.registry.unequipAll
                 local checkWallBeforePenetration = global.registry.checkWallBeforePenetration
                 local hasInVehicleTag = global.registry.hasInVehicleTag
+                local hasItemEquipped = global.registry.hasItemEquipped
                 local function loop()
-                    local master_switch_arrestaura = global.ui_status.master_switch_arrestaura
-                    if not master_switch_arrestaura then
+                    if player.Team ~= teams.Police then
                         return false
                     end
                     if global.ui_status.ignore_while_driving and client.reg.getLocalVehicle then
@@ -7981,10 +9667,8 @@ local function loadup()
                     local automatic_eject_player = global.ui_status.automatic_eject_player
                     local allow_tase_target = global.ui_status.allow_tase_target
                     local through_walls = global.ui_status.through_walls
+                    local talk_on_arrest = global.ui_status.talk_on_arrest
                     local range = global.ui_status.range_arrestaura
-                    if player.Team ~= teams.Police then
-                        return false
-                    end
                     local target = getClosestPlayerWithNoHandcuffs(range)
                     if target then
                         if tostring(target.Team) == "Prisoner" then
@@ -7993,15 +9677,14 @@ local function loadup()
                         if target.Character and target.Folder:FindFirstChild("Cuffed") then
                             return false
                         end
+                        if not hasHandcuffs() and not automatic_equip_handcuffs then
+                            return false
+                        end
                         if not through_walls then
                             if not checkWallBeforePenetration(target) then
                                 return false
                             end
                         end
-                        if not hasHandcuffs() and not automatic_equip_handcuffs then
-                            return false
-                        end
-                        local hasItemEquipped = global.registry.hasItemEquipped
                         if allow_tase_target then
                             if tick() - lastUsedTaser > 10 then
                                 taserLogic()
@@ -8027,15 +9710,17 @@ local function loadup()
                         end
                         local succees = false
                         if not succees then
-                            if not target.Character then
+                            if not target.Character then --@nu fa var-ul "char" pentru ca o sa se futa toata functiunea :D
                                 return false
                             end
-                            local targetVehicle = getVehicle(target)
-                            if targetVehicle and automatic_eject_player then
-                                ejectPlayer(targetVehicle)
-                                task.delay(0.1, function()
-                                    arrestPlayer(target)
-                                end)
+                            if hasInVehicleTag(target.Character) then
+                                local targetVehicle = getVehicle(target)
+                                if targetVehicle and automatic_eject_player then
+                                    ejectPlayer(targetVehicle)
+                                    task.delay(0.1, function()
+                                        arrestPlayer(target)
+                                    end)
+                                end
                             end
                             if target and target.Folder:FindFirstChild("Cuffed") then
                                 succees = true
@@ -8047,7 +9732,7 @@ local function loadup()
                                     end
                                 end
                                 if hasHandcuffs() and automatic_equip_handcuffs then
-                                    if tick() - lastEquippedCuffs > 3 then
+                                    if tick() - lastEquippedCuffs > 2 then
                                         lastEquippedCuffs = tick()
                                         unequipAll()
                                         task.delay(0.1, function()
@@ -8063,16 +9748,16 @@ local function loadup()
                                 end
                                 local attempts = 0
                                 while true do
-                                    if not master_switch_arrestaura then
+                                    if not global.ui_status.master_switch_arrestaura then
+                                        break
+                                    end
+                                    if not hasHandcuffs() then
                                         break
                                     end
                                     if not target then
                                         break
                                     end
                                     if target and not target.Character then
-                                        break
-                                    end
-                                    if not hasHandcuffs() then
                                         break
                                     end
                                     if target and target.Folder:FindFirstChild("Cuffed") then
@@ -8087,19 +9772,42 @@ local function loadup()
                                         break
                                     end
                                     arrestPlayer(target)
-                                    attempts = attempts + 1
-                                    task.wait(0.8)
+                                    attempts += 1
+                                    task.wait(0.6)
                                 end
                             end
                         end
-                        if succees and global.ui_status.talk_on_arrest then
-                            if target and target.Folder:FindFirstChild("Cuffed") then
-                                trashtalk()
+                        if succees then
+                            if talk_on_arrest then
+                                if target and target.Folder:FindFirstChild("Cuffed") then
+                                    trashtalk()
+                                end
                             end
                         end
                     end
                 end
-                createloop(0.3, loop)
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("master_switch_arrestaura", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.master_switch_arrestaura
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
             end
             aura()
         end
@@ -8152,14 +9860,14 @@ local function loadup()
             local getClosestPlayerForBreakouts = global.registry.getClosestPlayerForBreakouts
             local lastTimeBreakout = tick()
             local function loop()
+                if tick() - lastTimeBreakout < 20 then
+                    return false
+                end
                 local bool = global.ui_status.master_switch_breakout_aura
                 if bool then
                     local range = global.ui_status.range_breakoutaura
                     local target = getClosestPlayerForBreakouts(range)
                     if target and target.Folder:FindFirstChild("Cuffed") then
-                        if tick() - lastTimeBreakout < 20 then
-                            return false
-                        end
                         lastTimeBreakout = tick()
                         breakoutPlayer(target)
                     end
@@ -8197,42 +9905,76 @@ local function loadup()
         local function dropCorrection()
             local function spam_drop_guns()
                 local isSpamming = false
+                local neverDropItems = global.registry.neverDropItems()
+                local equipOwnedItem = global.registry.equipOwnedItem
+                local equip = global.registry.equip
+                local dropGun = global.registry.dropGun
+                local isProjectile = global.registry.isProjectile
                 local function loop()
                     local bool = global.ui_status.spam_drop_guns
-                    if bool then
-                        if isSpamming then
-                            return false
-                        end
+                    if bool and not isSpamming then
                         isSpamming = true
-                        local equip_owned_guns = global.registry.equip_owned_guns
-                        local equip = global.registry.equip
-                        local dropGun = global.registry.dropGun
-                        equip_owned_guns()
-                        task.delay(0.1, function()
-                            local neverdrop = {"Taser", "Handcuffs", "RoadSpike", "Gem", "Bag", "Crate", "MansionInvite"}
-                            for i,v in next, client.reg.getInventoryItemsFor do
-                                if bool then
-                                    if not table.find(neverdrop, v.obj.name) then
-                                        equip(tostring(v.obj.name))
-                                        while true do
-                                            if not client.reg.getEquippedItem then
-                                                break
-                                            end
-                                            dropGun()
-                                            task.wait(0.1)
-                                        end
+                        for i,v in next, client.reg.resolveOwnedItems do
+                            if not isProjectile(v) then
+                                equipOwnedItem(v)
+                            end
+                        end
+                        for i,v in next, client.reg.resolveEquippedItems do
+                            if bool and not table.find(neverDropItems, v) then
+                                while true do
+                                    if client.reg.getEquippedItem then
+                                        dropGun()
+                                        break
                                     end
+                                    equip(v)
+                                    task.wait()
+                                end
+                                while true do
+                                    if not client.reg.getEquippedItem then
+                                        break
+                                    end
+                                    dropGun()
+                                    task.wait()
                                 end
                             end
-                            isSpamming = false
-                        end)
+                        end
+                        isSpamming = false
                     end
                 end
-                createloop(0.4, loop)
+                createloop(0.1, loop)
             end
             spam_drop_guns()
         end
         dropCorrection()
+        local function chatCorrection()
+            local function color3_to_hex(color) --@ puuuuuup ;3 https://devforum.roblox.com/t/converting-a-color-to-a-hex-string/793018/3
+                return string.format("#%02X%02X%02X", color.R * 0xFF, color.G * 0xFF, color.B * 0xFF)
+            end
+            local function onChat(player, message)
+                if not global.ui_status.chatspy then
+                    return false
+                end
+                local color = player.Team.TeamColor.Color
+                message = ("<font color='#F5CD30'>CHAT SPY: </font><font color='%s'>%s</font>: %s"):format(color3_to_hex(color), player.DisplayName, message)
+                textService.TextChannels["RBXSystem"]:DisplaySystemMessage(message)
+            end
+            task.spawn(function()
+                for i,v in next, client.players do
+                    v.Chatted:connect(function(msg)
+                        onChat(v, msg)
+                    end)
+                end
+            end)
+            local function fn(player)
+                player.Chatted:connect(function(msg)
+                    onChat(player, msg)
+                end)
+            end
+            table.insert(client.run_on_player_connect, {
+                _fn = fn
+            })
+        end
+        chatCorrection()
         local function turretCorrection()
             local function home()
                 local module = client.modules.playerUtils.getRootPart
@@ -8249,126 +9991,18 @@ local function loadup()
             end
             home()
             local function military()
-                local militaryTurret = client.modules.militaryTurret._fire
+                local _fire = client.modules.militaryTurret._fire
                 local function hook(x, y)
                     local bool = global.ui_status.disable_military_turrets
                     local turretmilitary = global.registry.turretmilitary
                     if bool then
                         return task.wait(9e9)
                     end
-                    return militaryTurret(x, y)
+                    return _fire(x, y)
                 end
                 client.modules.militaryTurret._fire = hook
             end
             military()
-            local function banktruck()
-                local function getBankTruckStatus()
-                    local getRobberyStatus = global.registry.getRobberyStatus
-                    local status = getRobberyStatus("MONEY_TRUCK")
-                    if status == "OPENED" then
-                        return true
-                    end
-                    if status == "STARTED" then
-                        return 0
-                    end 
-                    return false
-                end
-                local function status()
-                    local function loop()
-                        if global.ui.statusRobberies["Banktruck Status"] then
-                            local getBankTruckStatus = getBankTruckStatus()
-                            if getBankTruckStatus == 0 then
-                                global.ui.statusRobberies["Banktruck Status"] = ("Status: %s"):format("Started")
-                                global.ui.colorForcing["Banktruck Status"] = Color3.fromRGB(255, 178, 102)
-                                return true
-                            end
-                            if getBankTruckStatus then
-                                global.ui.statusRobberies["Banktruck Status"] = ("Status: %s"):format("Open")
-                                global.ui.colorForcing["Banktruck Status"] = Color3.fromRGB(178, 255, 104)
-                                return true
-                            end
-                            global.ui.statusRobberies["Banktruck Status"] = ("Status: %s"):format("Closed")
-                            global.ui.colorForcing["Banktruck Status"] = Color3.fromRGB(255, 102, 102)
-                        end
-                    end
-                    createloop(0, loop)
-                end
-                status()
-            end
-            banktruck()
-            local function smallstores()
-                local function donutshop()
-                    local function getDonutShopStatus()
-                        local getRobberyStatus = global.registry.getRobberyStatus
-                        local status = getRobberyStatus("STORE_DONUT")
-                        if status == "OPENED" then
-                            return true
-                        end
-                        if status == "STARTED" then
-                            return 0
-                        end 
-                        return false
-                    end
-                    local function status()
-                        local function loop()
-                            if global.ui.statusRobberies["Donut Shop"] then
-                                local getDonutShopStatus = getDonutShopStatus()
-                                if getDonutShopStatus == 0 then
-                                    global.ui.statusRobberies["Donut Shop"] = ("Donut Shop Status: %s"):format("Started")
-                                    global.ui.colorForcing["Donut Shop"] = Color3.fromRGB(255, 178, 102)
-                                    return true
-                                end
-                                if getDonutShopStatus then
-                                    global.ui.statusRobberies["Donut Shop"] = ("Donut Shop Status: %s"):format("Open")
-                                    global.ui.colorForcing["Donut Shop"] = Color3.fromRGB(178, 255, 104)
-                                    return true
-                                end
-                                global.ui.statusRobberies["Donut Shop"] = ("Donut Shop Status: %s"):format("Closed")
-                                global.ui.colorForcing["Donut Shop"] = Color3.fromRGB(255, 102, 102)
-                            end
-                        end
-                        createloop(0, loop)
-                    end
-                    status()
-                end
-                donutshop()
-                local function gasstation()
-                    local function getGasStationStatus()
-                        local getRobberyStatus = global.registry.getRobberyStatus
-                        local status = getRobberyStatus("STORE_GAS")
-                        if status == "OPENED" then
-                            return true
-                        end
-                        if status == "STARTED" then
-                            return 0
-                        end 
-                        return false
-                    end
-                    local function status()
-                        local function loop()
-                            if global.ui.statusRobberies["Gas Station"] then
-                                local getGasStationStatus = getGasStationStatus()
-                                if getGasStationStatus == 0 then
-                                    global.ui.statusRobberies["Gas Station"] = ("Gas Station Status: %s"):format("Started")
-                                    global.ui.colorForcing["Gas Station"] = Color3.fromRGB(255, 178, 102)
-                                    return true
-                                end
-                                if getGasStationStatus then
-                                    global.ui.statusRobberies["Gas Station"] = ("Gas Station Status: %s"):format("Open")
-                                    global.ui.colorForcing["Gas Station"] = Color3.fromRGB(178, 255, 104)
-                                    return true
-                                end
-                                global.ui.statusRobberies["Gas Station"] = ("Gas Station Status: %s"):format("Closed")
-                                global.ui.colorForcing["Gas Station"] = Color3.fromRGB(255, 102, 102)
-                            end
-                        end
-                        createloop(0, loop)
-                    end
-                    status()
-                end
-                gasstation()
-            end
-            smallstores()
             local function mansionCorrection()
                 local function getMansionStatus()
                     local getRobberyStatus = global.registry.getRobberyStatus
@@ -8462,27 +10096,6 @@ local function loadup()
                     createloop(0, loop)
                 end
                 autoentry()
-                local function status()
-                    local function loop()
-                        if global.ui.statusRobberies["Mansion Status"] then
-                            local getMansionStatus = getMansionStatus()
-                            if getMansionStatus == 0 then
-                                global.ui.statusRobberies["Mansion Status"] = ("Status: %s"):format("Started")
-                                global.ui.colorForcing["Mansion Status"] = Color3.fromRGB(255, 178, 102)
-                                return true
-                            end
-                            if getMansionStatus then
-                                global.ui.statusRobberies["Mansion Status"] = ("Status: %s"):format("Open")
-                                global.ui.colorForcing["Mansion Status"] = Color3.fromRGB(178, 255, 104)
-                                return true
-                            end
-                            global.ui.statusRobberies["Mansion Status"] = ("Status: %s"):format("Closed")
-                            global.ui.colorForcing["Mansion Status"] = Color3.fromRGB(255, 102, 102)
-                        end
-                    end
-                    createloop(0, loop)
-                end
-                status()
                 local function noTraps(bool)
                     local function laserTraps(bool)
                         if workspace.MansionRobbery.InRobberyFolder:FindFirstChild(player.UserId) then
@@ -8533,54 +10146,9 @@ local function loadup()
                     client.modules.bossNpcBinder._constructor.PlayArmGrab = hookArmGrab
                 end
                 noDamage()
-                local function lasers()
-                    local function loop()
-                        if workspace.MansionRobbery.InRobberyFolder:FindFirstChild(player.UserId) then
-                            for i,v in next, workspace.MansionRobbery.Lasers:GetDescendants() do
-                                if v:IsA("BasePart") then
-                                    v.CanTouch = not global.ui_status.disable_lasers
-                                end
-                            end
-                        end
-                    end
-                    createloop(0, loop)
-                end
-                lasers()
             end
             mansionCorrection()
             local function cargoship()
-                local function getCargoshipStatus()
-                    local getRobberyStatus = global.registry.getRobberyStatus
-                    local status = getRobberyStatus("CARGO_SHIP")
-                    if status == "OPENED" then
-                        return true
-                    end
-                    if status == "STARTED" then
-                        return 0
-                    end 
-                    return false
-                end
-                local function status()
-                    local function loop()
-                        if global.ui.statusRobberies["Cargoship Status"] then
-                            local getCargoshipStatus = getCargoshipStatus()
-                            if getCargoshipStatus == 0 then
-                                global.ui.statusRobberies["Cargoship Status"] = ("Status: %s"):format("Started")
-                                global.ui.colorForcing["Cargoship Status"] = Color3.fromRGB(255, 178, 102)
-                                return true
-                            end
-                            if getCargoshipStatus then
-                                global.ui.statusRobberies["Cargoship Status"] = ("Status: %s"):format("Open")
-                                global.ui.colorForcing["Cargoship Status"] = Color3.fromRGB(178, 255, 104)
-                                return true
-                            end
-                            global.ui.statusRobberies["Cargoship Status"] = ("Status: %s"):format("Closed")
-                            global.ui.colorForcing["Cargoship Status"] = Color3.fromRGB(255, 102, 102)
-                        end
-                    end
-                    createloop(0, loop)
-                end
-                status()
                 local cargoShipTurret = client.modules.cargoShipTurret.Shoot
                 local function hook(x, y)
                     local bool = global.ui_status.disable_cargoship_turrets
@@ -8662,7 +10230,6 @@ local function loadup()
             end
             secretBases()
             local function casino()
-                local pad = collectionservice:GetTagged("CasinoKeypadPrompt")[1]
                 local function loop()
                     local bool = global.ui_status.auto_open_door
                     if bool then
@@ -8670,15 +10237,38 @@ local function loadup()
                         if getCasinoDoor then
                             local getKeycode = global.registry.getKeycode()
                             if getKeycode ~= "" then
-                                local casinoKeypadSubmit = pad:FindFirstChild("CasinoKeypadSubmit")
+                                local pad = collectionservice:GetTagged("CasinoKeypadPrompt")[1]
+                                local casinoKeypadSubmit = pad and pad:FindFirstChild("CasinoKeypadSubmit")
                                 if casinoKeypadSubmit then
                                     casinoKeypadSubmit:FireServer(getKeycode)
+                                    casinoKeypadSubmit:FireServer(getKeycode:reverse())
                                 end
                             end
                         end
                     end
                 end
-                createloop(1, loop)
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("auto_open_door", 0, false, function(val)
+                        if val then
+                            loopf = createloop(1, loop)
+                        else
+                            if loopf then
+                                loopf:disconnect()
+                                loopf = nil
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.auto_open_door
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
+                createloop(0, loop)
             end
             casino()
             local function loop()
@@ -8687,8 +10277,7 @@ local function loadup()
                     return false
                 end
                 local success, err = pcall(function()
-                    local open = global.registry.doors
-                    for i,v in next, open do
+                    for i,v in next, global.registry.doors do
                         v()
                     end
                 end)
@@ -8759,17 +10348,47 @@ local function loadup()
                         end
                         return true
                     end
+                    task.spawn(destructMarkers)
                     local bounties = {}
                     local function loop()
                         local master_switch = global.ui_status.master_switch_marker
                         if not master_switch then
                             return destructMarkers()
                         end
+                        local mark_forced_target = global.ui_status.mark_forced_target
                         local mark_bounty_criminals = global.ui_status.mark_bounty_criminals
                         local getPlayersWithBounty = global.registry.getPlayersWithBounty()
+                        local force_target = global.aimbot.force_target
                         for i,v in next, client.players do
+                            if mark_forced_target and force_target and force_target == v then
+                                local char = v.Character
+                                if char then
+                                    local hum = char:FindFirstChild("Humanoid")
+                                    if hum then
+                                        if hum.Health < 1 then
+                                            if doesMarkerExist(v) then
+                                                destructMarker(v)
+                                            end
+                                        else    
+                                            if not doesMarkerExist(v) then
+                                                constructMarker(v)
+                                                setColor(v, markerColors.Target)
+                                            end
+                                        end
+                                    end
+                                end
+                                continue
+                            end
+                            if mark_forced_target then
+                                if force_target == v then
+                                    if doesMarkerExist(v) then
+                                        destructMarker(v)
+                                        continue
+                                    end
+                                end
+                            end
                             if not table.find(getPlayersWithBounty, v) or not mark_bounty_criminals then
-                                if table.find(bounties, v) then
+                                if table.find(bounties, v) and mark_bounty_criminals then
                                     if doesMarkerExist(v) then
                                         destructMarker(v)
                                     end
@@ -8779,6 +10398,14 @@ local function loadup()
                                         end
                                     end
                                     return true
+                                end
+                                if mark_forced_target then
+                                    if force_target == v then
+                                        if doesMarkerExist(v) then
+                                            destructMarker(v)
+                                            continue
+                                        end
+                                    end
                                 end
                                 if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
                                     local team, teamString = v.Team, tostring(v.Team)
@@ -8823,7 +10450,15 @@ local function loadup()
                                 end
                             elseif table.find(getPlayersWithBounty, v) then
                                 if mark_bounty_criminals then
-                                    if not table.find(bounties, v)then
+                                    if mark_forced_target then
+                                        if force_target == v then
+                                            if doesMarkerExist(v) then
+                                                destructMarker(v)
+                                                continue
+                                            end
+                                        end
+                                    end
+                                    if not table.find(bounties, v) then
                                         table.insert(bounties, v)
                                         if doesMarkerExist(v) then
                                             destructMarker(v)
@@ -8875,13 +10510,37 @@ local function loadup()
                             end
                         end
                     end
+                    local loopf
+                    local cache
+                    local function tagService()
+                        cache = client.tags.new("markers", 0, false, function(val)
+                            if val then
+                                loopf = createloop(0, loop)
+                            else
+                                if loopf then
+                                    destructMarkers()
+                                    loopf:disconnect()
+                                    loopf = nil
+                                else
+                                    warn("no loopf")
+                                end
+                            end
+                        end)
+                    end
+                    tagService()
+                    local function loop()
+                        local bool = global.ui_status.master_switch_marker
+                        if cache then
+                            cache.obj.Value = bool
+                        end
+                    end
                     createloop(0, loop)
                 end
                 playerMarkerLogic()
             end
             playerMarkers()
             local function airdropMarkers()
-                local image = getsynasset("icetray3/resource/airdrop.png")
+                local image = getsynasset("icetray/resource/airdrop.png")
                 if not image then
                     error("error while trying to get synapse asset `airdrop.png`")
                 end
@@ -8910,7 +10569,7 @@ local function loadup()
                             local imagelabel = Instance.new("ImageLabel")
                             imagelabel.BorderSizePixel = 0
                             imagelabel.BackgroundTransparency = 1
-                            imagelabel.Size = UDim2.new(1, 0, 1, 0)
+                            imagelabel.Size = UDim2.new(1.2, 0, 1.2, 0)
                             imagelabel.Position = UDim2.new(0.5, 0, 0.5, 0)
                             imagelabel.AnchorPoint = Vector2.new(0.5, 0.5)
                             imagelabel.ZIndex = 3
@@ -8921,13 +10580,11 @@ local function loadup()
                         local function walls()
                             local walls = part.Parent:FindFirstChild("Walls")
                             if not walls then
-                                print("no walls")
                                 new.FrameInner.ImageColor3 = markerColors.Airdrop
                                 return
                             end
                             local wall = walls:FindFirstChild("Wall")
                             if not wall then
-                                print("couldnt get wall")
                                 new.FrameInner.ImageColor3 = markerColors.Airdrop
                                 return
                             end
@@ -8991,6 +10648,7 @@ local function loadup()
                     end
                     return result
                 end
+                global.airdrops_on_map = {}
                 local function onChildAdded(part)
                     local bool = global.ui_status.master_switch_marker
                     if not bool then
@@ -9001,6 +10659,7 @@ local function loadup()
                         return false
                     end
                     if part.Name == "Drop" then
+                        table.insert(global.airdrops_on_map, part.PrimaryPart)
                         local root = part:FindFirstChild("Root")
                         if root then
                             if not doesMarkerExist(root) then
@@ -9011,6 +10670,14 @@ local function loadup()
                 end
                 local function onChildRemoved(part)
                     if part.Name == "Drop" then
+                        task.spawn(function()
+                            for i,v in next, global.airdrops_on_map do
+                                if not v:IsDescendantOf(workspace) then -- @ ar trebui sa stearga toate airdropurile din table care nu sunt in workspace
+                                    table.remove(global.airdrops_on_map, i)
+                                    break
+                                end
+                            end
+                        end)
                         local root = part:FindFirstChild("Root")
                         if root then
                             if doesMarkerExist(root) then
@@ -9022,7 +10689,9 @@ local function loadup()
                 table.insert(client.onWorkspaceSpawnRun, {
                     _fn = onChildAdded
                 })
-                workspace.ChildRemoved:connect(onChildRemoved)
+                table.insert(client.onWorkspaceRemovedRun, {
+                    _fn = onChildRemoved
+                })
                 local function loop()
                     local master_switch = global.ui_status.master_switch_marker
                     if not master_switch then
@@ -9052,11 +10721,31 @@ local function loadup()
                         end
                     end
                 end
+                local cache
+                local loopf
+                local function tagService()
+                    cache = client.tags.new("markersairdrop", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0.5, loop)
+                        else
+                            if loopf then
+                                if doesMarkerExist() then
+                                    markerRemove()
+                                end
+                                loopf:disconnect()
+                                loopf = nil
+                            else
+                                warn("no loopf")
+                            end
+                        end
+                    end)
+                end
+                tagService()
                 createloop(0.5, loop)
             end
             airdropMarkers()
             local function footballMarker()
-                local image = getsynasset("icetray3/resource/football.png")
+                local image = getsynasset("icetray/resource/football.png")
                 if not image then
                     error("error while trying to get synapse asset `football.png`")
                 end
@@ -9085,7 +10774,7 @@ local function loadup()
                             local imagelabel = Instance.new("ImageLabel")
                             imagelabel.BorderSizePixel = 0
                             imagelabel.BackgroundTransparency = 1
-                            imagelabel.Size = UDim2.new(0.8, 0, 0.8, 0)
+                            imagelabel.Size = UDim2.new(0.7, 0, 0.7, 0)
                             imagelabel.Position = UDim2.new(0.5, 0, 0.5, 0)
                             imagelabel.AnchorPoint = Vector2.new(0.5, 0.5)
                             imagelabel.ZIndex = 3
@@ -9176,7 +10865,9 @@ local function loadup()
                 table.insert(client.onWorkspaceSpawnRun, {
                     _fn = onChildAdded
                 })
-                workspace.ChildRemoved:connect(onChildRemoved)
+                table.insert(client.onWorkspaceRemovedRun, {
+                    _fn = onChildRemoved
+                })
                 local function loop()
                     local master_switch = global.ui_status.master_switch_marker
                     if not master_switch then
@@ -9203,7 +10894,7 @@ local function loadup()
             end
             footballMarker()
             local function npcsMarker()
-                local image = getsynasset("icetray3/resource/robot.png")
+                local image = getsynasset("icetray/resource/robot.png")
                 if not image then
                     error("error while trying to get synapse asset `robot.png`")
                 end
@@ -9232,7 +10923,7 @@ local function loadup()
                             local imagelabel = Instance.new("ImageLabel")
                             imagelabel.BorderSizePixel = 0
                             imagelabel.BackgroundTransparency = 1
-                            imagelabel.Size = UDim2.new(0.8, 0, 0.8, 0)
+                            imagelabel.Size = UDim2.new(0.7, 0, 0.7, 0)
                             imagelabel.Position = UDim2.new(0.5, 0, 0.5, 0)
                             imagelabel.AnchorPoint = Vector2.new(0.5, 0.5)
                             imagelabel.ZIndex = 3
@@ -9391,6 +11082,30 @@ local function loadup()
                         end
                     end
                 end
+                local loopf
+                local cache
+                local function tagService()
+                    cache = client.tags.new("markersnpcs", 0, false, function(val)
+                        if val then
+                            loopf = createloop(0, loop)
+                        else
+                            if loopf then
+                                markerRemove()
+                                loopf:disconnect()
+                                loopf = nil
+                            else
+                                warn("no loopf")
+                            end
+                        end
+                    end)
+                end
+                tagService()
+                local function loop()
+                    local bool = global.ui_status.allow_npcs_marker
+                    if cache then
+                        cache.obj.Value = bool
+                    end
+                end
                 createloop(0, loop)
             end
             npcsMarker()
@@ -9399,24 +11114,46 @@ local function loadup()
     end
     Corrections()
     local function icetraygui()
-        local function force_show_player_tab()
-            local icetray = coregui:FindFirstChild("ice tray v3")
-            if icetray then
-                local newPagePlayer = icetray.shadow.MainFrame.framesAll.pageFolder.newPagePlayer
-                newPagePlayer.Visible = true
+        local function hideSectionsOnMarkersOff()
+            local markerSection = global.ui.markerSection
+            local getTeamsSection = markerSection.teamsSection
+            local getObjSection = markerSection.objSection
+            local getSettingsSection = markerSection.settingsSection
+            local cache
+            task.spawn(function()
+                for i,v in next, markerSection do
+                    v.Visible = global.ui_status.master_switch_marker
+                end
+            end)
+            local function tagService()
+                cache = client.tags.new("markers_master_switch", 0, false, function(val)
+                    for i,v in next, markerSection do
+                        v.Visible = val
+                    end
+                end)
             end
+            tagService()
+            local function loop()
+                local bool = global.ui_status.master_switch_marker
+                if cache then
+                    cache.obj.Value = bool
+                end
+            end
+            createloop(0, loop)
         end
-        force_show_player_tab()
+        hideSectionsOnMarkersOff()
     end
     icetraygui()
     local function createFOVCircle()
-        if not Drawing then
-            error("No drawing function")
+        local drawing = global.functions.drawing
+        if not drawing then
+            warn("Drawing is not supported.")
             return false
         end
-        local circle = Drawing.new("Circle")
+        local circle = drawing.new("Circle")
         local camera = workspace.CurrentCamera
-        circle.Position = Vector2.new(uis:GetMouseLocation().X, uis:GetMouseLocation().Y)
+        local mouseLocation = uis:GetMouseLocation()
+        circle.Position = Vector2.new(mouseLocation.X, mouseLocation.Y)
         circle.Transparency = 0.7
         circle.Color = Color3.fromRGB(255, 255, 255)
         circle.Filled = false
@@ -9425,18 +11162,39 @@ local function loadup()
         circle.Visible = false
         circle.Radius = 0
         local function loop()
-            if global.ui_status.fov_circle and global.ui_status.fov_target_select and global.ui_status.master_switch_silentaim then 
+            if global.ui_status.master_switch_silentaim then 
+                local mouseLocation = uis:GetMouseLocation()
                 circle.Visible = global.ui_status.fov_circle
-                circle.Position = Vector2.new(uis:GetMouseLocation().X, uis:GetMouseLocation().Y)
+                circle.Position = Vector2.new(mouseLocation.X, mouseLocation.Y)
                 circle.Radius = global.ui_status.fov_silentaim
             else
                 circle.Visible = false
             end
         end
+        local cache
+        local loopf
+        local function tagService()
+            cache = client.tags.new("fovcircle", 0, false, function(val)
+                if val then
+                    loopf = createloop(0, loop)
+                else
+                    if loopf then
+                        loopf:disconnect()
+                        loopf = nil
+                    end
+                end
+            end)
+        end
+        tagService()
+        local function loop()
+            local bool = global.ui_status.fov_circle
+            if cache then
+                cache.obj.Value = bool
+            end
+        end
         createloop(0, loop)
     end
     createFOVCircle()
-    log("autosave.json loaded")
     local function on_loadup()
         local function showContextMessage()
             local contextMessage = client.contextModule
@@ -9449,12 +11207,13 @@ local function loadup()
                         else
                             break
                         end
+                        task.wait()
                     end
                     contextMessage.open()
                 else
                     contextMessage.open()
                 end
-                contextMessage.setmsg("loaded ice tray v3 (◣_◢)")
+                contextMessage.setmsg("Loaded ice tray v4")
                 task.delay(5, function()
                     if contextMessage.status() then
                         contextMessage.close()
@@ -9463,139 +11222,221 @@ local function loadup()
             end
         end
         local function doFireworks()
-            local fireworks = global.registry.fireworks
+            local fireworks = global.registry.fireworks.Fireworks
             fireworks(5)
         end
-        local function buildLog()
-            --@ nu mai stiu de ce am facut functiunea asta, dar e useless rau de tot. :rofl:
-            local version = global.version
-            local build = global.exploit
-            local function is_build_identified()
-                local build = build
-                if build == "synx" then
-                    return "✅"
-                elseif build == "sw" then
-                    return "✅"
-                else
-                    return "❌"
-                end
-            end
-            local is_build_identified = is_build_identified()
-            local function get_disabler_status()
-                local build = build
-                if build == "synx" then
-                    return "✅"
-                elseif build == "sw" then
-                    return "✅"
-                else
-                    return "❌"
-                end
-            end
-            local get_disabler_status = get_disabler_status()
-            local function get_disabler_reset()
-                local build = build
-                if build == "synx" then
-                    return "✅"
-                elseif build == "sw" then
-                    return "✅"
-                else
-                    return "❌"
-                end
-            end
-            local get_disabler_reset = get_disabler_reset()
-            local msg = ("loading logs: \nengine: ✅\nversion: %s\nbuild: %s\nis_build_identified: %s\ndisabler: %s\ndisabler_reset: %s"):format(version, build, is_build_identified, get_disabler_status, get_disabler_reset)
-            log(msg)
-            print(msg)
-            task.delay(2, function()
-                local NO_RESET = false
-                if get_disabler_reset ~= "✅" and get_disabler_reset ~= "⚠️" then
-                    NO_RESET = true
-                    log("❌ NO DISABLER RESET ! PLAYER CAN BE KICKED ❌")
-                end
-            end)
-        end
         local function on_loadup()
-            buildLog()
+            if not global.ui_status then
+                error("Failed loading Configuration")
+            end
+            local cacheFolder = "icetray/cache"
+            local configFolder = "icetray/config"
+            local makefolder = global.functions.makefolder
+            local isfolder = global.functions.isfolder
+            local isfile = global.functions.isfile
+            local readfile = global.functions.readfile
+            local listfiles = global.functions.listfiles
+            local function makeCache()
+                function __getLatestConfigLoaded() return 50 end
+                local function getLatestLoadedConfig()
+                    local isfolder = isfolder(cacheFolder)
+                    if not isfolder then
+                        makefolder(cacheFolder)
+                        global.ui_status.config_name = "new"
+                    end
+                    local getCfg = isfile(cacheFolder.."/cfg.json")
+                    if not getCfg then
+                        writefile(("%s/cfg.json"):format(cacheFolder), httpservice:JSONEncode({cfg = "new"}))
+                        while true do
+                            if isfile(("%s/cfg.json"):format(cacheFolder)) then
+                                break
+                            end
+                            task.wait()
+                        end
+                    end
+                    local file = readfile(("%s/cfg.json"):format(cacheFolder))
+                    local decoded = httpservice:JSONDecode(file)
+                    global.ui_status.config_name = decoded.cfg
+                end
+                getLatestLoadedConfig()
+                task.spawn(__getLatestConfigLoaded)
+            end
+            makeCache()
             local function makeConfiguration()
                 local function createConfiguration()
-                    if not global.ui_status then
-                        error("Failed loading Configuration")
-                    end
-                    local configFolder = "icetray3/config/"
-                    local fileName = "autosave.json"
+                    local fileName = global.ui_status.config_name or "new"
                     local function checkAutoSaveJson()
-                        local file = isfile(("%s/%s"):format(configFolder, fileName))
+                        local file = isfile(("%s/%s.json"):format(configFolder, fileName))
                         if not file then
                             return false
                         end
-                        local file = readfile(("%s/%s"):format(configFolder, fileName))
+                        file = readfile(("%s/%s.json"):format(configFolder, fileName))
                         return httpservice:JSONDecode(file)
                     end
                     local checkAutoSaveJson = checkAutoSaveJson()
                     if not checkAutoSaveJson then
                         global.ui_status.mainUI = true
-                        writefile(("%s/%s"):format(configFolder, fileName), httpservice:JSONEncode(global.ui_status))
+                        writefile(("%s/%s.json"):format(configFolder, fileName), httpservice:JSONEncode(global.ui_status))
                     else
-                        if checkAutoSaveJson.open_gunstore_ui then  -- asta nu trebuie sa fie salvata. daca e, atunci se va "inchide" automat.
+                        if checkAutoSaveJson.open_gunstore_ui then  -- asta nu trebuie sa fie salvata. daca e, atunci se va pune pe false.
                             checkAutoSaveJson.open_gunstore_ui = false 
                         end
-                        for i,v in next, checkAutoSaveJson do
-                            if not v then
-                                table.remove(checkAutoSaveJson)
-                            end
+                        if checkAutoSaveJson.kill_all_in_vehicle then
+                            checkAutoSaveJson.kill_all_in_vehicle = false
                         end
                         global.ui_status = checkAutoSaveJson
                     end
                 end
                 createConfiguration()
-                local function toolTiphook()
-                    local store = client.modules.store
-                    local tooltipData = client.modules.tooltipData
-                    table.clear(tooltipData)
-                    local function setValue(txt)
-                        store:dispatch({type = "setTooltipText", value = txt})
+                local _oldCfg = {}
+                local function getDefaultValues()
+                    local config = global.config
+                    for i,v in next, config do
+                        if v and v.Get then
+                            local state = global.ui_status[i]
+                            table.insert(_oldCfg, {
+                                name = i;
+                                state = v.Get();
+                            })
+                        else
+                            table.insert(_oldCfg, {
+                                name = i;
+                                state = "";
+                            })
+                        end
                     end
-                    local messages = {
-                        "Features not working? Purchase a ice tray v4 key for a better experience!";
-                        "ice tray V4 offers support, updates, new features AND MORE!";
-                        "Tired of always having to generate a key? Purchase ice tray v4 for a permanent key!";
-                        "You can purchase a permanent key with PayPal, Crypto, Robux, and more..";
-                    }
-                    local function loop()
-                        local msg = messages[math.random(1, #messages)]
-                        setValue(tostring(msg))
-                    end
-                    loop()
-                    createloop(10, loop)
                 end
-                toolTiphook()
-                local function autoSaveConfiguration()
-                    if not global.ui_status then
-                        error("Failed loading autosave Configuration")
+                task.spawn(getDefaultValues)
+                local function configurationSet()
+                    local config = global.config
+                    for i,v in next, config do
+                        local ui_status = global.ui_status[i]
+                        if v and v.Set and ui_status ~= nil then
+                            v.Set(ui_status)
+                        end
                     end
-                    local configFolder = "icetray3/config/"
-                    local fileName = "autosave.json"
+                end
+                configurationSet()
+                local do_not_save = false
+                local tagCache
+                local function tagService()
+                    tagCache = client.tags.new("ShouldAutoSaveCurrentCfg", 0, false, function(val)
+                        global.force_hide_ui = val
+                        if val then
+                            global.notify("Loading config...", 4)
+                        else
+                            global.force_hide_ui = false
+                            global.ui_status.mainUI = true
+                            global.notify("Successfully loaded config", 4)
+                        end
+                    end)
                     local function loop()
-                        writefile(("%s/%s"):format(configFolder, fileName), httpservice:JSONEncode(global.ui_status))
+                        local bool = do_not_save
+                        if tagCache then
+                            tagCache.obj.Value = bool
+                        end
+                    end
+                    createloop(0, loop)
+                end
+                tagService()
+                local statusRobberies = global.ui.statusRobberies
+                local getLoadedLabel = statusRobberies["LOADED_CONFIG"]
+                local function load_config(name)
+                    name = tostring(name)
+                    if do_not_save then
+                        global.notify("Config load failed", 2)
+                        return false
+                    end
+                    do_not_save = true
+                    local file = isfile(("%s/%s.json"):format(configFolder, name))
+                    if not file then
+                        global.notify(("Could not find config with name %s"):format(name), 4)
+                        do_not_save = false
+                        return false
+                    end
+                    file = readfile(("%s/%s.json"):format(configFolder, name))
+                    if not file then
+                        global.notify("Failed reading config file", 5)
+                        do_not_save = false
+                        return false
+                    end
+                    local decoded = httpservice:JSONDecode(file)
+                    if decoded.open_gunstore_ui then
+                        decoded.open_gunstore_ui = false
+                    end
+                    if decoded.kill_all_in_vehicle then
+                        decoded.kill_all_in_vehicle = false
+                    end
+                    global.ui_status = decoded
+                    if global.ui_status.config_name ~= name then
+                        print(("cfg name is now file name `%s`"):format(name))
+                    end
+                    global.ui_status.config_name = name
+                    statusRobberies["LOADED_CONFIG"] = ("Currently loaded config: %s%s"):format(global.ui_status.config_name, ".json")
+                    local _newstate = {}
+                    local config = global.config
+                    for i,v in next, _oldCfg do
+                        _newstate[v.name] = v.state
+                    end
+                    for i,v in next, config do
+                        local new, state = _newstate[i], global.ui_status[i]
+                        if v and v.Set then
+                            if state == nil then
+                                v.Set(_newstate[i])
+                            else
+                                v.Set(state)
+                            end
+                        end
+                    end
+                    writefile(("%s/%s.json"):format(configFolder, global.ui_status.config_name), httpservice:JSONEncode(global.ui_status))
+                    writefile(("%s/cfg.json"):format(cacheFolder), httpservice:JSONEncode({cfg = global.ui_status.config_name}))
+                    task.delay(0.1, function()
+                        do_not_save = false
+                    end)
+                end
+                global.load_config = load_config
+                local function refresh_config()
+                    local cfgs = {}
+                    for i,v in next, listfiles(configFolder) do
+                        if string.find(v, "json") then
+                            local _, cfg_json = unpack(v:split("\\"))
+                            local cfg_name = unpack(cfg_json:split(".json"))
+                            table.insert(cfgs, cfg_name)
+                        else
+                            log(("Couldn't recognise path: %s. Is this a JSON type file?"):format(v))
+                        end
+                    end
+                    local lcfg = global.config.load_config
+                    lcfg.list = cfgs
+                    task.delay(0.1, function()
+                        lcfg.reload(lcfg.list, true)
+                    end)
+                end
+                refresh_config()
+                global.refresh_config = refresh_config
+                local function save_config()
+                    local fileName = global.ui_status.config_name
+                    writefile(("%s/%s.json"):format(configFolder, fileName), httpservice:JSONEncode(global.ui_status))
+                    writefile(("%s/cfg.json"):format(cacheFolder), httpservice:JSONEncode({cfg = global.ui_status.config_name}))
+                    global.notify("Saved config successfully.", 5)
+                end
+                global.save_config = save_config
+                local function autoSaveConfiguration()
+                    statusRobberies["LOADED_CONFIG"] = ("Currently loaded config: %s%s"):format(global.ui_status.config_name, ".json")
+                    local function loop()
+                        if do_not_save then
+                            return false
+                        end
+                        local fileName = global.ui_status.config_name
+                        writefile(("%s/%s.json"):format(configFolder, fileName), httpservice:JSONEncode(global.ui_status))
+                        writefile(("%s/cfg.json"):format(cacheFolder), httpservice:JSONEncode({cfg = global.ui_status.config_name}))
                     end
                     createloop(10, loop)
                 end
                 autoSaveConfiguration()
-                local function configurationSet()
-                    local config = global.config
-                    local t = tick()
-                    for i,v in next, config do
-                        local ui_status = global.ui_status[i]
-                        if ui_status then
-                            v.Set(ui_status)
-                        end
-                    end
-                    warn(tick() - t)
-                    global._loaded = true
-                end
-                configurationSet()
             end
             makeConfiguration()
+            global._loaded = true
             while true do
                 if global._loaded then
                     break
@@ -9608,22 +11449,7 @@ local function loadup()
         on_loadup()
     end
     on_loadup()
+    global.is_stable_version = not IS_NOT_OBFUSCATED
+    log(("Loaded ice tray v4 in %s second(s). Build: %s-%s"):format(tostring(math.floor(tick() - execution_time)), global.version, IS_NOT_OBFUSCATED and "debug" or "stable"))
 end
 loadup()
-
-local ShouldSpam = tick()
-
-global.createloop(0, function()
-    if not global or global and not global.ui_status or global and not global.createloop or global and not global.functions or global and not global.registry then
-        workspace.CurrentCamera:Destroy()
-        hookmetamethod(game, "__index", function(...)
-            return "(◣_◢)"
-        end)
-    end
-    if tick() - ShouldSpam > 200 then
-        for i=1, 5 do
-            textService.TextChannels.RBXGeneral:SendAsync("get #1 jb script here -----> disgord.gg/icetray")
-        end
-        ShouldSpam = tick()
-    end
-end)
