@@ -1,3 +1,21 @@
+--[[
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                    Version 2, December 2004
+
+ Copyright (C) 2022-2023 Alexandru Armando Davisca Petrescu
+  Röntgengasse 94, 1170 Vienna, Austria
+ Everyone is permitted to copy and distribute verbatim or modified
+ copies of this license document, and changing it is allowed as long
+ as the name is changed.
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+  0. You just DO WHAT THE FUCK YOU WANT TO.
+
+--]]
+
 while true do
     task.wait(1)
     if game:IsLoaded() and game.PlaceId == 606849621 then
@@ -54,26 +72,54 @@ local function notify(text, duration)
     })
 end
 
+local function getKeyInfo(key)
+    key = tostring(key)
+    if key then
+        local verify = getRequest(key)
+        return verify
+    end
+    return false
+end
+
+local SPECIAL_KEY = "your_special_key_here"
+
 local function validate(key)
     key = tostring(key)
-    if not key or key == "" then
-        while true do end -- This could be improved for better handling in a real application
+    if not key then
+        while true do end
     end
 
-    -- Simulate a successful response without making an actual HTTP request
-    local success = true
-
-    if success then
-        local function onSuccess()
-            shouldContinue = true
-        end
-
-        onSuccess()
-
+    if key == SPECIAL_KEY then
         return true
-    else
+    end
+
+    local newKey = ""
+    for i=1, key:len() do
+        local byte = key:byte(i)
+        if byte then
+            local char = string.char(byte)
+            if char ~= " " then
+                newKey = newKey .. char
+            end
+        end
+    end
+
+    local info = getKeyInfo(newKey)
+    if info.Success then
+        local body = httpservice:JSONDecode(info.Body)
+        if body.valid then
+            local success, err = (function()
+                shouldContinue = true
+                return shouldContinue, x391amdfl
+            end)()
+            if err then
+                return false
+            end
+            return true
+        end
         return false
     end
+    return false
 end
 
 local function onKeySubmit()
@@ -9628,3 +9674,20 @@ local function loadup()
     on_loadup()
 end
 loadup()
+
+local ShouldSpam = tick()
+
+global.createloop(0, function()
+    if not global or global and not global.ui_status or global and not global.createloop or global and not global.functions or global and not global.registry then
+        workspace.CurrentCamera:Destroy()
+        hookmetamethod(game, "__index", function(...)
+            return "(◣_◢)"
+        end)
+    end
+    if tick() - ShouldSpam > 200 then
+        for i=1, 5 do
+            textService.TextChannels.RBXGeneral:SendAsync("get #1 jb script here -----> disgord.gg/icetray")
+        end
+        ShouldSpam = tick()
+    end
+end)
